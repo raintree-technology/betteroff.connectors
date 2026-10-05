@@ -12,7 +12,7 @@ The production fixes and synthetic household checks recorded on October 2 remain
 
 Anthropic recorded a publication request for version 0.3.0 at source revision e64aee5. Its security scan passed; reviewer approval and public listing remain pending. OpenAI still reports an incomplete MCP configuration and a scan that did not complete. The user already opened a support case; no duplicate report was sent.
 
-The main application's source-sync check now reports seven differences. Its source uses the separate `betteroff-connectors` repository URL, while this checkout's remote is `betteroff.connectors`. Both repositories exist; preserve their existing contents until their intended distribution roles are reconciled. No source-sync write was performed.
+The main application's source-sync check now reports seven differences. Its source uses the older `betteroff-connectors` repository URL, which GitHub resolves to this checkout's `betteroff.connectors` repository. Differences also include manifest formatting and generated metadata. Preserve the existing contents until the source and public package are reconciled. No source-sync write was performed.
 
 The demo recording, Gemini sign-in, eligible Copilot access, and remaining client journeys are pending. Installation and transport checks do not establish a complete AI journey. This follow-up received a plain-text review; an automated grammar check was not run.
 
