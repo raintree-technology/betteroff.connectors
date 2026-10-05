@@ -28,7 +28,7 @@
 		"name": "BetterOff"
 	},
 	"homepage": "https://betteroff.finance",
-	"repository": "https://github.com/raintree-technology/betteroff-connectors",
+	"repository": "https://github.com/raintree-technology/betteroff.connectors",
 	"license": "UNLICENSED",
 	"skills": "./skills/",
 	"mcpServers": "./.mcp.json",

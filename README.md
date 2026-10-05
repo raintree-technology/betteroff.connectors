@@ -13,29 +13,29 @@ Run the commands for your client in a terminal.
 ### Codex
 
 ```sh
-codex plugin marketplace add raintree-technology/betteroff-connectors
+codex plugin marketplace add raintree-technology/betteroff.connectors
 codex plugin add betteroff@betteroff
 ```
 
 ### Claude Code
 
 ```sh
-claude plugin marketplace add raintree-technology/betteroff-connectors
+claude plugin marketplace add raintree-technology/betteroff.connectors
 claude plugin install betteroff@betteroff
 ```
 
 ### GitHub Copilot
 
-In VS Code, run **Chat: Install Plugin From Source** from the Command Palette, enter `https://github.com/raintree-technology/betteroff-connectors`, confirm the marketplace trust prompt, and select **Install** for **betteroff**.
+In VS Code, run **Chat: Install Plugin From Source** from the Command Palette, enter `https://github.com/raintree-technology/betteroff.connectors`, confirm the marketplace trust prompt, and select **Install** for **betteroff**.
 
 In Copilot CLI:
 
 ```sh
-copilot plugin marketplace add raintree-technology/betteroff-connectors
+copilot plugin marketplace add raintree-technology/betteroff.connectors
 copilot plugin install betteroff@betteroff
 ```
 
-In the GitHub Copilot app, open **Customize** > **Plugins**, select the gear icon, add `raintree-technology/betteroff-connectors`, and install **betteroff**.
+In the GitHub Copilot app, open **Customize** > **Plugins**, select the gear icon, add `raintree-technology/betteroff.connectors`, and install **betteroff**.
 
 VS Code runs tools marked read-only without asking and asks before the proposal tools. Copilot CLI asks before every BetterOff tool call. To sign in again from Copilot CLI, run `/mcp auth betteroff`.
 
@@ -60,7 +60,7 @@ Cursor asks before it runs each BetterOff tool unless you add the tool to your a
 ### Gemini CLI
 
 ```sh
-gemini extensions install https://github.com/raintree-technology/betteroff-connectors
+gemini extensions install https://github.com/raintree-technology/betteroff.connectors
 ```
 
 Restart Gemini CLI. On first use, it opens your browser to sign in to BetterOff and receives the result on a `localhost` callback, so run it on a machine with a browser. If sign-in does not start, run `/mcp auth betteroff`. Gemini CLI asks before each BetterOff tool call.
@@ -72,14 +72,14 @@ Restart Gemini CLI. On first use, it opens your browser to sign in to BetterOff 
 In the Devin web app:
 
 1. Open **Customize** > **Plugins** and select the **Personal** scope.
-2. Choose **Add plugin** > **From repository**. Enter `raintree-technology/betteroff-connectors` and the subdirectory `plugins/betteroff`.
+2. Choose **Add plugin** > **From repository**. Enter `raintree-technology/betteroff.connectors` and the subdirectory `plugins/betteroff`.
 3. After indexing finishes, open **Customize** > **MCPs**, select **betteroff**, and choose **Connect**.
 4. Start a new session and mention `/betteroff:household-review` to load the skill.
 
 In the Devin CLI:
 
 ```sh
-devin plugins install raintree-technology/betteroff-connectors#plugins/betteroff
+devin plugins install raintree-technology/betteroff.connectors#plugins/betteroff
 devin mcp login betteroff
 ```
 
@@ -103,7 +103,7 @@ Then sign in and install the skill:
 
 ```sh
 hermes mcp login betteroff
-hermes skills install raintree-technology/betteroff-connectors/plugins/betteroff/skills/household-review
+hermes skills install raintree-technology/betteroff.connectors/plugins/betteroff/skills/household-review
 ```
 
 ### Muse Code

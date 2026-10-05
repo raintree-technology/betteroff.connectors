@@ -1,6 +1,6 @@
 # BetterOff connector guide
 
-This guide explains the permissions and data boundaries for the BetterOff plugin. To install it in any supported client, follow the commands in the [repository README](https://github.com/raintree-technology/betteroff-connectors#install-the-connector).
+This guide explains the permissions and data boundaries for the BetterOff plugin. To install it in any supported client, follow the commands in the [repository README](https://github.com/raintree-technology/betteroff.connectors#install-the-connector).
 
 Version 0.3.0 connects every client to the same BetterOff MCP endpoint: `https://api.betteroff.finance/mcp`. The package ships a portable Agent Plugins manifest (`plugin.json` and `mcp.json`) beside the Claude Code and Codex manifests. It contains no credentials or local server. The client manages OAuth credentials after you approve access.
 
