@@ -12,7 +12,7 @@ The `household-review` skill helps an agent explain supporting evidence and miss
 
 ## Consent and disconnection
 
-Only an eligible household owner can grant access. The BetterOff consent page identifies the client, household, requested permissions, and access duration of up to 30 days. Data returned by a tool is shared with the connected client. Disconnect through [BetterOff Agent connections](https://app.betteroff.finance/settings/agents).
+Only a household owner with paid access can grant access. All household members must consent to AI processing, and the owner must accept the applicable Terms. The BetterOff consent page identifies the client, household, requested permissions, and access duration of up to 30 days. Data returned by a tool is shared with the connected client. Disconnect through [BetterOff Agent connections](https://app.betteroff.finance/settings/agents).
 
 ## Correction review
 

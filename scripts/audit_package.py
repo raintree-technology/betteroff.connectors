@@ -17,60 +17,65 @@ https = lambda u: isinstance(u, str) and re.fullmatch(r"https://[^\s@/]+(/\S*)?"
 oneline = lambda s: isinstance(s, str) and s.strip() and "\n" not in s
 
 m = json.loads((P / ".codex-plugin/plugin.json").read_text())
-if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", m.get("name", "")): e("plugin_name_format", m.get("name"))
-if not re.fullmatch(SEMVER, m.get("version", "")) or len(m["version"]) > 64: e("plugin_version_not_semver", m.get("version"))
-if not m.get("description") or len(m["description"]) > 1024: e("plugin_description", "missing or >1024")
-if not (m.get("author") or {}).get("name"): e("plugin_developer_missing", "author.name")
-if "homepage" in m and not https(m["homepage"]): e("plugin_homepage_format", m["homepage"])
-if m.get("skills") not in (None, "./skills/", "./skills"): e("plugin_skills_path_unsupported", m["skills"])
-if m.get("mcpServers") not in (None, "./.mcp.json"): e("plugin_mcp_path_unsupported", m["mcpServers"])
-if (P / ".mcp.json").exists() and "mcpServers" not in m: w("undeclared_mcp_manifest_ignored", ".mcp.json")
-if "apps" in m or (m.get("extensions", {}).get("com.openai", {}).get("hooks")): e("submission", "apps/hooks block ZIP submission")
+def validate_manifest(m):
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", m.get("name", "")): e("plugin_name_format", m.get("name"))
+    if not re.fullmatch(SEMVER, m.get("version", "")) or len(m["version"]) > 64: e("plugin_version_not_semver", m.get("version"))
+    if not m.get("description") or len(m["description"]) > 1024: e("plugin_description", "missing or >1024")
+    if not (m.get("author") or {}).get("name"): e("plugin_developer_missing", "author.name")
+    if "homepage" in m and not https(m["homepage"]): e("plugin_homepage_format", m["homepage"])
+    if m.get("skills") not in (None, "./skills/", "./skills"): e("plugin_skills_path_unsupported", m["skills"])
+    if m.get("mcpServers") not in (None, "./.mcp.json"): e("plugin_mcp_path_unsupported", m["mcpServers"])
+    if "$schema" not in m and (P / ".mcp.json").exists() and "mcpServers" not in m: w("undeclared_mcp_manifest_ignored", ".mcp.json")
+    if "apps" in m or (m.get("extensions", {}).get("com.openai", {}).get("hooks")): e("submission", "apps/hooks block ZIP submission")
 
-i = m.get("interface")
-if not isinstance(i, dict): e("plugin_interface_wrong_type", "interface required for Codex format"); i = {}
-for k, lim in [("displayName", 30), ("shortDescription", 30), ("developerName", 80)]:
-    if not oneline(i.get(k)) or len(i[k]) > lim: e(f"submission_{k}", f"required, one line, <= {lim}: {i.get(k)!r}")
-if not i.get("longDescription") or len(i["longDescription"]) > 4000: e("plugin_long_description", "required <= 4000")
-if i.get("longDescription") == m.get("description"): w("longDescription", "identical to description; should cover tasks, users, limits")
-if i.get("category") not in CATS: e("plugin_category_unknown", i.get("category"))
-caps = i.get("capabilities")
-if not isinstance(caps, list) or len(caps) > 20 or any(not oneline(c) or len(c) > 120 for c in caps): e("plugin_capabilities", caps)
-for k in ["websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL"]:
-    if not https(i.get(k)) or len(i[k]) > 1024: e(f"mcp_review_{k}", f"required HTTPS <= 1024 for MCP review: {i.get(k)!r}")
-dp = i.get("defaultPrompt", [])
-dp = [dp] if isinstance(dp, str) else dp
-norm = [" ".join(p.split()).casefold() for p in dp]
-if len(dp) > 3 or len(set(norm)) != len(norm) or any(not oneline(p) or len(p) > 128 or "@" in p for p in dp): e("plugin_default_prompt", dp)
-for k in ["brandColor", "brandColorDark"]:
-    if k in i and not re.fullmatch(r"#[0-9A-Fa-f]{6}", i[k]): e(f"plugin_{k}_format", i[k])
-for k in ["composerIcon", "logo", "composerIconDark", "logoDark"]:
-    v = i.get(k)
-    if v is None:
-        if k in ("composerIcon", "logo"): e(f"plugin_{k}_path_missing", "required for Codex")
-        continue
-    f = P / v
-    if not v.startswith("./") or ".." in v: e("declared_asset_path_unsafe", v); continue
-    if not f.is_file(): e("declared_asset_file_missing", v); continue
-    b = f.read_bytes()
-    if len(b) > 5 * 2**20: e("image_file_too_large", v)
-    if b[:8] == b"\x89PNG\r\n\x1a\n":
-        wd, ht = struct.unpack(">II", b[16:24])
-        if wd != ht or wd < 48 or wd > 4096: e("raster_image_dimensions", f"{v} {wd}x{ht}")
-if i.get("screenshots"): w("screenshots_not_allowed", "only with custom MCP UI")
+    i = m.get("interface")
+    if not isinstance(i, dict): e("plugin_interface_wrong_type", "interface required for Codex format"); i = {}
+    for k, lim in [("displayName", 30), ("shortDescription", 30), ("developerName", 80)]:
+        if not oneline(i.get(k)) or len(i[k]) > lim: e(f"submission_{k}", f"required, one line, <= {lim}: {i.get(k)!r}")
+    if not i.get("longDescription") or len(i["longDescription"]) > 4000: e("plugin_long_description", "required <= 4000")
+    if i.get("longDescription") == m.get("description"): w("longDescription", "identical to description; should cover tasks, users, limits")
+    if i.get("category") not in CATS: e("plugin_category_unknown", i.get("category"))
+    caps = i.get("capabilities")
+    if not isinstance(caps, list) or len(caps) > 20 or any(not oneline(c) or len(c) > 120 for c in caps): e("plugin_capabilities", caps)
+    for k in ["websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL"]:
+        if not https(i.get(k)) or len(i[k]) > 1024: e(f"mcp_review_{k}", f"required HTTPS <= 1024 for MCP review: {i.get(k)!r}")
+    dp = i.get("defaultPrompt", [])
+    dp = [dp] if isinstance(dp, str) else dp
+    norm = [" ".join(p.split()).casefold() for p in dp]
+    if len(dp) > 3 or len(set(norm)) != len(norm) or any(not oneline(p) or len(p) > 128 or "@" in p for p in dp): e("plugin_default_prompt", dp)
+    for k in ["brandColor", "brandColorDark"]:
+        if k in i and not re.fullmatch(r"#[0-9A-Fa-f]{6}", i[k]): e(f"plugin_{k}_format", i[k])
+    for k in ["composerIcon", "logo", "composerIconDark", "logoDark"]:
+        v = i.get(k)
+        if v is None:
+            if k in ("composerIcon", "logo"): e(f"plugin_{k}_path_missing", "required for Codex")
+            continue
+        f = P / v
+        if not v.startswith("./") or ".." in v: e("declared_asset_path_unsafe", v); continue
+        if not f.is_file(): e("declared_asset_file_missing", v); continue
+        b = f.read_bytes()
+        if len(b) > 5 * 2**20: e("image_file_too_large", v)
+        if b[:8] == b"\x89PNG\r\n\x1a\n":
+            wd, ht = struct.unpack(">II", b[16:24])
+            if wd != ht or wd < 48 or wd > 4096: e("raster_image_dimensions", f"{v} {wd}x{ht}")
+    if i.get("screenshots"): w("screenshots_not_allowed", "only with custom MCP UI")
 
-x = m.get("extensions", {}).get("com.openai", {})
-r = x.get("review", {})
-tc = r.get("test_cases") or {}
-if len(tc.get("positive", [])) != 5 or len(tc.get("negative", [])) != 3: w("review.test_cases", "need exactly 5 positive + 3 negative before MCP review")
-for c in tc.get("positive", []):
-    if not all(c.get(k) for k in ("description", "prompt", "tools_triggered", "expected_behavior", "expected_result_shape", "fixture_data")): e("review.test_cases.positive", c)
-for c in tc.get("negative", []):
-    if not all(c.get(k) for k in ("description", "prompt", "expected_behavior", "why_not_completed")): e("review.test_cases.negative", c)
-if not r.get("demo_recording_url"): w("review.demo_recording_url", "required for MCP review")
-if not x.get("publication", {}).get("release_notes"): w("publication.release_notes", "required for MCP review")
-for bad in ("test_credentials", "reviewer_instructions"):
-    if bad in json.dumps(x): e("zip_metadata_rejected", bad)
+    x = m.get("extensions", {}).get("com.openai", {})
+    r = x.get("review", {})
+    tc = r.get("test_cases") or {}
+    if len(tc.get("positive", [])) != 5 or len(tc.get("negative", [])) != 3: w("review.test_cases", "need exactly 5 positive + 3 negative before MCP review")
+    for c in tc.get("positive", []):
+        if not all(c.get(k) for k in ("description", "prompt", "tools_triggered", "expected_behavior")): e("review.test_cases.positive", c)
+        if set(c) - {"description", "prompt", "tools_triggered", "expected_behavior", "file_attachment_urls", "expected_output_url"}: e("review.test_cases.positive_fields", c)
+    for c in tc.get("negative", []):
+        if not all(c.get(k) for k in ("description", "prompt")): e("review.test_cases.negative", c)
+        if set(c) - {"description", "prompt", "file_attachment_urls", "expected_output_url"}: e("review.test_cases.negative_fields", c)
+    if not r.get("demo_recording_url"): w("review.demo_recording_url", "required for MCP review")
+    if not x.get("publication", {}).get("release_notes"): w("publication.release_notes", "required for MCP review")
+    for bad in ("test_credentials", "reviewer_instructions"):
+        if bad in json.dumps(x): e("zip_metadata_rejected", bad)
+
+validate_manifest(m)
 
 mc = json.loads((P / ".mcp.json").read_text())
 s = mc.get("mcpServers")
@@ -122,11 +127,23 @@ url = next(iter(s.values()))["url"] if isinstance(s, dict) and s else None
 pm = json.loads((P / "plugin.json").read_text())
 if pm.get("$schema") != "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json": e("portable_plugin_schema", pm.get("$schema"))
 if pm.get("name") != m["name"]: e("portable_plugin_name", pm.get("name"))
-if "extensions" in pm: w("portable_extensions", "extensions.com.openai in plugin.json overrides .codex-plugin/plugin.json")
+if pm.get("description") != m.get("description"): e("portable_plugin_description", "description differs from Codex manifest")
+if pm.get("keywords") != m.get("keywords"): e("portable_plugin_keywords", "keywords differ from Codex manifest")
+if "extensions" in pm:
+    ext = pm["extensions"].get("com.openai", {})
+    if ext.get("interface") != m.get("interface"): e("portable_interface", "OpenAI inline interface differs from compatibility manifest")
+if "extensions" in pm:
+    validate_manifest({**pm, "interface": ext.get("interface")})
+    for section in ("review", "publication"):
+        if ext.get(section) != m.get("extensions", {}).get("com.openai", {}).get(section): e("portable_" + section, "inline settings differ from Codex fallback")
 vers.add(pm.get("version"))
 gx = json.loads((root / "gemini-extension.json").read_text())
 vers.add(gx.get("version"))
-if not (root / gx.get("contextFileName", "")).is_file(): e("gemini_context_missing", gx.get("contextFileName"))
+if "contextFileName" in gx and not (root / gx["contextFileName"]).is_file(): e("gemini_context_missing", gx["contextFileName"])
+for skill in (P / "skills").glob("*/SKILL.md"):
+    native = root / "skills" / skill.relative_to(P / "skills")
+    if not native.is_file() or native.read_bytes() != skill.read_bytes():
+        e("gemini_skill_drift", str(native))
 for n, v in gx.get("mcpServers", {}).items():
     if v.get("httpUrl") != url: e("gemini_mcp_server", f"{n}: httpUrl must be {url}")
 cur = P / ".cursor-plugin/plugin.json"
@@ -138,6 +155,7 @@ if cur.exists():
 if len(vers) > 1: e("version_drift", sorted(map(str, vers)))
 pmc = json.loads((P / "mcp.json").read_text())
 if pmc.get("$schema") != "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json": e("portable_mcp_schema", pmc.get("$schema"))
+if set(pmc.get("mcpServers", {})) != set(s or {}): e("portable_mcp_servers_missing", "portable and compatibility server names must match")
 for n, v in pmc.get("mcpServers", {}).items():
     if v.get("type") != "streamable-http" or v.get("url") != url: e("portable_mcp_server", f"{n}: needs type streamable-http and url {url}")
 for doc in [root / "README.md", P / "README.md"]:

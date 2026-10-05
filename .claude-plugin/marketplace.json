@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "betteroff",
-      "description": "Read BetterOff household finances and prepare corrections for approval in BetterOff.",
+      "description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections for approval.",
       "displayName": "BetterOff",
       "author": {
         "name": "BetterOff"

@@ -2,9 +2,11 @@
 
 Ask Codex, Claude Code, GitHub Copilot, Cursor, Gemini CLI, Devin, Hermes Agent, Muse Code, OpenClaw, or Pi about the financial records you connect to BetterOff. The connector can read approved household data and prepare corrections for your review. It cannot apply a correction, move money, or place a trade.
 
+Installation instructions below describe supported configuration routes. Full lifecycle evidence is recorded in [the compatibility review](COMPATIBILITY.md); several clients still need live verification.
+
 ## Before you start
 
-You need a BetterOff household owner account and one of those clients. Connect at least one supported account or wallet in BetterOff to ask questions about your finances.
+You need a BetterOff household owner account with paid access and one of those clients. All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Connect at least one supported account or wallet in BetterOff to ask questions about your finances.
 
 ## Install the connector
 
@@ -37,7 +39,7 @@ copilot plugin install betteroff@betteroff
 
 In the GitHub Copilot app, open **Customize** > **Plugins**, select the gear icon, add `raintree-technology/betteroff.connectors`, and install **betteroff**.
 
-VS Code runs tools marked read-only without asking and asks before the proposal tools. Copilot CLI asks before every BetterOff tool call. To sign in again from Copilot CLI, run `/mcp auth betteroff`.
+With default approval settings, VS Code can run tools marked read-only without asking and asks before proposal tools. Copilot CLI normally asks before tool calls; policies and allowlists can change this behavior. To sign in again from Copilot CLI, run `/mcp auth betteroff`.
 
 ### Cursor
 
@@ -63,7 +65,7 @@ Cursor asks before it runs each BetterOff tool unless you add the tool to your a
 gemini extensions install https://github.com/raintree-technology/betteroff.connectors
 ```
 
-Restart Gemini CLI. On first use, it opens your browser to sign in to BetterOff and receives the result on a `localhost` callback, so run it on a machine with a browser. If sign-in does not start, run `/mcp auth betteroff`. Gemini CLI asks before each BetterOff tool call.
+Restart Gemini CLI. On first use, it opens your browser to sign in to BetterOff and receives the result on a `localhost` callback, so run it on a machine with a browser. If sign-in does not start, run `/mcp auth betteroff`. Gemini CLI approval behavior depends on its policy and trusted-tool settings. The extension includes the native `household-review` skill.
 
 ### Devin
 
@@ -108,20 +110,22 @@ hermes skills install raintree-technology/betteroff.connectors/plugins/betteroff
 
 ### Muse Code
 
-Add the server to `~/.config/muse/settings.json`. Keep `"schema_version": 1` and merge the `mcp_servers` block into any existing settings:
+Add the server to `~/.config/muse/settings.json`. Keep `"schema_version": 1` and merge the `mcpServers` block into any existing settings:
 
 ```json
 {
   "schema_version": 1,
-  "mcp_servers": {
+  "mcpServers": {
     "betteroff": {
-      "transport": "streamable_http",
+      "type": "streamable-http",
       "url": "https://api.betteroff.finance/mcp",
-      "mode": "optional"
+      "required": false
     }
   }
 }
 ```
+
+OAuth works through user settings. Muse Code plugin servers and project-only servers do not provide this sign-in route.
 
 Then sign in and install the skill from a clone of this repository:
 
@@ -149,7 +153,7 @@ Then install the skill from a clone of this repository:
 openclaw skills install ./plugins/betteroff/skills/household-review --global
 ```
 
-Sign-in returns to `http://127.0.0.1:8989/oauth/callback`. If the Gateway runs on another machine, finish with `openclaw mcp login betteroff --code <code>`. OpenClaw's built-in agent can run the proposal tools without asking, but nothing changes until you approve the proposal in BetterOff.
+Sign-in returns to `http://127.0.0.1:8989/oauth/callback`. If the Gateway runs on another machine, finish with `openclaw mcp login betteroff --code <code>`. Approval prompts depend on the Gateway and agent harness. Verify their behavior before sharing access. Nothing changes until you approve the proposal in BetterOff.
 
 ### Pi
 
@@ -167,7 +171,7 @@ Then copy the skill from a clone of this repository:
 cp -R plugins/betteroff/skills/household-review ~/.agents/skills/
 ```
 
-Run `/reload` in an open Pi session to pick up the server. Pi runs tools without asking. The proposal tools only prepare a correction, and nothing changes until you approve it in BetterOff.
+Run `/reload` in an open Pi session to pick up the server. Pi's built-in tools can run without prompts; permission extensions can change this behavior. The proposal tools only prepare a correction, and nothing changes until you approve it in BetterOff.
 
 When your client prompts you, sign in to BetterOff. Review the household and requested permissions before selecting **Allow access**. The data returned by a tool is shared with the client you connected.
 
@@ -181,9 +185,9 @@ Results can be incomplete when a source is not connected or is out of date. Chec
 
 ## What the connector can do
 
-Version 0.3.0 provides 19 tools:
+Version 0.3.0 provides 20 tools:
 
-- **16 financial reads** cover accounts, net worth, cash flow, recurring items, holdings, transactions, spending, debts, observations, and financial activity.
+- **17 reads and analyses** cover setup status, accounts, net worth, cash flow, recurring items, holdings, transactions, spending, debts, observations, and financial activity.
 - **Three correction proposals** cover payment categories, recurring items, and debt classifications.
 
 ## Approval and disconnection

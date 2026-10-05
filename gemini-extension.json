@@ -2,7 +2,6 @@
   "name": "betteroff",
   "version": "0.3.0",
   "description": "Read BetterOff household finances and prepare corrections for approval in BetterOff.",
-  "contextFileName": "plugins/betteroff/skills/household-review/SKILL.md",
   "mcpServers": {
     "betteroff": {
       "httpUrl": "https://api.betteroff.finance/mcp"
