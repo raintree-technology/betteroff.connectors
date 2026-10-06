@@ -1,15 +1,15 @@
 {
-  "name": "betteroff",
-  "displayName": "BetterOff",
-  "version": "0.3.0",
-  "description": "Read BetterOff household finances and prepare corrections for approval in BetterOff.",
-  "author": {
-    "name": "BetterOff"
-  },
-  "homepage": "https://betteroff.finance",
-  "repository": "https://github.com/raintree-technology/betteroff.connectors",
-  "license": "UNLICENSED",
-  "keywords": ["finance", "household", "net-worth", "budgeting", "mcp"],
-  "logo": "assets/icon.png",
-  "mcpServers": "./.mcp.json"
+	"name": "betteroff",
+	"displayName": "BetterOff",
+	"version": "0.3.0",
+	"description": "Read BetterOff household finances and prepare corrections for approval in BetterOff.",
+	"author": {
+		"name": "BetterOff"
+	},
+	"homepage": "https://betteroff.finance",
+	"repository": "https://github.com/raintree-technology/betteroff.connectors",
+	"license": "UNLICENSED",
+	"keywords": ["finance", "household", "net-worth", "budgeting", "mcp"],
+	"logo": "assets/icon.png",
+	"mcpServers": "./.mcp.json"
 }

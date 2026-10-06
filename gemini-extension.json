@@ -1,10 +1,10 @@
 {
-  "name": "betteroff",
-  "version": "0.3.0",
-  "description": "Read BetterOff household finances and prepare corrections for approval in BetterOff.",
-  "mcpServers": {
-    "betteroff": {
-      "httpUrl": "https://api.betteroff.finance/mcp"
-    }
-  }
+	"name": "betteroff",
+	"version": "0.3.0",
+	"description": "Read BetterOff household finances and prepare corrections for approval in BetterOff.",
+	"mcpServers": {
+		"betteroff": {
+			"httpUrl": "https://api.betteroff.finance/mcp"
+		}
+	}
 }

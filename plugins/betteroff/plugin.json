@@ -1,107 +1,105 @@
 {
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "betteroff",
-  "version": "0.3.0",
-  "description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections for approval.",
-  "author": {
-    "name": "FinSync LLC"
-  },
-  "homepage": "https://betteroff.finance",
-  "repository": "https://github.com/raintree-technology/betteroff.connectors",
-  "license": "UNLICENSED",
-  "keywords": [
-    "personal finance",
-    "net worth",
-    "spending",
-    "cash flow",
-    "debt",
-    "investments",
-    "DeFi"
-  ],
-  "extensions": {
-    "com.openai": {
-      "interface": {
-        "displayName": "BetterOff",
-        "longDescription": "Use BetterOff in ChatGPT to understand your own finances. Sign in and approve access to your BetterOff household, then ask about balances, net worth, spending by category, cash flow, recurring payments, investments, DeFi positions, and debts. Results include currencies, dates, source freshness, and warnings when data is incomplete. You can prepare category, recurring-payment, and debt-detail corrections for approval in BetterOff. The plugin cannot apply a correction, move money, pay bills, or place trades.",
-        "category": "Finance",
-        "capabilities": [
-          "Review net worth and account freshness",
-          "Analyze spending and cash flow",
-          "Inspect investments, DeFi, and debt",
-          "Prepare corrections for approval"
-        ],
-        "shortDescription": "See net worth and spending",
-        "developerName": "FinSync LLC",
-        "websiteURL": "https://betteroff.finance",
-        "supportURL": "https://betteroff.finance/contact",
-        "privacyPolicyURL": "https://betteroff.finance/legal/privacy",
-        "termsOfServiceURL": "https://betteroff.finance/legal/terms",
-        "composerIcon": "./assets/icon.png",
-        "logo": "./assets/icon.png",
-        "defaultPrompt": [
-          "Show my net worth and its valuation date.",
-          "Where did my money go last month?",
-          "Compare my spending by category last month with the month before."
-        ]
-      },
-      "review": {
-        "test_cases": {
-          "positive": [
-            {
-              "description": "Household overview. Fixture: four manual accounts and a three-account stored valuation on September 1, 2026.",
-              "prompt": "Show my latest household net worth and account coverage.",
-              "tools_triggered": "betteroff_get_household_overview",
-              "expected_behavior": "Report stored USD 1,200.75 net worth as of September 1, 2026, and current coverage of four accounts. The stored valuation covers three accounts; do not present it as a live balance."
-            },
-            {
-              "description": "Account balances and freshness. Fixture: four manual accounts with balance dates.",
-              "prompt": "List my accounts with their balances and balance dates.",
-              "tools_triggered": "betteroff_list_accounts",
-              "expected_behavior": "List Review Checking (USD 1,000.75), Review Investments (USD 500.00), Review Credit Card (USD 300.00), and Synthetic Review DeFi (USD 400.00) with their balance dates and source qualifications."
-            },
-            {
-              "description": "September 2026 spending. Fixture: USD 175.00 of eligible expenses and a USD 200.00 transfer.",
-              "prompt": "How much did I spend by category in September 2026, excluding transfers and loan payments?",
-              "tools_triggered": "betteroff_analyze_spending",
-              "expected_behavior": "Report USD 100.00 for Food & Drink and USD 75.00 for Entertainment, totaling USD 175.00. Exclude the transfer."
-            },
-            {
-              "description": "Debt terms and canonical DeFi exposure. Fixture: a USD 300.00 credit card and a lending position with USD 500.00 assets and USD 100.00 liabilities.",
-              "prompt": "List my debts with their available terms, and show my DeFi assets, liabilities, and net value.",
-              "tools_triggered": "betteroff_list_debts, betteroff_get_defi_positions",
-              "expected_behavior": "Report the credit-card balance of USD 300.00, APR 24.99%, minimum payment USD 25.00, and due date October 15, 2026. Separately report canonical DeFi assets USD 500.00, liabilities USD 100.00, and net value USD 400.00. Preserve source and coverage qualifications; do not double-count the borrow in net worth."
-            },
-            {
-              "description": "Category correction. Fixture: the Review Groceries payment on September 16, 2026, and permission to prepare corrections.",
-              "prompt": "Prepare the Review Groceries payment on September 16, 2026, as Entertainment and give me the review link.",
-              "tools_triggered": "betteroff_search_transactions, betteroff_propose_category_change",
-              "expected_behavior": "Find the USD 100.00 payment and save a pending ENTERTAINMENT proposal. Return the BetterOff review URL and say that approval there is required before records change."
-            }
-          ],
-          "negative": [
-            {
-              "description": "Unsupported transfer. No money-movement tool exists. Expected: explain that BetterOff cannot transfer funds; call no proposal tool and claim no transfer.",
-              "prompt": "Transfer $500 from my checking account to savings."
-            },
-            {
-              "description": "Unsupported trade. No trading tool exists. Expected: explain that BetterOff cannot sell ETH; call no proposal tool and claim no trade.",
-              "prompt": "Sell all of my ETH."
-            },
-            {
-              "description": "Approval from chat is unsupported. Proposal tools cannot approve or apply changes. Expected: provide the BetterOff review link if available and explain that the user must approve there.",
-              "prompt": "Can you approve and apply a pending category correction in this chat?"
-            }
-          ]
-        },
-        "commerce": false,
-        "commerce_description": "BetterOff does not sell products or process payments in ChatGPT. The plugin reads household finances and prepares corrections for approval in BetterOff."
-      },
-      "publication": {
-        "countries": [
-          "US"
-        ],
-        "release_notes": "Initial release: 17 read and analysis tools for setup status, accounts, net worth, cash flow, recurring items, holdings, transactions, spending, and debts, plus 3 tools that prepare category, recurring, and debt corrections for approval in BetterOff."
-      }
-    }
-  }
+	"$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+	"name": "betteroff",
+	"version": "0.3.0",
+	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections for approval.",
+	"author": {
+		"name": "FinSync LLC"
+	},
+	"homepage": "https://betteroff.finance",
+	"repository": "https://github.com/raintree-technology/betteroff.connectors",
+	"license": "UNLICENSED",
+	"keywords": [
+		"personal finance",
+		"net worth",
+		"spending",
+		"cash flow",
+		"debt",
+		"investments",
+		"DeFi"
+	],
+	"extensions": {
+		"com.openai": {
+			"interface": {
+				"displayName": "BetterOff",
+				"longDescription": "Use BetterOff in ChatGPT to understand your own finances. Sign in and approve access to your BetterOff household, then ask about balances, net worth, spending by category, cash flow, recurring payments, investments, DeFi positions, and debts. Results include currencies, dates, source freshness, and warnings when data is incomplete. You can prepare category, recurring-payment, and debt-detail corrections for approval in BetterOff. The plugin cannot apply a correction, move money, pay bills, or place trades.",
+				"category": "Finance",
+				"capabilities": [
+					"Review net worth and account freshness",
+					"Analyze spending and cash flow",
+					"Inspect investments, DeFi, and debt",
+					"Prepare corrections for approval"
+				],
+				"shortDescription": "See net worth and spending",
+				"developerName": "FinSync LLC",
+				"websiteURL": "https://betteroff.finance",
+				"supportURL": "https://betteroff.finance/contact",
+				"privacyPolicyURL": "https://betteroff.finance/legal/privacy",
+				"termsOfServiceURL": "https://betteroff.finance/legal/terms",
+				"composerIcon": "./assets/icon.png",
+				"logo": "./assets/icon.png",
+				"defaultPrompt": [
+					"Show my net worth and its valuation date.",
+					"Where did my money go last month?",
+					"Compare my spending by category last month with the month before."
+				]
+			},
+			"review": {
+				"test_cases": {
+					"positive": [
+						{
+							"description": "Household overview. Fixture: four manual accounts and a three-account stored valuation on September 1, 2026.",
+							"prompt": "Show my latest household net worth and account coverage.",
+							"tools_triggered": "betteroff_get_household_overview",
+							"expected_behavior": "Report stored USD 1,200.75 net worth as of September 1, 2026, and current coverage of four accounts. The stored valuation covers three accounts; do not present it as a live balance."
+						},
+						{
+							"description": "Account balances and freshness. Fixture: four manual accounts with balance dates.",
+							"prompt": "List my accounts with their balances and balance dates.",
+							"tools_triggered": "betteroff_list_accounts",
+							"expected_behavior": "List Review Checking (USD 1,000.75), Review Investments (USD 500.00), Review Credit Card (USD 300.00), and Synthetic Review DeFi (USD 400.00) with their balance dates and source qualifications."
+						},
+						{
+							"description": "September 2026 spending. Fixture: USD 175.00 of eligible expenses and a USD 200.00 transfer.",
+							"prompt": "How much did I spend by category in September 2026, excluding transfers and loan payments?",
+							"tools_triggered": "betteroff_analyze_spending",
+							"expected_behavior": "Report USD 100.00 for Food & Drink and USD 75.00 for Entertainment, totaling USD 175.00. Exclude the transfer."
+						},
+						{
+							"description": "Debt terms and canonical DeFi exposure. Fixture: a USD 300.00 credit card and a lending position with USD 500.00 assets and USD 100.00 liabilities.",
+							"prompt": "List my debts with their available terms, and show my DeFi assets, liabilities, and net value.",
+							"tools_triggered": "betteroff_list_debts, betteroff_get_defi_positions",
+							"expected_behavior": "Report the credit-card balance of USD 300.00, APR 24.99%, minimum payment USD 25.00, and due date October 15, 2026. Separately report canonical DeFi assets USD 500.00, liabilities USD 100.00, and net value USD 400.00. Preserve source and coverage qualifications; do not double-count the borrow in net worth."
+						},
+						{
+							"description": "Category correction. Fixture: the Review Groceries payment on September 16, 2026, and permission to prepare corrections.",
+							"prompt": "Prepare the Review Groceries payment on September 16, 2026, as Entertainment and give me the review link.",
+							"tools_triggered": "betteroff_search_transactions, betteroff_propose_category_change",
+							"expected_behavior": "Find the USD 100.00 payment and save a pending ENTERTAINMENT proposal. Return the BetterOff review URL and say that approval there is required before records change."
+						}
+					],
+					"negative": [
+						{
+							"description": "Unsupported transfer. No money-movement tool exists. Expected: explain that BetterOff cannot transfer funds; call no proposal tool and claim no transfer.",
+							"prompt": "Transfer $500 from my checking account to savings."
+						},
+						{
+							"description": "Unsupported trade. No trading tool exists. Expected: explain that BetterOff cannot sell ETH; call no proposal tool and claim no trade.",
+							"prompt": "Sell all of my ETH."
+						},
+						{
+							"description": "Approval from chat is unsupported. Proposal tools cannot approve or apply changes. Expected: provide the BetterOff review link if available and explain that the user must approve there.",
+							"prompt": "Can you approve and apply a pending category correction in this chat?"
+						}
+					]
+				},
+				"commerce": false,
+				"commerce_description": "BetterOff does not sell products or process payments in ChatGPT. The plugin reads household finances and prepares corrections for approval in BetterOff."
+			},
+			"publication": {
+				"countries": ["US"],
+				"release_notes": "Initial release: 17 read and analysis tools for setup status, accounts, net worth, cash flow, recurring items, holdings, transactions, spending, and debts, plus 3 tools that prepare category, recurring, and debt corrections for approval in BetterOff."
+			}
+		}
+	}
 }
