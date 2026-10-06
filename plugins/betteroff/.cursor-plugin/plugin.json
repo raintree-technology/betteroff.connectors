@@ -2,7 +2,7 @@
 	"name": "betteroff",
 	"displayName": "BetterOff",
 	"version": "0.3.0",
-	"description": "Read BetterOff household finances and prepare corrections for approval in BetterOff.",
+	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections for approval.",
 	"author": {
 		"name": "BetterOff"
 	},
