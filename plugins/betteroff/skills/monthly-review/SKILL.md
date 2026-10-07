@@ -21,33 +21,38 @@ The user's explicit instructions take priority over this skill. When the `househ
 
 Review the last complete calendar month in the result `timezone`, compared with the month before it. If the user names a month, use that month. If the user asks about the current month, compare the same elapsed calendar days in the prior month and label the current month as incomplete.
 
-## Read in this order
+## Read
 
-1. `betteroff_get_setup_status`. If a step is `action_needed`, name it and its `url` first. Continue only with the data that remains available.
-2. `betteroff_get_cash_flow` for the review month. Use `priorPeriod` for the comparison.
-3. `betteroff_analyze_spending` for the review month with `comparison` set to the prior month.
-4. `betteroff_detect_spending_patterns` for the review month.
-5. `betteroff_list_recurring`.
-6. `betteroff_get_net_worth_history`, then `betteroff_explain_net_worth_change` between the valuations nearest the start and end of the month, when both exist.
-7. `betteroff_list_observations`.
+Call `betteroff_get_setup_status` first. If a step is `action_needed`, name it and its `url` first, then continue with the data that remains available.
 
-Skip a step whose tool is hidden or returns `INSUFFICIENT_SCOPE`, and list the missing permission at the end.
+Then make these reads. They are independent, so make them together when the client allows:
+
+- `betteroff_get_cash_flow` for the review month. Use `priorPeriod` for the comparison.
+- `betteroff_analyze_spending` for the review month with `comparison` set to the prior month.
+- `betteroff_detect_spending_patterns` for the review month.
+- `betteroff_list_recurring`.
+- `betteroff_get_net_worth_history`, then `betteroff_explain_net_worth_change` between the valuations nearest the start and end of the month, when both exist.
+- `betteroff_list_observations`.
+
+Skip a read whose tool is hidden or returns `INSUFFICIENT_SCOPE`, and name the missing permission in the data limits.
 
 ## Report
 
-Lead with one sentence: net cash flow for the month, its direction against the prior month, and the currency.
+Lead with one sentence: net cash flow for the month, its change against the prior month, and the currency.
 
-Then give at most five findings, ordered by dollar impact:
+Then list at most five findings, ordered by dollar impact. A finding is one fact that deserves attention, in one or two sentences with its figures. It is not a section. Candidates:
 
-- **Cash flow:** income, expenses, and net. State a savings rate only when `savingsRatePercent` is not null.
-- **Spending drivers:** the three categories with the largest absolute change. Report observed changes without assigning a cause.
-- **Recurring changes:** new, stopped, stale, or changed recurring charges. Claim a missed or upcoming charge only when the result returns a date.
-- **Unusual activity:** items from `unusualTransactions` or `monthlyOutliers`. Call matching charges possible duplicates, not confirmed duplicates or fraud.
-- **Net worth:** observed change split into assets and liabilities. Report `reconciliationResidual` as unexplained change.
+- Income or expenses that changed against the prior month. Give the savings rate only when `savingsRatePercent` is not null.
+- The categories with the largest absolute change. Report the change without assigning a cause.
+- A recurring charge that is new, stopped, stale, or changed in amount. Claim a missed or upcoming charge only when the result returns a date.
+- Items from `unusualTransactions` or `monthlyOutliers`. Call matching charges possible duplicates, not confirmed duplicates or fraud.
+- The net worth change, split into assets and liabilities. Report `economicAttributionResidual` as change the records do not explain. Do not reconcile net worth with cash flow or suggest causes.
+
+Mention each item once, even when two reads return it. Skip facts that did not change.
 
 End with:
 
-1. Data limits: `quality.reasons`, warnings, stale accounts, and skipped tools.
-2. One suggested next step that follows from the evidence, such as an offer to run `subscription-audit` or `categorize-transactions`.
+1. Data limits, only when something limits the review: `partial` or `unavailable` quality with its reasons, warnings, stale accounts, or skipped reads. Omit this when every read is complete.
+2. One suggested next step that follows from the findings, such as an offer to run `subscription-audit` or `categorize-transactions`.
 
-Do not repeat every row in prose. Do not present totals across currencies without a supported conversion.
+Keep the report under about 250 words. Do not present totals across currencies without a supported conversion.
