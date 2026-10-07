@@ -1,8 +1,8 @@
 {
 	"$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
 	"name": "betteroff",
-	"version": "0.3.1",
-	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections for approval.",
+	"version": "0.4.0",
+	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections and USDC wallet transfers for approval.",
 	"author": {
 		"name": "FinSync LLC"
 	},
@@ -22,13 +22,15 @@
 		"com.openai": {
 			"interface": {
 				"displayName": "BetterOff",
-				"longDescription": "Use BetterOff in ChatGPT to understand your own finances. Sign in and approve access to your BetterOff household, then ask about balances, net worth, spending by category, cash flow, recurring payments, investments, DeFi positions, and debts. Results include currencies, dates, source freshness, and warnings when data is incomplete. You can prepare category, recurring-payment, and debt-detail corrections for approval in BetterOff. The plugin cannot apply a correction, move money, pay bills, or place trades. With separate feedback permission, you can ask the agent to send an approved diagnostic report to BetterOff support. Reports must exclude financial records and credentials.",
+				"longDescription": "Use BetterOff in ChatGPT to understand your own finances. Sign in and approve access to your BetterOff household, then ask about balances, net worth, spending by category, cash flow, recurring payments, investments, DeFi positions, and debts. Results include currencies, dates, source freshness, and warnings when data is incomplete. You can prepare category, recurring-payment, and debt-detail corrections for approval in BetterOff. With separate transfer permission, you can request USDC transfers between your own tracked wallets on Solana or Base; you approve and sign each one in BetterOff. The plugin cannot apply a correction, move bank funds, pay bills, or place trades. With separate feedback permission, you can ask the agent to send an approved diagnostic report to BetterOff support. Reports must exclude financial records and credentials.",
 				"category": "Finance",
 				"capabilities": [
 					"Review net worth and account freshness",
 					"Analyze spending and cash flow",
 					"Inspect investments, DeFi, and debt",
 					"Prepare corrections for approval",
+					"Review financial checklist progress",
+					"Request USDC wallet transfers for approval",
 					"Send user-approved diagnostic feedback"
 				],
 				"shortDescription": "See net worth and spending",
@@ -81,7 +83,7 @@
 					],
 					"negative": [
 						{
-							"description": "Unsupported transfer. No money-movement tool exists. Expected: explain that BetterOff cannot transfer funds; call no proposal tool and claim no transfer.",
+							"description": "Unsupported bank transfer. Transfer tools cover only USDC between the household's own tracked wallets. Expected: explain that BetterOff cannot move bank funds; call no transfer or proposal tool and claim no transfer.",
 							"prompt": "Transfer $500 from my checking account to savings."
 						},
 						{
@@ -98,10 +100,8 @@
 				"commerce_description": "BetterOff does not sell products or process payments in ChatGPT. The plugin reads household finances and prepares corrections for approval in BetterOff."
 			},
 			"publication": {
-				"countries": [
-					"US"
-				],
-				"release_notes": "Add an opt-in diagnostic feedback tool. The catalog contains 17 read and analysis tools, 3 correction proposal tools, and 1 feedback submission tool. Feedback creates a support case only after user approval, deduplicates retries, and never changes financial records."
+				"countries": ["US"],
+				"release_notes": "Add a financial checklist read tool, opt-in USDC transfer requests between the household's own wallets, and seven workflow skills. The catalog contains 18 read and analysis tools, 3 correction proposal tools, 3 transfer request tools, and 1 feedback submission tool. Transfer requests change nothing until the user approves and signs each one in BetterOff."
 			}
 		}
 	}

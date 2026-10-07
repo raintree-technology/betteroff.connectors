@@ -1,8 +1,8 @@
 {
 	"name": "betteroff",
 	"displayName": "BetterOff",
-	"version": "0.3.1",
-	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections for approval.",
+	"version": "0.4.0",
+	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections and USDC wallet transfers for approval.",
 	"author": {
 		"name": "FinSync LLC"
 	},
@@ -10,6 +10,6 @@
 	"repository": "https://github.com/raintree-technology/betteroff.connectors",
 	"license": "UNLICENSED",
 	"keywords": ["finance", "household", "net-worth", "budgeting", "mcp"],
-	"logo": "./assets/icon.png",
+	"logo": "assets/icon.png",
 	"mcpServers": "./.mcp.json"
 }

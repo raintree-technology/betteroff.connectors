@@ -1,0 +1,11 @@
+interface:
+  display_name: "Household review"
+  short_description: "Review household finances"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "betteroff"
+      description: "BetterOff MCP server"
+      transport: "streamable_http"
+      url: "https://api.betteroff.finance/mcp"

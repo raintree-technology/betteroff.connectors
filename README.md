@@ -1,6 +1,6 @@
 # <picture><source media="(prefers-color-scheme: dark)" srcset="assets/betteroff-mark-white.svg"><img src="assets/betteroff-mark-graphite.svg" alt="" width="48" height="48" align="absmiddle"></picture> BetterOff connectors
 
-Ask Codex, Claude Code, GitHub Copilot, Cursor, Gemini CLI, Devin, Hermes Agent, Muse Code, OpenClaw, or Pi about the financial records you connect to BetterOff. The connector can read approved household data and prepare corrections for your review. It cannot apply a correction, move money, or place a trade.
+Ask Codex, Claude Code, GitHub Copilot, Cursor, Gemini CLI, Devin, Hermes Agent, Muse Code, OpenClaw, or Pi about the financial records you connect to BetterOff. The connector can read approved household data and prepare corrections for your review. With separate permission, it can request USDC transfers between your own wallets, which you approve and sign in BetterOff. It cannot apply a correction, move bank funds, or place a trade.
 
 Installation instructions below describe supported configuration routes. Full lifecycle evidence is recorded in [the compatibility review](COMPATIBILITY.md); several clients still need live verification.
 
@@ -9,8 +9,6 @@ This is a public connector distribution, not an open-source license grant. The m
 ## Before you start
 
 You need a BetterOff household owner account with paid access and one of those clients. All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Connect at least one supported account or wallet in BetterOff to ask questions about your finances.
-
-Candidate 0.3.1 adds `betteroff_submit_feedback` for diagnostic reports you approve. It requires separate, opt-in `feedback:submit` permission. Existing connections must reconnect to request that permission after the server release. Reports must exclude financial records, conversation history, tool payloads, and credentials. Production availability of this candidate remains unverified.
 
 ## Install the connector
 
@@ -80,7 +78,7 @@ In the Devin web app:
 1. Open **Customize** > **Plugins** and select the **Personal** scope.
 2. Choose **Add plugin** > **From repository**. Enter `raintree-technology/betteroff.connectors` and the subdirectory `plugins/betteroff`.
 3. After indexing finishes, open **Customize** > **MCPs**, select **betteroff**, and choose **Connect**.
-4. Start a new session and mention `/betteroff:household-review` to load the skill.
+4. Start a new session and mention `/betteroff:household-review` or a workflow skill such as `/betteroff:monthly-review` to load it.
 
 In the Devin CLI:
 
@@ -93,7 +91,7 @@ The Devin CLI asks before each BetterOff tool call unless you allow it.
 
 ### Hermes Agent
 
-Add the server to `~/.hermes/config.yaml`. With `trust: untrusted`, Hermes asks you before any tool that is not marked read-only, including the three proposal tools, runs:
+Add the server to `~/.hermes/config.yaml`. With `trust: untrusted`, Hermes asks you before any tool that is not marked read-only, including the proposal and transfer request tools, runs:
 
 ```yaml
 mcp_servers:
@@ -105,11 +103,13 @@ mcp_servers:
       enabled: false
 ```
 
-Then sign in and install the skill:
+Then sign in and install the skills:
 
 ```sh
 hermes mcp login betteroff
-hermes skills install raintree-technology/betteroff.connectors/plugins/betteroff/skills/household-review
+for skill in household-review monthly-review subscription-audit categorize-transactions debt-plan portfolio-check connect-and-setup financial-checkup; do
+  hermes skills install "raintree-technology/betteroff.connectors/plugins/betteroff/skills/$skill"
+done
 ```
 
 ### Muse Code
@@ -131,11 +131,11 @@ Add the server to `~/.config/muse/settings.json`. Keep `"schema_version": 1` and
 
 OAuth works through user settings. Muse Code plugin servers and project-only servers do not provide this sign-in route.
 
-Then sign in and install the skill from a clone of this repository:
+Then sign in and install the skills from a clone of this repository:
 
 ```sh
 muse mcp login betteroff
-muse skills install ./plugins/betteroff/skills/household-review --scope user
+for skill in plugins/betteroff/skills/*/; do muse skills install "$skill" --scope user; done
 ```
 
 Do not choose **Always allow** for the proposal tools. Each proposal should get its own approval.
@@ -151,10 +151,10 @@ openclaw mcp login betteroff
 openclaw mcp doctor betteroff --probe
 ```
 
-Then install the skill from a clone of this repository:
+Then install the skills from a clone of this repository:
 
 ```sh
-openclaw skills install ./plugins/betteroff/skills/household-review --global
+for skill in plugins/betteroff/skills/*/; do openclaw skills install "./$skill" --global; done
 ```
 
 Sign-in returns to `http://127.0.0.1:8989/oauth/callback`. If the Gateway runs on another machine, finish with `openclaw mcp login betteroff --code <code>`. Approval prompts depend on the Gateway and agent harness. Verify their behavior before sharing access. Nothing changes until you approve the proposal in BetterOff.
@@ -169,10 +169,10 @@ pi mcp login betteroff
 pi mcp list
 ```
 
-Then copy the skill from a clone of this repository:
+Then copy the skills from a clone of this repository:
 
 ```sh
-cp -R plugins/betteroff/skills/household-review ~/.agents/skills/
+cp -R plugins/betteroff/skills/* ~/.agents/skills/
 ```
 
 Run `/reload` in an open Pi session to pick up the server. Pi's built-in tools can run without prompts; permission extensions can change this behavior. The proposal tools only prepare a correction, and nothing changes until you approve it in BetterOff.
@@ -187,27 +187,18 @@ Try asking:
 
 Results can be incomplete when a source is not connected or is out of date. Check available dates and warnings before relying on a result.
 
-## Instinct connection status
-
-An Instinct connection is not yet verified. On October 6, 2026, [Instinct's public site](https://instinct.com/) provided no custom MCP setup instructions, and its account app required phone sign-in before settings could be inspected. Instinct's ability to operate applications does not establish support for this connector.
-
-BetterOff's existing endpoint is `https://api.betteroff.finance/mcp`. A compatible client must support Streamable HTTP and BetterOff's OAuth authorization flow. No additional BetterOff server or client-specific plugin package is needed if Instinct supports that contract.
-
-Before documenting an installation route:
-
-1. Confirm a custom MCP connection option in Instinct account settings or obtain official integration instructions.
-2. Connect the endpoint using OAuth and approve the intended household and permissions in BetterOff.
-3. Discover the permitted tools and run `betteroff_get_setup_status`, then `betteroff_get_household_overview`, against a synthetic household.
-4. Verify token renewal and denied access after disconnecting in BetterOff.
-
-Do not claim Instinct support until those checks pass. Do not paste BetterOff credentials or access tokens into an Instinct conversation.
-
 ## What the connector can do
 
-Version 0.3.0 provides 20 tools:
+Version 0.4.0 provides 25 tools:
 
-- **17 reads and analyses** cover setup status, accounts, net worth, cash flow, recurring items, holdings, transactions, spending, debts, observations, and financial activity.
+- **18 reads and analyses** cover setup status, accounts, net worth, cash flow, recurring items, holdings, transactions, spending, debts, checklist progress, observations, and financial activity.
 - **Three correction proposals** cover payment categories, recurring items, and debt classifications.
+- **Three transfer request tools** request, check, and cancel USDC transfers between wallets your household tracks on Solana or Base. They require separate, opt-in `transfers:prepare` and `transfers:read` permissions. A request never approves, signs, or sends; you approve and sign each one in BetterOff.
+- **One feedback tool**, `betteroff_submit_feedback`, sends diagnostic reports you approve. It requires separate, opt-in `feedback:submit` permission. Reports must exclude financial records, conversation history, tool payloads, and credentials.
+
+Existing connections must reconnect to request a new permission. Production availability of version 0.4.0 remains unverified until the server release.
+
+Eight skills ship with the connector. `household-review` covers every tool. Seven workflow skills each handle one task and work on their own: `monthly-review`, `subscription-audit`, `categorize-transactions`, `debt-plan`, `portfolio-check`, `connect-and-setup`, and `financial-checkup`.
 
 ## Approval and disconnection
 
@@ -215,4 +206,4 @@ Preparing a proposal changes no financial record. Open its authenticated BetterO
 
 Only an eligible household owner can grant access. Access lasts up to 30 days. You can disconnect sooner in [BetterOff Agent connections](https://app.betteroff.finance/settings/agents).
 
-For the MCP endpoint, data boundaries, and correction flow, read the [connector guide](plugins/betteroff/README.md). For help, [contact BetterOff](https://betteroff.finance/contact).
+For the MCP endpoint, data boundaries, and correction flow, read the [connector guide](plugins/betteroff/README.md). To change this repository, read the [contribution guide](CONTRIBUTING.md). For help, [contact BetterOff](https://betteroff.finance/contact).

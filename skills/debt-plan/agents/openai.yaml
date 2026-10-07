@@ -1,0 +1,11 @@
+interface:
+  display_name: "Debt plan"
+  short_description: "Compare debt payoff plans"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "betteroff"
+      description: "BetterOff MCP server"
+      transport: "streamable_http"
+      url: "https://api.betteroff.finance/mcp"

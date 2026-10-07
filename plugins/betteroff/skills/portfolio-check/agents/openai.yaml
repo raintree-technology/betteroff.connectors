@@ -1,0 +1,11 @@
+interface:
+  display_name: "Portfolio check"
+  short_description: "Check allocation and concentration"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "betteroff"
+      description: "BetterOff MCP server"
+      transport: "streamable_http"
+      url: "https://api.betteroff.finance/mcp"
