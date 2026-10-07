@@ -1,7 +1,7 @@
 {
   "name": "betteroff",
   "owner": {
-    "name": "BetterOff"
+    "name": "FinSync LLC"
   },
   "metadata": {
     "description": "BetterOff connectors for reading household finances and preparing corrections for approval in BetterOff."
@@ -10,7 +10,7 @@
     {
       "name": "betteroff",
       "source": "./plugins/betteroff",
-      "description": "Read BetterOff household finances and prepare corrections for approval in BetterOff."
+      "description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections for approval."
     }
   ]
 }

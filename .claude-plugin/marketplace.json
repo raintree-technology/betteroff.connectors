@@ -2,20 +2,15 @@
   "name": "betteroff",
   "description": "BetterOff connectors for reading household finances and preparing corrections for approval in BetterOff.",
   "owner": {
-    "name": "BetterOff"
+    "name": "FinSync LLC"
   },
   "plugins": [
     {
       "name": "betteroff",
+      "source": "./plugins/betteroff",
       "description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections for approval.",
-      "displayName": "BetterOff",
-      "author": {
-        "name": "BetterOff"
-      },
-      "homepage": "https://betteroff.finance",
-      "repository": "https://github.com/raintree-technology/betteroff.connectors",
-      "license": "UNLICENSED",
-      "source": "./plugins/betteroff"
+      "category": "finance",
+      "tags": ["personal-finance", "net-worth", "budgeting", "mcp"]
     }
   ]
 }

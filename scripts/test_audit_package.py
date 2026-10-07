@@ -1,4 +1,4 @@
-"""Check inline OpenAI metadata and generated Gemini skill drift independently."""
+"""Check inline OpenAI metadata, Gemini skill drift, and client manifest metadata drift independently."""
 import json
 import pathlib
 import shutil
@@ -12,7 +12,7 @@ class PackageAuditTests(unittest.TestCase):
     def test_inline_metadata_and_native_skill(self):
         with tempfile.TemporaryDirectory() as directory:
             target = pathlib.Path(directory)
-            for name in ('plugins', 'skills', '.agents', '.claude-plugin'):
+            for name in ('plugins', 'skills', '.agents', '.claude-plugin', '.cursor-plugin'):
                 shutil.copytree(ROOT / name, target / name)
             for name in ('README.md', 'gemini-extension.json'):
                 shutil.copyfile(ROOT / name, target / name)
@@ -32,6 +32,31 @@ class PackageAuditTests(unittest.TestCase):
             result = audit()
             self.assertEqual(result.returncode, 1)
             self.assertIn('gemini_skill_drift', result.stdout)
+            shutil.copyfile(ROOT / 'skills/household-review/SKILL.md', target / 'skills/household-review/SKILL.md')
+            cursor = target / '.cursor-plugin/marketplace.json'
+            data = json.loads(cursor.read_text())
+            data['owner']['name'] = 'Someone Else'
+            data['plugins'][0]['source'] = './plugins/missing'
+            cursor.write_text(json.dumps(data))
+            result = audit()
+            self.assertEqual(result.returncode, 1)
+            self.assertIn('developer_name_drift', result.stdout)
+            self.assertIn('cursor_marketplace_source_path', result.stdout)
+
+    def test_client_metadata_drift(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target = pathlib.Path(directory)
+            for name in ('plugins', 'skills', '.agents', '.claude-plugin', '.cursor-plugin'):
+                shutil.copytree(ROOT / name, target / name)
+            for name in ('README.md', 'gemini-extension.json'):
+                shutil.copyfile(ROOT / name, target / name)
+            manifest = target / 'plugins/betteroff/.cursor-plugin/plugin.json'
+            data = json.loads(manifest.read_text())
+            data['author'] = {'name': 'Someone Else'}
+            manifest.write_text(json.dumps(data))
+            result = subprocess.run(['python3', str(ROOT / 'scripts/audit_package.py'), directory], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn('metadata_drift: plugins/betteroff/.cursor-plugin/plugin.json: author', result.stdout)
 
 if __name__ == '__main__':
     unittest.main()

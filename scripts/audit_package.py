@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline package checks: Codex manifest rules from developers.openai.com/plugins/deploy/submission
+"""Offline package checks: Codex rules for plugin.json extensions.com.openai from developers.openai.com/plugins/deploy/submission
 and submission-errors (read 2026-09-29), skill frontmatter, version drift, endpoint consistency, secrets.
 Usage: python3 scripts/audit_package.py [repo_root]. Exits 1 on errors; warnings are submission-only gaps."""
 import json, re, struct, sys, pathlib
@@ -16,7 +16,10 @@ SEMVER = r"(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?(\+[0-9A-Za
 https = lambda u: isinstance(u, str) and re.fullmatch(r"https://[^\s@/]+(/\S*)?", u) is not None
 oneline = lambda s: isinstance(s, str) and s.strip() and "\n" not in s
 
-m = json.loads((P / ".codex-plugin/plugin.json").read_text())
+# Codex reads OpenAI settings from the root manifest's extensions.com.openai and ignores .codex-plugin/plugin.json.
+pm = json.loads((P / "plugin.json").read_text())
+m = {**pm, "interface": pm.get("extensions", {}).get("com.openai", {}).get("interface")}
+if (P / ".codex-plugin").exists(): e("codex_overlay_shadowed", ".codex-plugin/plugin.json is ignored when plugin.json sets extensions.com.openai")
 def validate_manifest(m):
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", m.get("name", "")): e("plugin_name_format", m.get("name"))
     if not re.fullmatch(SEMVER, m.get("version", "")) or len(m["version"]) > 64: e("plugin_version_not_semver", m.get("version"))
@@ -124,18 +127,7 @@ cm = root / ".claude-plugin/marketplace.json"
 if cm.exists(): vers |= {p.get("version") for p in json.loads(cm.read_text())["plugins"] if p.get("version")}
 
 url = next(iter(s.values()))["url"] if isinstance(s, dict) and s else None
-pm = json.loads((P / "plugin.json").read_text())
 if pm.get("$schema") != "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json": e("portable_plugin_schema", pm.get("$schema"))
-if pm.get("name") != m["name"]: e("portable_plugin_name", pm.get("name"))
-if pm.get("description") != m.get("description"): e("portable_plugin_description", "description differs from Codex manifest")
-if pm.get("keywords") != m.get("keywords"): e("portable_plugin_keywords", "keywords differ from Codex manifest")
-if "extensions" in pm:
-    ext = pm["extensions"].get("com.openai", {})
-    if ext.get("interface") != m.get("interface"): e("portable_interface", "OpenAI inline interface differs from compatibility manifest")
-if "extensions" in pm:
-    validate_manifest({**pm, "interface": ext.get("interface")})
-    for section in ("review", "publication"):
-        if ext.get(section) != m.get("extensions", {}).get("com.openai", {}).get(section): e("portable_" + section, "inline settings differ from Codex fallback")
 vers.add(pm.get("version"))
 gx = json.loads((root / "gemini-extension.json").read_text())
 vers.add(gx.get("version"))
@@ -152,7 +144,34 @@ if cur.exists():
     vers.add(cu.get("version"))
     if cu.get("name") != m["name"]: e("cursor_plugin_name", cu.get("name"))
     if not (P / cu.get("logo", "")).is_file(): e("cursor_logo_missing", cu.get("logo"))
+for f in (cp, cur):
+    if f.exists():
+        fm = json.loads(f.read_text())
+        for k in ("description", "author", "homepage", "repository", "license"):
+            if fm.get(k) != m.get(k): e("metadata_drift", f"{f.relative_to(root)}: {k}")
+if gx.get("description") != m.get("description"): e("metadata_drift", "gemini-extension.json: description")
+for f in (cm, root / ".cursor-plugin/marketplace.json"):
+    if f.exists():
+        for pe in json.loads(f.read_text())["plugins"]:
+            if pe.get("description") != m.get("description"): e("metadata_drift", f"{f.relative_to(root)}: {pe.get('name')} description")
 if len(vers) > 1: e("version_drift", sorted(map(str, vers)))
+cmk = root / ".cursor-plugin/marketplace.json"
+if cmk.exists():
+    if cmk.stat().st_size > 10 * 2**20: e("cursor_marketplace_size", "over 10 MB")
+    ck = json.loads(cmk.read_text())
+    if not re.fullmatch(r"[a-z0-9]([a-z0-9.-]*[a-z0-9])?", ck.get("name", "")): e("cursor_marketplace_name", ck.get("name"))
+    if not (ck.get("owner") or {}).get("name"): e("cursor_marketplace_owner", "owner.name required")
+    for pe in ck.get("plugins", []):
+        src = pe.get("source")
+        path = src if isinstance(src, str) else (src or {}).get("path", "")
+        if not path.startswith("./") or ".." in path or not (root / path).is_dir(): e("cursor_marketplace_source_path", path)
+        if pe.get("name") != m["name"]: e("cursor_marketplace_entry_name", pe.get("name"))
+        if pe.get("description") != m.get("description"): e("cursor_marketplace_description", "differs from plugin description")
+authors = {pm["author"]["name"], m["interface"]["developerName"]}
+for f, key in [(P / ".claude-plugin/plugin.json", "author"), (P / ".cursor-plugin/plugin.json", "author"),
+               (cm, "owner"), (cmk, "owner")]:
+    if f.exists(): authors.add(json.loads(f.read_text())[key]["name"])
+if len(authors) > 1: e("developer_name_drift", sorted(authors))
 pmc = json.loads((P / "mcp.json").read_text())
 if pmc.get("$schema") != "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json": e("portable_mcp_schema", pmc.get("$schema"))
 if set(pmc.get("mcpServers", {})) != set(s or {}): e("portable_mcp_servers_missing", "portable and compatibility server names must match")

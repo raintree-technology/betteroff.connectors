@@ -11,16 +11,32 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: audit-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   package:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
+          fetch-depth: 0
       - run: python3 scripts/test_audit_public.py
       - run: python3 scripts/audit_public.py
       - run: python3 scripts/test_audit_package.py
       - run: python3 scripts/audit_package.py
-      - run: npm install -g @anthropic-ai/claude-code
+      - name: Scan Git history for secrets
+        env:
+          GITLEAKS_VERSION: "8.30.0"
+        run: |
+          curl -fsSL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" -o /tmp/gitleaks.tar.gz
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          /tmp/gitleaks git --redact --no-banner .
+      # Bump deliberately: --strict accepts directory-listing fields only on 2.1.281 or later.
+      - run: npm install -g @anthropic-ai/claude-code@2.1.292
       - run: claude plugin validate --strict .
       - run: claude plugin validate --strict plugins/betteroff
 
@@ -28,6 +44,9 @@ jobs:
     # Live endpoint checks run on the schedule so a server outage does not block pull requests.
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          persist-credentials: false
       - run: scripts/audit_server.sh
