@@ -10,7 +10,12 @@
       "source": "./plugins/betteroff",
       "description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections and USDC wallet transfers for approval.",
       "category": "finance",
-      "tags": ["personal-finance", "net-worth", "budgeting", "mcp"]
+      "tags": [
+        "personal-finance",
+        "net-worth",
+        "budgeting",
+        "mcp"
+      ]
     }
   ]
 }

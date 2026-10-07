@@ -96,6 +96,7 @@
 						}
 					]
 				},
+				"demo_recording_url": "https://youtu.be/TJ_axiefyeY",
 				"commerce": false,
 				"commerce_description": "BetterOff does not sell products or process payments in ChatGPT. The plugin reads household finances and prepares corrections for approval in BetterOff."
 			},
