@@ -1,5 +1,7 @@
 __pycache__/
 *.py[cod]
+.venv/
+.pytest_cache/
 
 # Local operations, reviewer material, and credentials are not public artifacts.
 /.private/

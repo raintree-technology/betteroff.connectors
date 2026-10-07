@@ -1,0 +1,11 @@
+interface:
+  display_name: "Monthly review"
+  short_description: "Review last month's money"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "betteroff"
+      description: "BetterOff MCP server"
+      transport: "streamable_http"
+      url: "https://api.betteroff.finance/mcp"

@@ -1,0 +1,11 @@
+interface:
+  display_name: "Categorize transactions"
+  short_description: "Fix transaction categories"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "betteroff"
+      description: "BetterOff MCP server"
+      transport: "streamable_http"
+      url: "https://api.betteroff.finance/mcp"

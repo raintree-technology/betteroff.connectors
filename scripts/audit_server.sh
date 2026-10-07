@@ -2,6 +2,8 @@
 # Unauthenticated MCP endpoint and OAuth discovery checks (MCP authorization spec 2025-11-25).
 # Usage: scripts/audit_server.sh  (run from repo root; needs curl and jq). Exits 1 on any FAIL.
 set -u
+# Bound every request so an unresponsive server fails fast instead of hanging the job.
+curl() { command curl --max-time 20 "$@"; }
 F=0
 fail() { echo "FAIL $*"; F=1; }
 ok() { echo "ok   $*"; }

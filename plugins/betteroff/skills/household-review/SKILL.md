@@ -1,6 +1,6 @@
 ---
 name: household-review
-description: Read BetterOff household finances and prepare corrections for authenticated user review. Use for accounts, net worth, transactions, spending, cash flow, recurring payments, investments, DeFi, debts, financial findings, and permitted financial activity.
+description: Reads BetterOff household finances and prepares corrections for authenticated user review. Use for accounts, net worth, transactions, spending, cash flow, recurring payments, investments, DeFi, debts, financial findings, permitted financial activity, and USDC transfer requests between the household's own wallets.
 ---
 
 # BetterOff household review
@@ -33,6 +33,9 @@ A tool that the connection lacks permission for may be hidden, or it may return 
 | Prepare category correction | `betteroff_propose_category_change` |
 | Prepare recurring classification | `betteroff_propose_recurring_kind` |
 | Prepare stated debt terms | `betteroff_propose_debt_details` |
+| Request a USDC transfer between the household's own wallets | `betteroff_request_transfer` |
+| Transfer request status | `betteroff_get_action_request` |
+| Cancel a transfer request before signing | `betteroff_cancel_action_request` |
 | Send approved diagnostic feedback | `betteroff_submit_feedback` |
 
 ## Interpret results
@@ -76,7 +79,7 @@ Category review offers two choices: selected payments only; or selected payments
 
 Approval checks the current household, role, originating grant, expiry, and source versions. A stale proposal must be prepared again. Approval retries reuse the saved result. Undo restores only records that have not changed since approval; later edits remain. Payments ingested after approval remain as recorded, while undo restores the rule for subsequent ingestion.
 
-The tools cannot move money, place trades, or pay bills. Describe supported financial facts and arithmetic without presenting individualized investment, tax, or legal advice.
+The tools cannot move bank funds, pay bills, or place trades. With the separate `transfers:prepare` permission, `betteroff_request_transfer` can request a USDC transfer between two wallets the household tracks on Solana or Base; give the returned review link and say it awaits the user's approval and wallet signature. Describe supported financial facts and arithmetic without presenting individualized investment, tax, or legal advice.
 
 ## Send feedback
 

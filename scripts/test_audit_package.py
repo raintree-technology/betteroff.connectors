@@ -14,7 +14,7 @@ class PackageAuditTests(unittest.TestCase):
             target = pathlib.Path(directory)
             for name in ('plugins', 'skills', '.agents', '.claude-plugin', '.cursor-plugin'):
                 shutil.copytree(ROOT / name, target / name)
-            for name in ('README.md', 'gemini-extension.json'):
+            for name in ('README.md', 'COMPATIBILITY.md', 'gemini-extension.json'):
                 shutil.copyfile(ROOT / name, target / name)
             def audit():
                 return subprocess.run(['python3', str(ROOT / 'scripts/audit_package.py'), directory], capture_output=True, text=True)
@@ -48,7 +48,7 @@ class PackageAuditTests(unittest.TestCase):
             target = pathlib.Path(directory)
             for name in ('plugins', 'skills', '.agents', '.claude-plugin', '.cursor-plugin'):
                 shutil.copytree(ROOT / name, target / name)
-            for name in ('README.md', 'gemini-extension.json'):
+            for name in ('README.md', 'COMPATIBILITY.md', 'gemini-extension.json'):
                 shutil.copyfile(ROOT / name, target / name)
             manifest = target / 'plugins/betteroff/.cursor-plugin/plugin.json'
             data = json.loads(manifest.read_text())

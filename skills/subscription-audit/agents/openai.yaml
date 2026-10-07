@@ -1,0 +1,11 @@
+interface:
+  display_name: "Subscription audit"
+  short_description: "Review recurring charges"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "betteroff"
+      description: "BetterOff MCP server"
+      transport: "streamable_http"
+      url: "https://api.betteroff.finance/mcp"
