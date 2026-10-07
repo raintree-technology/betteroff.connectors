@@ -4,7 +4,7 @@ Ask Codex, Claude Code, GitHub Copilot, Cursor, Gemini CLI, Devin, Hermes Agent,
 
 Installation instructions below describe supported configuration routes. Full lifecycle evidence is recorded in [the compatibility review](COMPATIBILITY.md); several clients still need live verification.
 
-This is a public connector distribution, not an open-source license grant. The manifests declare `UNLICENSED`. BetterOff names and artwork remain subject to the [brand usage terms](https://betteroff.finance/brand).
+This is a public connector distribution, not an open-source license grant. See [LICENSE](LICENSE); the manifests declare `UNLICENSED`. BetterOff names and artwork remain subject to the [brand usage terms](https://betteroff.finance/brand).
 
 ## Before you start
 
@@ -45,7 +45,7 @@ With default approval settings, VS Code can run tools marked read-only without a
 
 ### Cursor
 
-Copy `plugins/betteroff` from a clone of this repository to `~/.cursor/plugins/local/betteroff`, then reload Cursor. The plugin adds the BetterOff MCP server and the `household-review` skill.
+Copy `plugins/betteroff` from a clone of this repository to `~/.cursor/plugins/local/betteroff`, then reload Cursor. The plugin adds the BetterOff MCP server and the BetterOff skills.
 
 To add only the MCP server, add it to `~/.cursor/mcp.json`:
 
@@ -67,7 +67,7 @@ Cursor asks before it runs each BetterOff tool unless you add the tool to your a
 gemini extensions install https://github.com/raintree-technology/betteroff.connectors
 ```
 
-Restart Gemini CLI. On first use, it opens your browser to sign in to BetterOff and receives the result on a `localhost` callback, so run it on a machine with a browser. If sign-in does not start, run `/mcp auth betteroff`. Gemini CLI approval behavior depends on its policy and trusted-tool settings. The extension includes the native `household-review` skill.
+Restart Gemini CLI. On first use, it opens your browser to sign in to BetterOff and receives the result on a `localhost` callback, so run it on a machine with a browser. If sign-in does not start, run `/mcp auth betteroff`. Gemini CLI approval behavior depends on its policy and trusted-tool settings. The extension includes the BetterOff skills.
 
 ### Devin
 
@@ -114,16 +114,16 @@ done
 
 ### Muse Code
 
-Add the server to `~/.config/muse/settings.json`. Keep `"schema_version": 1` and merge the `mcpServers` block into any existing settings:
+Add the server to `~/.config/muse/settings.json`. Keep `"schema_version": 1` and merge the `mcp_servers` block into any existing settings:
 
 ```json
 {
   "schema_version": 1,
-  "mcpServers": {
+  "mcp_servers": {
     "betteroff": {
-      "type": "streamable-http",
+      "transport": "streamable_http",
       "url": "https://api.betteroff.finance/mcp",
-      "required": false
+      "mode": "optional"
     }
   }
 }
@@ -144,6 +144,8 @@ Do not choose **Always allow** for the proposal tools. Each proposal should get 
 
 Use OpenClaw only in a direct chat with the household owner. By default, OpenClaw shares one BetterOff sign-in with everyone who can message the agent, so anyone in a group chat could read your household finances.
 
+OpenClaw can instead give each sender a separate sign-in: set `oauth.identity` to `"per-requester"` on the server and set `gateway.publicOrigin`, as described in [OpenClaw's MCP transport documentation](https://github.com/openclaw/openclaw/blob/main/docs/cli/mcp/transports.md). This route has not been tested with BetterOff.
+
 ```sh
 openclaw mcp add betteroff --url https://api.betteroff.finance/mcp --transport streamable-http --auth oauth
 openclaw mcp configure betteroff --approval prompt
@@ -157,7 +159,7 @@ Then install the skills from a clone of this repository:
 for skill in plugins/betteroff/skills/*/; do openclaw skills install "./$skill" --global; done
 ```
 
-Sign-in returns to `http://127.0.0.1:8989/oauth/callback`. If the Gateway runs on another machine, finish with `openclaw mcp login betteroff --code <code>`. Approval prompts depend on the Gateway and agent harness. Verify their behavior before sharing access. Nothing changes until you approve the proposal in BetterOff.
+Sign-in returns to `http://127.0.0.1:8989/oauth/callback`. If the Gateway runs on another machine, finish with `openclaw mcp login betteroff --code <code>`. `--approval prompt` applies only to Gateway-hosted Codex runs; other agent harnesses use their own approval settings. Verify their behavior before sharing access. Nothing changes until you approve the proposal in BetterOff.
 
 ### Pi
 

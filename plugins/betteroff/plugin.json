@@ -72,7 +72,7 @@
 							"description": "Debt terms and canonical DeFi exposure. Fixture: a USD 300.00 credit card and a lending position with USD 500.00 assets and USD 100.00 liabilities.",
 							"prompt": "List my debts with their available terms, and show my DeFi assets, liabilities, and net value.",
 							"tools_triggered": "betteroff_list_debts, betteroff_get_defi_positions",
-							"expected_behavior": "Report the credit-card balance of USD 300.00, APR 24.99%, minimum payment USD 25.00, and due date October 15, 2026. Separately report canonical DeFi assets USD 500.00, liabilities USD 100.00, and net value USD 400.00. Preserve source and coverage qualifications; do not double-count the borrow in net worth."
+							"expected_behavior": "Report the credit-card balance of USD 300.00, APR 24.99%, minimum payment USD 25.00, and that the card is not overdue. Separately report canonical DeFi assets USD 500.00, liabilities USD 100.00, and net value USD 400.00. Preserve source and coverage qualifications; do not double-count the borrow in net worth."
 						},
 						{
 							"description": "Category correction. Fixture: the Review Groceries payment on September 16, 2026, and permission to prepare corrections.",

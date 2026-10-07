@@ -177,7 +177,7 @@ if pmc.get("$schema") != "https://agent-plugins.org/schemas/1.0.0/mcp.schema.jso
 if set(pmc.get("mcpServers", {})) != set(s or {}): e("portable_mcp_servers_missing", "portable and compatibility server names must match")
 for n, v in pmc.get("mcpServers", {}).items():
     if v.get("type") != "streamable-http" or v.get("url") != url: e("portable_mcp_server", f"{n}: needs type streamable-http and url {url}")
-for doc in [root / "README.md", P / "README.md"]:
+for doc in [root / "README.md", root / "COMPATIBILITY.md", P / "README.md"]:
     for u in re.findall(r"https://api\.[^\s`)\"]+/mcp", doc.read_text()):
         if u != url: e("endpoint_mismatch", f"{doc.name}: {u} != {url}")
 SECRET = re.compile(r"sk_live_|sk-[A-Za-z0-9]{20}|client_secret|Bearer [A-Za-z0-9._-]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY")
