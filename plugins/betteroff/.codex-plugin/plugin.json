@@ -1,16 +1,17 @@
 {
 	"name": "betteroff",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections for approval.",
 	"interface": {
 		"displayName": "BetterOff",
-		"longDescription": "Use BetterOff in ChatGPT to understand your own finances. Sign in and approve access to your BetterOff household, then ask about balances, net worth, spending by category, cash flow, recurring payments, investments, DeFi positions, and debts. Results include currencies, dates, source freshness, and warnings when data is incomplete. You can prepare category, recurring-payment, and debt-detail corrections for approval in BetterOff. The plugin cannot apply a correction, move money, pay bills, or place trades.",
+		"longDescription": "Use BetterOff in ChatGPT to understand your own finances. Sign in and approve access to your BetterOff household, then ask about balances, net worth, spending by category, cash flow, recurring payments, investments, DeFi positions, and debts. Results include currencies, dates, source freshness, and warnings when data is incomplete. You can prepare category, recurring-payment, and debt-detail corrections for approval in BetterOff. The plugin cannot apply a correction, move money, pay bills, or place trades. With separate feedback permission, you can ask the agent to send an approved diagnostic report to BetterOff support. Reports must exclude financial records and credentials.",
 		"category": "Finance",
 		"capabilities": [
 			"Review net worth and account freshness",
 			"Analyze spending and cash flow",
 			"Inspect investments, DeFi, and debt",
-			"Prepare corrections for approval"
+			"Prepare corrections for approval",
+			"Send user-approved diagnostic feedback"
 		],
 		"shortDescription": "See net worth and spending",
 		"developerName": "FinSync LLC",
@@ -89,8 +90,10 @@
 				"commerce_description": "BetterOff does not sell products or process payments in ChatGPT. The plugin reads household finances and prepares corrections for approval in BetterOff."
 			},
 			"publication": {
-				"countries": ["US"],
-				"release_notes": "Initial release: 17 read and analysis tools for setup status, accounts, net worth, cash flow, recurring items, holdings, transactions, spending, and debts, plus 3 tools that prepare category, recurring, and debt corrections for approval in BetterOff."
+				"countries": [
+					"US"
+				],
+				"release_notes": "Add an opt-in diagnostic feedback tool. The catalog contains 17 read and analysis tools, 3 correction proposal tools, and 1 feedback submission tool. Feedback creates a support case only after user approval, deduplicates retries, and never changes financial records."
 			}
 		}
 	},

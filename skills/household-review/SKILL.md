@@ -33,6 +33,7 @@ A tool that the connection lacks permission for may be hidden, or it may return 
 | Prepare category correction | `betteroff_propose_category_change` |
 | Prepare recurring classification | `betteroff_propose_recurring_kind` |
 | Prepare stated debt terms | `betteroff_propose_debt_details` |
+| Send approved diagnostic feedback | `betteroff_submit_feedback` |
 
 ## Interpret results
 
@@ -76,3 +77,21 @@ Category review offers two choices: selected payments only; or selected payments
 Approval checks the current household, role, originating grant, expiry, and source versions. A stale proposal must be prepared again. Approval retries reuse the saved result. Undo restores only records that have not changed since approval; later edits remain. Payments ingested after approval remain as recorded, while undo restores the rule for subsequent ingestion.
 
 The tools cannot move money, place trades, or pay bills. Describe supported financial facts and arithmetic without presenting individualized investment, tax, or legal advice.
+
+## Send feedback
+
+Call `betteroff_submit_feedback` only when the user requests or approves sending
+that diagnostic report to BetterOff support. Show the proposed report text before
+asking for approval when the user has not already approved it. Feedback requires
+the separate `feedback:submit` permission; reconnect to opt in if it is absent.
+
+Include only a short diagnostic description, category, and optional tool name,
+request ID, client, and client version. Use the request ID returned by the affected
+call. Exclude conversation history, tool arguments and outputs, financial records,
+credentials, email addresses, and wallet or account identifiers. The server checks
+common sensitive patterns; that check does not identify every kind of private data.
+
+Generate one UUID idempotency key per approved report and reuse it for retries.
+Set `userApproved: true` only after approval. Report the returned receipt ID;
+it confirms submission, not resolution. Do not submit automatically after a tool
+failure, and do not send a second report when the first submission succeeds.

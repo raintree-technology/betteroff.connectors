@@ -1,2 +1,12 @@
 __pycache__/
 *.py[cod]
+
+# Local operations, reviewer material, and credentials are not public artifacts.
+/.private/
+/todo-mcp.txt
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store

@@ -163,7 +163,7 @@ for doc in [root / "README.md", P / "README.md"]:
         if u != url: e("endpoint_mismatch", f"{doc.name}: {u} != {url}")
 SECRET = re.compile(r"sk_live_|sk-[A-Za-z0-9]{20}|client_secret|Bearer [A-Za-z0-9._-]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY")
 for f in root.rglob("*"):
-    if ".git" in f.parts or not f.is_file() or f.suffix in (".png", ".svg") or f.parent.name == "scripts": continue
+    if ".git" in f.parts or ".private" in f.parts or "__pycache__" in f.parts or f.name == "todo-mcp.txt" or not f.is_file() or f.suffix in (".png", ".svg") or f.parent.name == "scripts": continue
     if SECRET.search(f.read_text(errors="ignore")): e("secret_like_string", str(f.relative_to(root)))
 
 print("\n".join(["ERRORS:"] + errs + ["WARNINGS:"] + warns))

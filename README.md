@@ -4,9 +4,13 @@ Ask Codex, Claude Code, GitHub Copilot, Cursor, Gemini CLI, Devin, Hermes Agent,
 
 Installation instructions below describe supported configuration routes. Full lifecycle evidence is recorded in [the compatibility review](COMPATIBILITY.md); several clients still need live verification.
 
+This is a public connector distribution, not an open-source license grant. The manifests declare `UNLICENSED`. BetterOff names and artwork remain subject to the [brand usage terms](https://betteroff.finance/brand).
+
 ## Before you start
 
 You need a BetterOff household owner account with paid access and one of those clients. All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Connect at least one supported account or wallet in BetterOff to ask questions about your finances.
+
+Candidate 0.3.1 adds `betteroff_submit_feedback` for diagnostic reports you approve. It requires separate, opt-in `feedback:submit` permission. Existing connections must reconnect to request that permission after the server release. Reports must exclude financial records, conversation history, tool payloads, and credentials. Production availability of this candidate remains unverified.
 
 ## Install the connector
 
