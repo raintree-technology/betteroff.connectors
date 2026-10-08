@@ -28,6 +28,7 @@ jobs:
           fetch-depth: 0
       - run: python3 scripts/test_audit_public.py
       - run: python3 scripts/audit_public.py
+      - run: python3 scripts/test_package_chatgpt.py
       - run: python3 scripts/test_audit_package.py
       - run: python3 scripts/audit_package.py
       - name: Scan Git history for secrets

@@ -10,10 +10,10 @@ A client must support Streamable HTTP and BetterOff's OAuth authorization flow.
 The endpoint is `https://api.betteroff.finance/mcp`. Static-token, local-stdio,
 legacy-SSE, and machine-to-machine-only clients do not satisfy this contract.
 
-Only an eligible household owner can grant access. Paid access, household
-AI-processing consent, and acceptance of the applicable Terms are required.
-The connector reads permitted financial data and prepares corrections. Applying
-a correction requires authenticated approval in BetterOff.
+Only an eligible household owner can grant access. Household AI-processing
+consent and acceptance of the applicable Terms are required. Reading data is
+free; preparing corrections and transfer requests needs BetterOff Core.
+Applying a correction requires authenticated approval in BetterOff.
 
 ## Client status
 
