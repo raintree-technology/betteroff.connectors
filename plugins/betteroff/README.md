@@ -22,7 +22,7 @@ Workflow skills guide common tasks. Each one works alone and repeats the core ru
 
 ## Consent and disconnection
 
-Only a household owner with paid access can grant access. All household members must consent to AI processing, and the owner must accept the applicable Terms. The BetterOff consent page identifies the client, household, requested permissions, and access duration of up to 30 days. Data returned by a tool is shared with the connected client. Disconnect through [BetterOff Agent connections](https://app.betteroff.finance/settings/agents).
+Only a household owner can grant access. Reading data is free; proposals and transfers need BetterOff Core. All household members must consent to AI processing, and the owner must accept the applicable Terms. The BetterOff consent page identifies the client, household, requested permissions, and access duration of up to 30 days. Data returned by a tool is shared with the connected client. Disconnect through [BetterOff Agent connections](https://app.betteroff.finance/settings/agents).
 
 ## Correction review
 

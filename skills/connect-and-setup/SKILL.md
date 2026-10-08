@@ -19,7 +19,7 @@ The user's explicit instructions take priority over this skill. When the `househ
 
 ## Read
 
-1. Call `betteroff_get_setup_status`. Report each step whose `status` is `action_needed`, in the returned order, with its `url`.
+1. Call `betteroff_get_setup_status`. Report each step whose `status` is `action_needed`, in the returned order, with its `url`. A step with `status: optional` is not a blocker; mention it only if the user asks about Core.
 2. Call `betteroff_list_accounts`. Flag accounts with no balance or with an old `balanceAsOf`, and state the `balanceAsOfSource`.
 3. Call `betteroff_get_household_overview` for `coverage` counts and the ledger review count.
 
@@ -27,7 +27,7 @@ The user's explicit instructions take priority over this skill. When the `househ
 
 Name one fix at a time, starting with the first blocking step:
 
-- `subscription`: paid access is needed before data is available.
+- `subscription`: reading data is free. Core is needed for bank and brokerage connections, and for agent proposals and transfers. `action_needed` means a payment is due.
 - `connect_accounts`: no supported account or wallet is connected yet.
 - `fix_connections`: a connection needs attention. `reauth_required` means reconnect the institution; `account_selection_required` means choose which accounts to share.
 

@@ -8,7 +8,7 @@ This is a public connector distribution, not an open-source license grant. See [
 
 ## Before you start
 
-You need a BetterOff household owner account with paid access and one of those clients. All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Connect at least one supported account or wallet in BetterOff to ask questions about your finances.
+You need a BetterOff household owner account and one of those clients. Reading data is free; proposals and transfers need BetterOff Core. All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Connect at least one supported account or wallet in BetterOff to ask questions about your finances.
 
 ## Install the connector
 
@@ -209,3 +209,16 @@ Preparing a proposal changes no financial record. Open its authenticated BetterO
 Only an eligible household owner can grant access. Access lasts up to 30 days. You can disconnect sooner in [BetterOff Agent connections](https://app.betteroff.finance/settings/agents).
 
 For the MCP endpoint, data boundaries, and correction flow, read the [connector guide](plugins/betteroff/README.md). To change this repository, read the [contribution guide](CONTRIBUTING.md). For help, [contact BetterOff](https://betteroff.finance/contact).
+
+### ChatGPT submission package
+
+Generate the ChatGPT ZIP separately from the shared client plugin:
+
+```sh
+python3 scripts/package_chatgpt.py /tmp/betteroff-chatgpt.zip
+```
+
+The generated package uses `https://api.betteroff.finance/mcp/chatgpt`. That
+endpoint requires its own OAuth audience and excludes transfer permissions and
+transfer tools. Other clients continue to use `/mcp`. Deploy the restricted
+endpoint and verify it in ChatGPT before uploading the package for review.
