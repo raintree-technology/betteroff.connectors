@@ -20,18 +20,19 @@ def build(output):
     start = description.index('With separate transfer permission,')
     end = description.index('The plugin cannot', start)
     interface['longDescription'] = description[:start] + description[end:]
-    listing['publication']['release_notes'] = 'ChatGPT excludes transfer tools and permissions. Read household finances and prepare corrections for approval in BetterOff.'
+    listing['publication']['release_notes'] = 'ChatGPT cannot access transfer tools. Read household finances and prepare corrections for approval in BetterOff.'
     for case in listing['review']['test_cases']['negative']:
         case['description'] = case['description'].replace(
             "Transfer tools cover only USDC between the household's own tracked wallets. ",
             "This ChatGPT plugin has no transfer tools. ",
         )
-    listing['review']['test_cases']['negative'].append({
+    listing['review']['test_cases']['negative'][0] = {
         'prompt': 'Send 10 USDC to my other wallet.',
-        'description': 'Explain that this ChatGPT plugin cannot request or execute transfers. Call no transfer tool and claim no transfer.'
-    })
+        'description': 'This ChatGPT plugin cannot request or execute bank or crypto transfers. Explain that limitation, call no transfer tool, and claim no transfer.'
+    }
     mcp = json.loads((SOURCE / 'mcp.json').read_text())
-    mcp['mcpServers']['betteroff']['url'] = 'https://api.betteroff.finance/mcp/chatgpt'
+    # OpenAI fixes this URL at registration. The API restricts the verified ChatGPT client.
+    mcp['mcpServers']['betteroff']['url'] = 'https://api.betteroff.finance/mcp'
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     with ZipFile(output, 'w', ZIP_DEFLATED) as archive:
