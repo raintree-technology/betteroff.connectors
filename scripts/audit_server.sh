@@ -48,6 +48,11 @@ if [[ -z $ASM ]]; then
 else
   [[ $(jq -r .issuer <<<"$ASM") == "$AS" ]] && ok "issuer matches" || fail "issuer $(jq -r .issuer <<<"$ASM") != $AS"
   jq -e '.code_challenge_methods_supported | index("S256")' >/dev/null <<<"$ASM" && ok "PKCE S256" || fail "S256 not advertised"
+  jq -e '.id_token_signing_alg_values_supported // [] | index("RS256")' >/dev/null <<<"$ASM" \
+    && ok "OIDC advertises RS256" || fail "OIDC does not advertise required RS256 signing"
+  JWKS_URL=$(jq -r '.jwks_uri // empty' <<<"$ASM")
+  [[ $JWKS_URL == https://* ]] && curl -fsS "$JWKS_URL" | jq -e '.keys | any(.kty == "RSA" and .alg == "RS256" and .n and .e and (has("d") | not))' >/dev/null \
+    && ok "RS256 public verification key is published" || fail "no RS256 public verification key"
   jq -e '.registration_endpoint or .client_id_metadata_document_supported' >/dev/null <<<"$ASM" && ok "DCR or CIMD" || fail "no DCR or CIMD"
   jq -e '.registration_endpoint' >/dev/null <<<"$ASM" || warn "no DCR: Pi, OpenClaw, Muse Code, and Cursor register clients with DCR by default"
   jq -e '.authorization_response_iss_parameter_supported' >/dev/null <<<"$ASM" && ok "RFC 9207 iss" || warn "RFC 9207 iss not advertised"

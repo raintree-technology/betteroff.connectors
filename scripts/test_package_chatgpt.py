@@ -10,12 +10,15 @@ class ChatgptPackageTest(unittest.TestCase):
         before = (SOURCE / 'plugin.json').read_bytes()
         with tempfile.TemporaryDirectory() as directory:
             with ZipFile(build(Path(directory) / 'chatgpt.zip')) as archive:
-                self.assertIn('https://api.betteroff.finance/mcp/chatgpt', archive.read('mcp.json').decode())
+                mcp = json.loads(archive.read('mcp.json'))
+                self.assertEqual(mcp['mcpServers']['betteroff']['url'], 'https://api.betteroff.finance/mcp')
                 for entry in archive.namelist():
                     if entry.startswith('skills/'):
                         self.assertNotIn('request USDC transfers', archive.read(entry).decode())
                 manifest = json.loads(archive.read('plugin.json'))
                 listing = manifest['extensions']['com.openai']
+                self.assertEqual(len(listing['review']['test_cases']['positive']), 5)
+                self.assertEqual(len(listing['review']['test_cases']['negative']), 3)
                 self.assertNotIn('With separate transfer permission', listing['interface']['longDescription'])
                 for case in listing['review']['test_cases']['negative']:
                     self.assertNotIn('Transfer tools cover only USDC', case['description'])
