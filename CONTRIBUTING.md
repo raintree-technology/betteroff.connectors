@@ -21,3 +21,16 @@ Dependabot proposes GitHub Actions updates weekly and waits 7 days after each re
 
 - **gitleaks:** change `GITLEAKS_VERSION` and `GITLEAKS_SHA256` together. Take the hash from the `linux_x64` line of the release's `checksums.txt`.
 - **Claude Code:** `--strict` validation needs version 2.1.281 or later. Bump it deliberately and confirm that validation still passes.
+
+## ChatGPT submission package
+
+Generate the ChatGPT ZIP separately from the shared client plugin:
+
+```sh
+python3 scripts/package_chatgpt.py /tmp/betteroff-chatgpt.zip
+```
+
+The generated package uses `https://api.betteroff.finance/mcp/chatgpt`. That
+endpoint requires its own OAuth audience and excludes transfer permissions and
+transfer tools. Other clients continue to use `/mcp`. Deploy the restricted
+endpoint and verify it in ChatGPT before uploading the package for review.
