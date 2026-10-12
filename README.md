@@ -8,7 +8,7 @@ This is a public connector distribution, not an open-source license grant. See [
 
 ## Before you start
 
-You need a BetterOff household owner account and one of those clients. Reading data is free; proposals and transfers need BetterOff Core. All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Connect at least one supported account or wallet in BetterOff to ask questions about your finances.
+You need a BetterOff household owner account and one of the clients listed above. Reading data is free; proposals and transfers need BetterOff Core. All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Connect at least one supported account or wallet in BetterOff to ask questions about your finances.
 
 ## Install the connector
 
@@ -198,7 +198,7 @@ Version 0.4.0 provides 25 tools:
 - **Three transfer request tools** request, check, and cancel USDC transfers between wallets your household tracks on Solana or Base. They require separate, opt-in `transfers:prepare` and `transfers:read` permissions. A request never approves, signs, or sends; you approve and sign each one in BetterOff.
 - **One feedback tool**, `betteroff_submit_feedback`, sends diagnostic reports you approve. It requires separate, opt-in `feedback:submit` permission. Reports must exclude financial records, conversation history, tool payloads, and credentials.
 
-Existing connections must reconnect to request a new permission. Production availability of version 0.4.0 remains unverified until the server release.
+Existing connections must reconnect to request a new permission.
 
 Eight skills ship with the connector. `household-review` covers every tool. Seven workflow skills each handle one task and work on their own: `monthly-review`, `subscription-audit`, `categorize-transactions`, `debt-plan`, `portfolio-check`, `connect-and-setup`, and `financial-checkup`.
 
@@ -209,16 +209,3 @@ Preparing a proposal changes no financial record. Open its authenticated BetterO
 Only an eligible household owner can grant access. Access lasts up to 30 days. You can disconnect sooner in [BetterOff Agent connections](https://app.betteroff.finance/settings/agents).
 
 For the MCP endpoint, data boundaries, and correction flow, read the [connector guide](plugins/betteroff/README.md). To change this repository, read the [contribution guide](CONTRIBUTING.md). For help, [contact BetterOff](https://betteroff.finance/contact).
-
-### ChatGPT submission package
-
-Generate the ChatGPT ZIP separately from the shared client plugin:
-
-```sh
-python3 scripts/package_chatgpt.py /tmp/betteroff-chatgpt.zip
-```
-
-The generated package uses `https://api.betteroff.finance/mcp/chatgpt`. That
-endpoint requires its own OAuth audience and excludes transfer permissions and
-transfer tools. Other clients continue to use `/mcp`. Deploy the restricted
-endpoint and verify it in ChatGPT before uploading the package for review.
