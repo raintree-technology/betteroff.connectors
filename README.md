@@ -15,20 +15,33 @@ Connect your AI client to BetterOff to review household finances, find recurring
 
 ## Install the connector
 
-Choose your client to jump to its setup instructions. MCP stands for Model Context Protocol. It lets your AI client call BetterOff tools.
+Choose your client for setup instructions.
 
-| Client | Setup route | Client | Setup route |
-| --- | --- | --- | --- |
-| <a href="#codex"><img src="assets/clients/codex.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Codex</a> | Plugin | <a href="#claude-code"><img src="assets/clients/claude-code.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Claude Code</a> | Plugin |
-| <a href="#github-copilot"><img src="assets/clients/github-copilot.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; GitHub Copilot</a> | Plugin | <a href="#cursor"><img src="assets/clients/cursor.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; Cursor</a> | Plugin or MCP |
-| <a href="#gemini-cli"><img src="assets/clients/gemini-cli.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Gemini CLI</a> | Extension | <a href="#devin"><img src="assets/clients/devin.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; Devin</a> | Personal plugin |
-| <a href="#hermes-agent"><img src="assets/clients/hermes-agent.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Hermes Agent</a> | MCP + skills | <a href="#muse-code"><img src="assets/clients/muse-code.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; Muse Code</a> | MCP + skills |
-| <a href="#openclaw"><img src="assets/clients/openclaw.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; OpenClaw</a> | MCP + skills | <a href="#pi"><img src="assets/clients/pi.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; Pi</a> | MCP + skills |
-| <a href="#grok"><img src="assets/clients/grok.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Grok</a> | Plugin or MCP |  |  |
+<p>
+  <a href="#codex"><img src="assets/clients/codex.png" alt="" width="20" height="20" align="middle">&nbsp; Codex</a>&emsp;
+  <a href="#claude-code"><img src="assets/clients/claude-code.png" alt="" width="20" height="20" align="middle">&nbsp; Claude Code</a>&emsp;
+  <a href="#github-copilot"><img src="assets/clients/github-copilot.svg" alt="" width="20" height="20" align="middle">&nbsp; GitHub Copilot</a>&emsp;
+  <a href="#cursor"><img src="assets/clients/cursor.svg" alt="" width="20" height="20" align="middle">&nbsp; Cursor</a>
+</p>
 
-These are documented configuration routes. Several clients still need live verification; read the [compatibility review](COMPATIBILITY.md) for the evidence and limits.
+<p>
+  <a href="#gemini-cli"><img src="assets/clients/gemini-cli.png" alt="" width="20" height="20" align="middle">&nbsp; Gemini CLI</a>&emsp;
+  <a href="#devin"><img src="assets/clients/devin.svg" alt="" width="20" height="20" align="middle">&nbsp; Devin</a>&emsp;
+  <a href="#hermes-agent"><img src="assets/clients/hermes-agent.png" alt="" width="20" height="20" align="middle">&nbsp; Hermes Agent</a>&emsp;
+  <a href="#muse-code"><img src="assets/clients/muse-code.svg" alt="" width="20" height="20" align="middle">&nbsp; Muse Code</a>
+</p>
+
+<p>
+  <a href="#openclaw"><img src="assets/clients/openclaw.svg" alt="" width="20" height="20" align="middle">&nbsp; OpenClaw</a>&emsp;
+  <a href="#pi"><img src="assets/clients/pi.svg" alt="" width="20" height="20" align="middle">&nbsp; Pi</a>&emsp;
+  <a href="#grok"><img src="assets/clients/grok.png" alt="" width="20" height="20" align="middle">&nbsp; Grok</a>
+</p>
+
+Several clients still need live verification. See the [compatibility review](COMPATIBILITY.md) for tested configurations and limits.
 
 ### Sign in and ask your first question
+
+Your client uses Model Context Protocol (MCP) to call BetterOff tools.
 
 1. Follow your client's setup instructions below. Run shell commands in a terminal; run slash commands inside the client.
 2. When prompted, sign in to BetterOff. Review the household and requested permissions before selecting **Allow access**.
