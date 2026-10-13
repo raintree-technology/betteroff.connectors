@@ -46,7 +46,7 @@ Before documenting an installation route:
 
 1. Confirm a custom MCP connection option in Instinct account settings or obtain official integration instructions.
 2. Connect the endpoint using OAuth and approve the intended household and permissions in BetterOff.
-3. Discover the permitted tools and run `betteroff_get_setup_status`, then `betteroff_get_household_overview`, against a synthetic household.
+3. Discover the permitted tools and run `betteroff_get_setup_status`, then `betteroff_get_overview`, against a synthetic household.
 4. Verify token renewal and denied access after disconnecting in BetterOff.
 
 Do not claim Instinct support until those checks pass. Do not paste BetterOff credentials or access tokens into an Instinct conversation.

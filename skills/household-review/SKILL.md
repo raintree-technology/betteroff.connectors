@@ -13,7 +13,7 @@ A tool that the connection lacks permission for may be hidden, or it may return 
 
 | Task | Tool |
 | --- | --- |
-| Compact valuation and coverage | `betteroff_get_household_overview` |
+| Compact valuation and coverage | `betteroff_get_overview` |
 | Accounts and balance observation dates | `betteroff_list_accounts` |
 | Stored valuations | `betteroff_get_net_worth_history` |
 | Reconcile a change between valuations | `betteroff_explain_net_worth_change` |
