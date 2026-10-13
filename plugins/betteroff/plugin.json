@@ -53,7 +53,7 @@
 						{
 							"description": "Household overview. Fixture: four manual accounts and a three-account stored valuation on September 1, 2026.",
 							"prompt": "Show my latest household net worth and account coverage.",
-							"tools_triggered": "betteroff_get_household_overview",
+							"tools_triggered": "betteroff_get_overview",
 							"expected_behavior": "Report stored USD 1,200.75 net worth as of September 1, 2026, and current coverage of four accounts. The stored valuation covers three accounts; do not present it as a live balance."
 						},
 						{
