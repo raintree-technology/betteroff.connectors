@@ -1,18 +1,40 @@
 # <picture><source media="(prefers-color-scheme: dark)" srcset="assets/betteroff-mark-white.svg"><img src="assets/betteroff-mark-graphite.svg" alt="" width="48" height="48" align="absmiddle"></picture> BetterOff connectors
 
-Ask Codex, Claude Code, GitHub Copilot, Cursor, Gemini CLI, Devin, Hermes Agent, Muse Code, OpenClaw, Pi, or Grok about the financial records you connect to BetterOff. The connector can read approved household data and prepare corrections for your review. With separate permission, it can request USDC transfers between your own wallets, which you approve and sign in BetterOff. It cannot apply a correction, move bank funds, or place a trade.
+Connect your AI client to BetterOff to review household finances, find recurring charges, and prepare corrections for your approval.
 
-Installation instructions below describe supported configuration routes. Full lifecycle evidence is recorded in [the compatibility review](COMPATIBILITY.md); several clients still need live verification.
+**25 tools · 8 skills · 11 client setup guides**
 
-This is a public connector distribution, not an open-source license grant. See [LICENSE](LICENSE); the manifests declare `UNLICENSED`. BetterOff names and artwork remain subject to the [brand usage terms](https://betteroff.finance/brand).
+[Choose your client](#install-the-connector) · [What you can do](#what-the-connector-can-do) · [Compatibility](COMPATIBILITY.md) · [Connector guide](plugins/betteroff/README.md)
 
 ## Before you start
 
-You need a BetterOff household owner account and one of the clients listed above. Reading data is free; proposals and transfers need BetterOff Core. All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Connect at least one supported account or wallet in BetterOff to ask questions about your finances.
+- **Account:** You need a BetterOff household owner account and a client listed below. Connect a supported account or wallet in BetterOff to ask questions about your finances.
+- **Consent:** All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Data returned by a tool is shared with your connected client.
+- **Plan:** Reading data is free. Preparing corrections and transfer requests requires BetterOff Core.
+- **Approval:** The connector prepares corrections for your review. With separate permission, it can request USDC transfers between your own wallets. You review each request in BetterOff. Corrections require your approval; transfers require your approval and wallet signature. The connector cannot apply a correction, move bank funds, or place a trade.
 
 ## Install the connector
 
-Run the commands for your client in a terminal.
+Choose your client to jump to its setup instructions. MCP stands for Model Context Protocol. It lets your AI client call BetterOff tools.
+
+| Client | Setup route | Client | Setup route |
+| --- | --- | --- | --- |
+| <a href="#codex"><img src="assets/clients/codex.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Codex</a> | Plugin | <a href="#claude-code"><img src="assets/clients/claude-code.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Claude Code</a> | Plugin |
+| <a href="#github-copilot"><img src="assets/clients/github-copilot.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; GitHub Copilot</a> | Plugin | <a href="#cursor"><img src="assets/clients/cursor.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; Cursor</a> | Plugin or MCP |
+| <a href="#gemini-cli"><img src="assets/clients/gemini-cli.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Gemini CLI</a> | Extension | <a href="#devin"><img src="assets/clients/devin.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; Devin</a> | Personal plugin |
+| <a href="#hermes-agent"><img src="assets/clients/hermes-agent.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Hermes Agent</a> | MCP + skills | <a href="#muse-code"><img src="assets/clients/muse-code.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; Muse Code</a> | MCP + skills |
+| <a href="#openclaw"><img src="assets/clients/openclaw.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; OpenClaw</a> | MCP + skills | <a href="#pi"><img src="assets/clients/pi.svg" alt="" width="24" height="24" align="absmiddle">&nbsp; Pi</a> | MCP + skills |
+| <a href="#grok"><img src="assets/clients/grok.png" alt="" width="24" height="24" align="absmiddle">&nbsp; Grok</a> | Plugin or MCP |  |  |
+
+These are documented configuration routes. Several clients still need live verification; read the [compatibility review](COMPATIBILITY.md) for the evidence and limits.
+
+### Sign in and ask your first question
+
+1. Follow your client's setup instructions below. Run shell commands in a terminal; run slash commands inside the client.
+2. When prompted, sign in to BetterOff. Review the household and requested permissions before selecting **Allow access**.
+3. Ask: “Show my household overview and flag missing or out-of-date data.”
+
+Results can be incomplete when a source is not connected or is out of date. Check available dates and warnings before relying on a result.
 
 ### Codex
 
@@ -30,7 +52,12 @@ claude plugin install betteroff@betteroff
 
 ### GitHub Copilot
 
-In VS Code, run **Chat: Install Plugin From Source** from the Command Palette, enter `https://github.com/raintree-technology/betteroff.connectors`, confirm the marketplace trust prompt, and select **Install** for **betteroff**.
+In VS Code:
+
+1. Run **Chat: Install Plugin From Source** from the Command Palette.
+2. Enter `https://github.com/raintree-technology/betteroff.connectors`.
+3. Confirm the marketplace trust prompt.
+4. Select **Install** for **betteroff**.
 
 In Copilot CLI:
 
@@ -39,7 +66,12 @@ copilot plugin marketplace add raintree-technology/betteroff.connectors
 copilot plugin install betteroff@betteroff
 ```
 
-In the GitHub Copilot app, open **Customize** > **Plugins**, select the gear icon, add `raintree-technology/betteroff.connectors`, and install **betteroff**.
+In the GitHub Copilot app:
+
+1. Open **Customize** > **Plugins**.
+2. Select the gear icon.
+3. Add `raintree-technology/betteroff.connectors`.
+4. Install **betteroff**.
 
 With default approval settings, VS Code can run tools marked read-only without asking and asks before proposal tools. Copilot CLI normally asks before tool calls; policies and allowlists can change this behavior. To sign in again from Copilot CLI, run `/mcp auth betteroff`.
 
@@ -63,11 +95,15 @@ Cursor asks before it runs each BetterOff tool unless you add the tool to your a
 
 ### Gemini CLI
 
+Run Gemini CLI on a machine with a browser. Sign-in opens the browser and returns to Gemini CLI through a `localhost` callback.
+
 ```sh
 gemini extensions install https://github.com/raintree-technology/betteroff.connectors
 ```
 
-Restart Gemini CLI. On first use, it opens your browser to sign in to BetterOff and receives the result on a `localhost` callback, so run it on a machine with a browser. If sign-in does not start, run `/mcp auth betteroff`. Gemini CLI approval behavior depends on its policy and trusted-tool settings. The extension includes the BetterOff skills.
+Restart Gemini CLI after installation. If sign-in does not start on first use, run `/mcp auth betteroff`.
+
+The extension includes the BetterOff skills. Tool approvals depend on Gemini CLI policy and trusted-tool settings.
 
 ### Devin
 
@@ -91,7 +127,7 @@ The Devin CLI asks before each BetterOff tool call unless you allow it.
 
 ### Hermes Agent
 
-Add the server to `~/.hermes/config.yaml`. With `trust: untrusted`, Hermes asks you before any tool that is not marked read-only, including the proposal and transfer request tools, runs:
+Add the server to `~/.hermes/config.yaml` with the settings below. `trust: untrusted` makes Hermes ask before running tools that are not marked read-only. This includes correction proposal and transfer request tools:
 
 ```yaml
 mcp_servers:
@@ -198,21 +234,20 @@ grok mcp doctor betteroff
 
 Sign-in starts on first use. In an open session, run `/mcps` and press `i` to sign in again.
 
-On [grok.com](https://grok.com/connectors), select **New Connector** > **Custom**, name it `BetterOff`, enter `https://api.betteroff.finance/mcp`, and leave the headers empty.
+On [grok.com](https://grok.com/connectors):
 
-In Grok Bot, send "Add a custom MCP server called betteroff at https://api.betteroff.finance/mcp", check the URL, select **Add it**, then select **Authorize** on the card it posts.
+1. Select **New Connector** > **Custom**.
+2. Name the connector `BetterOff`.
+3. Enter `https://api.betteroff.finance/mcp` as the server URL. Leave the headers empty.
+
+In Grok Bot:
+
+1. Send “Add a custom MCP server called betteroff at https://api.betteroff.finance/mcp”.
+2. Check that the proposed URL matches `https://api.betteroff.finance/mcp`.
+3. Select **Add it**.
+4. Select **Authorize** on the card Grok Bot posts.
 
 If Grok marks the connector as connected without opening a BetterOff sign-in page, remove it and add it again. Each proposal still needs your approval in BetterOff.
-
-When your client prompts you, sign in to BetterOff. Review the household and requested permissions before selecting **Allow access**. The data returned by a tool is shared with the client you connected.
-
-Try asking:
-
-- “Show my household overview and flag missing or out-of-date data.”
-- “Compare my spending by category this month with the same days last month.”
-- “List my debts and tell me which terms are missing.”
-
-Results can be incomplete when a source is not connected or is out of date. Check available dates and warnings before relying on a result.
 
 ## What the connector can do
 
@@ -223,9 +258,22 @@ Version 0.4.0 provides 25 tools:
 - **Three transfer request tools** request, check, and cancel USDC transfers between wallets your household tracks on Solana or Base. They require separate, opt-in `transfers:prepare` and `transfers:read` permissions. A request never approves, signs, or sends; you approve and sign each one in BetterOff.
 - **One feedback tool**, `betteroff_submit_feedback`, sends diagnostic reports you approve. It requires separate, opt-in `feedback:submit` permission. Reports must exclude financial records, conversation history, tool payloads, and credentials.
 
-Existing connections must reconnect to request a new permission.
+If you already connected BetterOff, reconnect to request a new permission.
 
-Eight skills ship with the connector. `household-review` covers every tool. Seven workflow skills each handle one task and work on their own: `monthly-review`, `subscription-audit`, `categorize-transactions`, `debt-plan`, `portfolio-check`, `connect-and-setup`, and `financial-checkup`.
+### Choose a workflow
+
+Skills give your AI client instructions for specific tasks. Each skill works on its own. Start with `household-review` for a broad review, or choose a focused workflow.
+
+| Skill | Example request |
+| --- | --- |
+| [`household-review`](plugins/betteroff/skills/household-review/SKILL.md) | “Show my household overview and flag missing or out-of-date data.” |
+| [`monthly-review`](plugins/betteroff/skills/monthly-review/SKILL.md) | “Review my spending and cash flow for the last complete month.” |
+| [`subscription-audit`](plugins/betteroff/skills/subscription-audit/SKILL.md) | “Review my recurring charges and identify bills and subscriptions.” |
+| [`categorize-transactions`](plugins/betteroff/skills/categorize-transactions/SKILL.md) | “Find payments that may be miscategorized and prepare corrections for review.” |
+| [`debt-plan`](plugins/betteroff/skills/debt-plan/SKILL.md) | “Compare debt payoff strategies and flag missing terms.” |
+| [`portfolio-check`](plugins/betteroff/skills/portfolio-check/SKILL.md) | “Summarize my investment allocation and concentration.” |
+| [`connect-and-setup`](plugins/betteroff/skills/connect-and-setup/SKILL.md) | “Check my connections and show the remaining setup steps.” |
+| [`financial-checkup`](plugins/betteroff/skills/financial-checkup/SKILL.md) | “Review my financial checklist and suggest the next items to complete.” |
 
 ## Approval and disconnection
 
@@ -234,3 +282,9 @@ Preparing a proposal changes no financial record. Open its authenticated BetterO
 Only an eligible household owner can grant access. Access lasts up to 30 days. You can disconnect sooner in [BetterOff Agent connections](https://app.betteroff.finance/settings/agents).
 
 For the MCP endpoint, data boundaries, and correction flow, read the [connector guide](plugins/betteroff/README.md). To change this repository, read the [contribution guide](CONTRIBUTING.md). For help, [contact BetterOff](https://betteroff.finance/contact).
+
+## License and brand assets
+
+This is a public connector distribution, not an open-source license grant. See [LICENSE](LICENSE); the manifests declare `UNLICENSED`. BetterOff names and artwork remain subject to the [brand usage terms](https://betteroff.finance/brand).
+
+Client logos identify the documented integrations and remain the property of their respective owners. See [logo sources](assets/clients/README.md) for attribution. Their inclusion does not imply endorsement.
