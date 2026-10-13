@@ -29,6 +29,7 @@ Applying a correction requires authenticated approval in BetterOff.
 | Muse Code | User MCP settings and separate skill | Configuration instructions are provided. A complete authenticated journey remains unverified. |
 | OpenClaw | Remote MCP connection and skill | Configuration instructions are provided. A complete authenticated journey remains unverified. |
 | Pi | Built-in MCP connection and shared skill | Configuration instructions require Pi 0.99.0 or later. A complete authenticated journey remains unverified. |
+| Grok | Grok Build plugin directory or MCP command; grok.com and Grok Bot custom connector | Configuration instructions are provided. A complete authenticated journey remains unverified. |
 | Instinct | No verified route | BetterOff connection support remains unverified. |
 
 These results cover synthetic data and the tested configurations. They do not

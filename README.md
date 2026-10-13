@@ -1,6 +1,6 @@
 # <picture><source media="(prefers-color-scheme: dark)" srcset="assets/betteroff-mark-white.svg"><img src="assets/betteroff-mark-graphite.svg" alt="" width="48" height="48" align="absmiddle"></picture> BetterOff connectors
 
-Ask Codex, Claude Code, GitHub Copilot, Cursor, Gemini CLI, Devin, Hermes Agent, Muse Code, OpenClaw, or Pi about the financial records you connect to BetterOff. The connector can read approved household data and prepare corrections for your review. With separate permission, it can request USDC transfers between your own wallets, which you approve and sign in BetterOff. It cannot apply a correction, move bank funds, or place a trade.
+Ask Codex, Claude Code, GitHub Copilot, Cursor, Gemini CLI, Devin, Hermes Agent, Muse Code, OpenClaw, Pi, or Grok about the financial records you connect to BetterOff. The connector can read approved household data and prepare corrections for your review. With separate permission, it can request USDC transfers between your own wallets, which you approve and sign in BetterOff. It cannot apply a correction, move bank funds, or place a trade.
 
 Installation instructions below describe supported configuration routes. Full lifecycle evidence is recorded in [the compatibility review](COMPATIBILITY.md); several clients still need live verification.
 
@@ -178,6 +178,31 @@ cp -R plugins/betteroff/skills/* ~/.agents/skills/
 ```
 
 Run `/reload` in an open Pi session to pick up the server. Pi's built-in tools can run without prompts; permission extensions can change this behavior. The proposal tools only prepare a correction, and nothing changes until you approve it in BetterOff.
+
+### Grok
+
+Grok connects to the same endpoint and signs in with OAuth. Do not add an `Authorization` header or an API key.
+
+In Grok Build, load the plugin from a clone of this repository. It adds the BetterOff MCP server and the skills:
+
+```sh
+grok --plugin-dir ./plugins/betteroff
+```
+
+To add only the MCP server:
+
+```sh
+grok mcp add --transport http betteroff https://api.betteroff.finance/mcp
+grok mcp doctor betteroff
+```
+
+Sign-in starts on first use. In an open session, run `/mcps` and press `i` to sign in again.
+
+On [grok.com](https://grok.com/connectors), select **New Connector** > **Custom**, name it `BetterOff`, enter `https://api.betteroff.finance/mcp`, and leave the headers empty.
+
+In Grok Bot, send "Add a custom MCP server called betteroff at https://api.betteroff.finance/mcp", check the URL, select **Add it**, then select **Authorize** on the card it posts.
+
+If Grok marks the connector as connected without opening a BetterOff sign-in page, remove it and add it again. Each proposal still needs your approval in BetterOff.
 
 When your client prompts you, sign in to BetterOff. Review the household and requested permissions before selecting **Allow access**. The data returned by a tool is shared with the client you connected.
 
