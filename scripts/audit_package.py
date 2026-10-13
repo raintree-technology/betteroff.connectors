@@ -150,26 +150,29 @@ for f in (cp, cur):
         for k in ("description", "author", "homepage", "repository", "license"):
             if fm.get(k) != m.get(k): e("metadata_drift", f"{f.relative_to(root)}: {k}")
 if gx.get("description") != m.get("description"): e("metadata_drift", "gemini-extension.json: description")
-for f in (cm, root / ".cursor-plugin/marketplace.json"):
+gmk = root / ".grok-plugin/marketplace.json"
+for f in (cm, root / ".cursor-plugin/marketplace.json", gmk):
     if f.exists():
         for pe in json.loads(f.read_text())["plugins"]:
             if pe.get("description") != m.get("description"): e("metadata_drift", f"{f.relative_to(root)}: {pe.get('name')} description")
 if len(vers) > 1: e("version_drift", sorted(map(str, vers)))
 cmk = root / ".cursor-plugin/marketplace.json"
-if cmk.exists():
-    if cmk.stat().st_size > 10 * 2**20: e("cursor_marketplace_size", "over 10 MB")
-    ck = json.loads(cmk.read_text())
-    if not re.fullmatch(r"[a-z0-9]([a-z0-9.-]*[a-z0-9])?", ck.get("name", "")): e("cursor_marketplace_name", ck.get("name"))
-    if not (ck.get("owner") or {}).get("name"): e("cursor_marketplace_owner", "owner.name required")
+# Grok Build reads the same marketplace shape; it also accepts .claude-plugin/plugin.json manifests.
+for label, mk_path in (("cursor", cmk), ("grok", gmk)):
+    if not mk_path.exists(): continue
+    if mk_path.stat().st_size > 10 * 2**20: e(f"{label}_marketplace_size", "over 10 MB")
+    ck = json.loads(mk_path.read_text())
+    if not re.fullmatch(r"[a-z0-9]([a-z0-9.-]*[a-z0-9])?", ck.get("name", "")): e(f"{label}_marketplace_name", ck.get("name"))
+    if not (ck.get("owner") or {}).get("name"): e(f"{label}_marketplace_owner", "owner.name required")
     for pe in ck.get("plugins", []):
         src = pe.get("source")
         path = src if isinstance(src, str) else (src or {}).get("path", "")
-        if not path.startswith("./") or ".." in path or not (root / path).is_dir(): e("cursor_marketplace_source_path", path)
-        if pe.get("name") != m["name"]: e("cursor_marketplace_entry_name", pe.get("name"))
-        if pe.get("description") != m.get("description"): e("cursor_marketplace_description", "differs from plugin description")
+        if not path.startswith("./") or ".." in path or not (root / path).is_dir(): e(f"{label}_marketplace_source_path", path)
+        if pe.get("name") != m["name"]: e(f"{label}_marketplace_entry_name", pe.get("name"))
+        if pe.get("description") != m.get("description"): e(f"{label}_marketplace_description", "differs from plugin description")
 authors = {pm["author"]["name"], m["interface"]["developerName"]}
 for f, key in [(P / ".claude-plugin/plugin.json", "author"), (P / ".cursor-plugin/plugin.json", "author"),
-               (cm, "owner"), (cmk, "owner")]:
+               (cm, "owner"), (cmk, "owner"), (gmk, "owner")]:
     if f.exists(): authors.add(json.loads(f.read_text())[key]["name"])
 if len(authors) > 1: e("developer_name_drift", sorted(authors))
 pmc = json.loads((P / "mcp.json").read_text())
