@@ -6,7 +6,7 @@
 
 Connect BetterOff to OpenClaw and install its workflow skills for the household owner.
 
-**Unverified connection.** A complete authenticated BetterOff connection test remains unfinished. Separate sign-in for each sender is also unverified. This status reflects the October 6, 2026 test record; the October 13 documentation review did not rerun these checks. See [verification and sources](#verification-and-sources).
+**Not yet tested** with a BetterOff sign-in. See [test record](#verification-and-sources).
 
 Read the [account and consent requirements](../../README.md#before-you-start) before connecting. Run shell commands in a terminal and slash commands inside the client.
 

@@ -1,0 +1,53 @@
+"""Check that the tool catalog check catches stray names, stale docs, and live API drift."""
+import json
+import shutil
+import tempfile
+import unittest
+from pathlib import Path
+
+from tools_catalog import ROOT, check, check_live, render
+
+
+class ToolCatalogTests(unittest.TestCase):
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        self.root = Path(directory.name)
+        for name in ('plugins', 'skills', 'docs', 'integrations'):
+            shutil.copytree(ROOT / name, self.root / name)
+        for name in ('README.md', 'AGENTS.md', 'tools.json'):
+            shutil.copyfile(ROOT / name, self.root / name)
+
+    def test_repository_passes(self):
+        self.assertEqual(check(self.root), [])
+
+    def test_unknown_tool_and_stale_reference_fail(self):
+        guide = self.root / 'docs/connector.md'
+        guide.write_text(guide.read_text() + '\nCall `betteroff_move_money`.\n')
+        catalog = json.loads((self.root / 'tools.json').read_text())
+        catalog['tools'][0]['summary'] = 'Changed.'
+        (self.root / 'tools.json').write_text(json.dumps(catalog))
+        errors = '\n'.join(check(self.root))
+        self.assertIn('docs/connector.md: unknown tool betteroff_move_money', errors)
+        self.assertIn('docs/tools.md is stale', errors)
+
+    def test_live_scope_drift_fails(self):
+        catalog = json.loads((self.root / 'tools.json').read_text())
+        tool = catalog['tools'][0]
+        operation = {'operationId': tool['name'], 'summary': tool['title'],
+                     'security': [{'agentOAuth': ['accounts:read']}]}
+        spec = {'info': {'version': catalog['version'] + '+abc'},
+                'paths': {f"/v1/tools/{tool['name']}": {'post': operation},
+                          '/v1/tools/old_alias': {'post': {'operationId': 'old_alias', 'deprecated': True}}}}
+        (self.root / 'spec.json').write_text(json.dumps(spec))
+        errors = '\n'.join(check_live(self.root, (self.root / 'spec.json').as_uri()))
+        self.assertIn(f"{tool['name']}: scopes", errors)
+        self.assertIn(f"{catalog['tools'][1]['name']}: missing from the API", errors)
+        self.assertNotIn('old_alias', errors)
+
+    def test_render_counts_tools(self):
+        self.assertIn('29 tools: 21 read tools and 8 write tools', render(json.loads((ROOT / 'tools.json').read_text())))
+
+
+if __name__ == '__main__':
+    unittest.main()

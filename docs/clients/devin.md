@@ -6,7 +6,7 @@
 
 Connect BetterOff through your personal Devin account in the web app or CLI.
 
-**Unverified connection.** Neither the web app nor CLI has a completed authenticated BetterOff connection test. This status reflects the October 6, 2026 test record; the October 13 documentation review did not rerun these checks. See [verification and sources](#verification-and-sources).
+**Not yet tested** with a BetterOff sign-in. See [test record](#verification-and-sources).
 
 Read the [account and consent requirements](../../README.md#before-you-start) before connecting. Run shell commands in a terminal and slash commands inside the client.
 

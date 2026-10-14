@@ -2,9 +2,15 @@
 
 # BetterOff plugin
 
-Install BetterOff using a [client setup guide](https://github.com/raintree-technology/betteroff.connectors#install-the-connector) and check its recorded test limits. Read the [BetterOff documentation](https://github.com/raintree-technology/betteroff.connectors) for shared capabilities and permissions.
+Review household finances and prepare corrections for approval in BetterOff.
 
-**Verification is incomplete.** Client checks range from partial authenticated tests to installation-only checks and unverified connections. This repository package does not establish vendor marketplace approval or ChatGPT/Claude directory availability. Read the selected guide’s status before connecting.
+Install in Claude Code 2.1.275 or later from inside a session:
+
+```
+/plugin install betteroff --marketplace raintree-technology/betteroff.connectors
+```
+
+For Codex and other clients, follow the [client setup guides](https://github.com/raintree-technology/betteroff.connectors#install-the-connector). Each guide states what has been tested for that client. See the [tool reference](https://github.com/raintree-technology/betteroff.connectors/blob/main/docs/tools.md) for every tool's access, plan, and permissions.
 
 This package contains portable Agent Plugins manifests (`plugin.json` and `mcp.json`), client compatibility manifests, and eight standalone workflow skills. It contains no credentials or local server. The client manages OAuth credentials after you approve access.
 

@@ -155,6 +155,8 @@ for f in (cm, root / ".cursor-plugin/marketplace.json", gmk):
     if f.exists():
         for pe in json.loads(f.read_text())["plugins"]:
             if pe.get("description") != m.get("description"): e("metadata_drift", f"{f.relative_to(root)}: {pe.get('name')} description")
+# Registry metadata (server.json) can take its own version for a metadata-only republish.
+if (root / "tools.json").exists(): vers.add(json.loads((root / "tools.json").read_text()).get("version"))
 if len(vers) > 1: e("version_drift", sorted(map(str, vers)))
 cmk = root / ".cursor-plugin/marketplace.json"
 # Grok Build reads the same marketplace shape; it also accepts .claude-plugin/plugin.json manifests.
@@ -180,9 +182,15 @@ if pmc.get("$schema") != "https://agent-plugins.org/schemas/1.0.0/mcp.schema.jso
 if set(pmc.get("mcpServers", {})) != set(s or {}): e("portable_mcp_servers_missing", "portable and compatibility server names must match")
 for n, v in pmc.get("mcpServers", {}).items():
     if v.get("type") != "streamable-http" or v.get("url") != url: e("portable_mcp_server", f"{n}: needs type streamable-http and url {url}")
-for doc in [root / "README.md", P / "README.md", *sorted((root / "docs").rglob("*.md"))]:
+agent_yaml = sorted((P / "skills").glob("*/agents/openai.yaml")) + sorted((root / "skills").glob("*/agents/openai.yaml"))
+for f in agent_yaml:
+    if f'url: "{url}"' not in f.read_text(): e("endpoint_mismatch", f"{f.relative_to(root)}: dependency url must be {url}")
+endpoint_files = [root / "README.md", root / "AGENTS.md", root / "tools.json", root / "integrations/directories/server.json",
+                  P / "README.md", *sorted((root / "docs").rglob("*.md")), *agent_yaml]
+for doc in endpoint_files:
+    if not doc.is_file(): continue
     for u in re.findall(r"https://api\.[^\s`)\"]+/mcp", doc.read_text()):
-        if u != url: e("endpoint_mismatch", f"{doc.name}: {u} != {url}")
+        if u != url and "/.well-known/" not in u: e("endpoint_mismatch", f"{doc.relative_to(root)}: {u} != {url}")
 SECRET = re.compile(r"sk_live_|sk-[A-Za-z0-9]{20}|client_secret|Bearer [A-Za-z0-9._-]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY")
 for f in root.rglob("*"):
     if ".git" in f.parts or ".private" in f.parts or "__pycache__" in f.parts or f.name == "todo-mcp.txt" or not f.is_file() or f.suffix in (".png", ".svg") or f.parent.name == "scripts": continue

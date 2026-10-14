@@ -10,6 +10,15 @@ SOURCE = ROOT / 'plugins/betteroff'
 TRANSFER_TOOLS = ('betteroff_request_transfer', 'betteroff_request_bank_transfer',
                   'betteroff_request_vault_deposit', 'betteroff_get_action_request',
                   'betteroff_cancel_action_request')
+# Skills mark transfer-only text with these lines; the package drops the marked blocks.
+TRANSFER_BLOCK = re.compile(r'^<!-- transfers -->\n.*?^<!-- /transfers -->\n', re.M | re.S)
+
+
+def replace_once(text, old, new):
+    # Fail loudly when the source wording changes instead of silently shipping transfer text.
+    if text.count(old) != 1:
+        raise ValueError(f'Expected one occurrence of {old!r}')
+    return text.replace(old, new)
 
 
 def build(output):
@@ -23,11 +32,6 @@ def build(output):
     end = description.index('The plugin cannot', start)
     interface['longDescription'] = description[:start] + description[end:]
     listing['publication']['release_notes'] = 'ChatGPT cannot access transfer tools. Read household finances and prepare corrections for approval in BetterOff.'
-    for case in listing['review']['test_cases']['negative']:
-        case['description'] = case['description'].replace(
-            "Transfer tools cover only USDC between the household's own tracked wallets. ",
-            "This ChatGPT plugin has no transfer tools. ",
-        )
     listing['review']['test_cases']['negative'][0] = {
         'prompt': 'Send 10 USDC to my other wallet.',
         'description': 'This ChatGPT plugin cannot request or execute bank or crypto transfers. Explain that limitation, call no transfer tool, and claim no transfer.'
@@ -46,15 +50,11 @@ def build(output):
             if not path.is_file() or relative.parts[0] not in ('skills', 'assets'):
                 continue
             if path.suffix in ('.md', '.yaml'):
-                text = path.read_text()
-                text = re.sub(r"With the separate transfer permission,.*?BetterOff\. ", "", text)
+                text = re.sub(r'\n{3,}', '\n\n', TRANSFER_BLOCK.sub('', path.read_text()))
                 if relative == Path('skills/household-review/SKILL.md'):
-                    text = re.sub(r'With the separate `transfers:prepare`.*?wallet signature\. ', '', text)
-                    text = '\n'.join(line for line in text.splitlines() if not any(tool in line for tool in TRANSFER_TOOLS)) + '\n'
-                    text = text.replace(', and USDC transfer requests between the household\'s own wallets', '')
-                    text = text.replace(', and transfer requests for approval in BetterOff', '')
+                    text = replace_once(text, 'prepares corrections and transfer requests for', 'prepares corrections for')
                     text += '\nThis ChatGPT plugin cannot request, approve, sign, or execute transfers.\n'
-                if 'request USDC transfers' in text or 'transfers:' in text or any(tool in text for tool in TRANSFER_TOOLS):
+                if '<!-- transfers' in text or 'transfers:' in text or any(tool in text for tool in TRANSFER_TOOLS):
                     raise ValueError(f'Transfer tool remains in {relative}')
                 archive.writestr(str(relative), text)
             else:

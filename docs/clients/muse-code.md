@@ -6,7 +6,7 @@
 
 Add BetterOff’s financial tools to Muse Code user settings, then install its workflow skills.
 
-**Unverified connection.** A complete authenticated BetterOff connection test remains unfinished, including plugin and project-only sign-in routes. This status reflects the October 6, 2026 test record; the October 13 documentation review did not rerun these checks. See [verification and sources](#verification-and-sources).
+**Not yet tested** with a BetterOff sign-in. See [test record](#verification-and-sources).
 
 Read the [account and consent requirements](../../README.md#before-you-start) before connecting. Run shell commands in a terminal and slash commands inside the client.
 

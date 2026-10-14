@@ -12,6 +12,14 @@ warn() { echo "warn $*"; }
 MCP=$(jq -r '.mcpServers | to_entries[0].value.url' plugins/betteroff/.mcp.json)
 [[ $MCP == https://* ]] && ok "MCP URL $MCP" || fail "MCP URL is not HTTPS: $MCP"
 
+# A DNS, proxy, or firewall block is not a server regression: report it once and stop.
+curl -s -o /dev/null -X POST "$MCP" -H 'Content-Type: application/json' -d '{}'
+REACH=$?
+if (( REACH != 0 )); then
+  echo "SKIP cannot reach ${MCP%/mcp} from this runner (curl exit $REACH): check DNS, proxy, or firewall. No server checks ran."
+  exit 2
+fi
+
 # 401 challenge
 H=$(curl -si -X POST "$MCP" -H 'Content-Type: application/json' -d '{}' | tr -d '\r')
 grep -q '^HTTP/[0-9.]* 401' <<<"$H" && ok "unauthenticated request gets 401" || fail "no 401 without a token"

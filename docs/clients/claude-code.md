@@ -6,7 +6,7 @@
 
 Install the BetterOff plugin to use its financial tools and workflow skills in Claude Code.
 
-**Partially verified.** Interactive authenticated synthetic checks passed; automated sessions and the full connection lifecycle remain unverified. This status reflects the October 6, 2026 test record; the October 13 documentation review did not rerun these checks. See [verification and sources](#verification-and-sources).
+**Tested:** sign-in and synthetic reads passed on October 6, 2026. See [test record](#verification-and-sources).
 
 Read the [account and consent requirements](../../README.md#before-you-start) before connecting. Run shell commands in a terminal and slash commands inside the client.
 

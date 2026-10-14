@@ -1,9 +1,12 @@
-"""Copy canonical plugin skills to Gemini; --check reports drift without writing."""
+"""Write scripts/core_rules.md into each plugin skill's Core rules section, then copy the plugin
+skills to Gemini; --check reports drift without writing."""
 import argparse
+import re
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CORE_RULES = re.compile(r'(^## Core rules\n\n).*?(?=^## )', re.M | re.S)
 
 
 def inventory(directory):
@@ -18,6 +21,23 @@ def inventory(directory):
     return files
 
 
+def apply_core_rules(root, check):
+    """Return skills whose Core rules section differs from the shared source; fix them unless checking."""
+    rules = root / 'scripts/core_rules.md'
+    if not rules.is_file():
+        return []
+    block = rules.read_text() + '\n'
+    changed = []
+    for skill in sorted((root / 'plugins/betteroff/skills').glob('*/SKILL.md')):
+        text = skill.read_text()
+        updated = CORE_RULES.sub(lambda match: match.group(1) + block, text)
+        if updated != text:
+            changed.append(skill.relative_to(root))
+            if not check:
+                skill.write_text(updated)
+    return changed
+
+
 def sync(root, check=False):
     source = root / 'plugins/betteroff/skills'
     target = root / 'skills'
@@ -28,11 +48,18 @@ def sync(root, check=False):
     if extra:
         raise ValueError('Review unexpected Gemini files before syncing: ' +
                          ', '.join(str(path) for path in sorted(extra)))
+    stale_rules = apply_core_rules(root, check)
+    if stale_rules and not check:
+        expected = inventory(source)
     changed = [path for path in expected if actual.get(path) != expected[path]]
     if check:
+        for path in stale_rules:
+            print(f'Core rules drift: {path}')
         for path in changed:
             print(f'Skill drift: skills/{path}')
-        return not changed
+        return not changed and not stale_rules
+    for path in stale_rules:
+        print(f'Updated core rules in {path}')
     for path in changed:
         destination = target / path
         destination.parent.mkdir(parents=True, exist_ok=True)
