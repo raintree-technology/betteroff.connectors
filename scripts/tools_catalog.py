@@ -39,7 +39,7 @@ Connector package {catalog['version']} describes hosted server {catalog['serverV
 - **Write** tools save a pending correction or transfer request, cancel a pending request, or send feedback. None of them can approve, sign, or execute a change; you do that in BetterOff.
 - **Core** tools need a BetterOff Core plan. The other tools are free.
 
-The same catalog is available as [tools.json](../tools.json). With an API token, call any tool at `POST https://api.betteroff.finance/v1/tools/{{name}}`; see the [developer documentation](https://betteroff.finance/developers) and the [public OpenAPI document](https://api.betteroff.finance/openapi/public.json).
+The same catalog is available as [tools.json](../tools.json). With an API token, call any tool at `POST https://api.betteroff.finance/v1/tools/{{name}}`; see the [developer documentation](https://betteroff.finance/developers) and the [tool OpenAPI document]({catalog['openapi']}).
 
 | Tool | Access | Plan | Scopes | Description |
 | --- | --- | --- | --- | --- |
@@ -94,6 +94,9 @@ def check_live(root, url=None):
         tool, operation = expected[name], live[name]
         if operation.get('summary') != tool['title']:
             errors.append(f"{name}: title {tool['title']!r} != API {operation.get('summary')!r}")
+        read_only = operation.get('x-mcp-annotations', {}).get('readOnlyHint')
+        if read_only is not tool['readOnly']:
+            errors.append(f"{name}: readOnly {tool['readOnly']!r} != API readOnlyHint {read_only!r}")
         scopes = {s for requirement in operation.get('security', []) for s in requirement.get('agentOAuth', [])}
         if scopes != set(tool['scopes']):
             errors.append(f"{name}: scopes {sorted(tool['scopes'])} != API {sorted(scopes)}")
