@@ -48,6 +48,20 @@ class SkillSyncTests(unittest.TestCase):
             sync(self.root)
         self.assertEqual(list(outside.iterdir()), [])
 
+    def test_core_rules_come_from_one_source(self):
+        (self.root / 'scripts').mkdir()
+        (self.root / 'scripts/core_rules.md').write_text('- Shared rule.\n')
+        skill = self.source / 'SKILL.md'
+        skill.write_text('# Review\n\n## Core rules\n\n- Edited copy.\n\n## Read\n\nSteps\n')
+        self.assertTrue(sync(self.root))
+        self.assertTrue(sync(self.root, check=True))
+        expected = '# Review\n\n## Core rules\n\n- Shared rule.\n\n## Read\n\nSteps\n'
+        self.assertEqual(skill.read_text(), expected)
+        self.assertEqual((self.root / 'skills/review/SKILL.md').read_text(), expected)
+        skill.write_text(expected.replace('Shared rule', 'Local edit'))
+        self.assertFalse(sync(self.root, check=True))
+        self.assertIn('Local edit', skill.read_text())
+
     def test_empty_source_is_rejected(self):
         with tempfile.TemporaryDirectory() as empty:
             with self.assertRaisesRegex(ValueError, 'missing or empty'):

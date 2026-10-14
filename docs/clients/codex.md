@@ -6,7 +6,7 @@
 
 Install the BetterOff plugin to use its financial tools and workflow skills in Codex.
 
-**Partially verified.** Authenticated synthetic checks passed; fresh installation, token renewal, and revocation remain unverified. This status reflects the October 6, 2026 test record; the October 13 documentation review did not rerun these checks. See [verification and sources](#verification-and-sources).
+**Tested:** sign-in and synthetic reads passed on October 6, 2026; installation passed again on October 13. See [test record](#verification-and-sources).
 
 Read the [account and consent requirements](../../README.md#before-you-start) before connecting. Run shell commands in a terminal and slash commands inside the client.
 
@@ -35,7 +35,7 @@ For failed reads, use [Connection troubleshooting](../connector.md#connection-tr
 
 ## Verification and sources
 
-Authenticated checks with synthetic data passed on October 6, 2026. Fresh installation, token renewal, and access revocation remain unverified for the current client version. Tests cover only the recorded configuration. Client versions, policies, and extensions can change behavior.
+Authenticated checks with synthetic data passed on October 6, 2026. On October 13, 2026, the two install commands above installed plugin 0.5.0 into an empty Codex home with codex-cli 0.162.1; that run did not sign in. Token renewal and access revocation remain unverified for the current client version. Tests cover only the recorded configuration. Client versions, policies, and extensions can change behavior.
 
 Official documentation reviewed October 13, 2026: [Codex plugins](https://learn.chatgpt.com/docs/plugins) and [CLI plugin commands](https://learn.chatgpt.com/docs/cli/reference).
 

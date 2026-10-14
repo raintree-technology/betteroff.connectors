@@ -6,7 +6,7 @@
 
 Install BetterOff in VS Code or Copilot CLI to use its financial tools and workflow skills.
 
-**Installation only.** CLI installation passed. Authentication and tool calls remain unverified; VS Code and app installation are also unverified. This status reflects the October 6, 2026 test record; the October 13 documentation review did not rerun these checks. See [verification and sources](#verification-and-sources).
+**Tested:** CLI installation only; sign-in, reads, VS Code, and the app are not yet tested. See [test record](#verification-and-sources).
 
 Read the [account and consent requirements](../../README.md#before-you-start) before connecting. Run shell commands in a terminal and slash commands inside the client.
 

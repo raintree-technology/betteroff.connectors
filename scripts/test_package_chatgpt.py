@@ -14,7 +14,8 @@ class ChatgptPackageTest(unittest.TestCase):
                 self.assertEqual(mcp['mcpServers']['betteroff']['url'], 'https://api.betteroff.finance/mcp')
                 for entry in archive.namelist():
                     if entry.startswith('skills/'):
-                        self.assertNotIn('request USDC transfers', archive.read(entry).decode())
+                        self.assertNotIn('<!-- transfers', archive.read(entry).decode())
+                        self.assertNotIn('prepare wallet transfers', archive.read(entry).decode())
                         for name in TRANSFER_TOOLS:
                             self.assertNotIn(name, archive.read(entry).decode())
                         self.assertNotIn('transfers:bank', archive.read(entry).decode())
@@ -28,6 +29,9 @@ class ChatgptPackageTest(unittest.TestCase):
                     self.assertNotIn('Transfer tools cover only USDC', case['description'])
                 skill = archive.read('skills/household-review/SKILL.md').decode()
                 self.assertIn('individualized investment, tax, or legal advice', skill)
+                self.assertIn('description: Reads BetterOff household finances and prepares corrections for '
+                              'authenticated user review in BetterOff. Use for accounts', skill)
+                self.assertIn('financial findings, and permitted financial activity.', skill)
                 for name in TRANSFER_TOOLS:
                     self.assertNotIn(name, skill)
                 self.assertNotIn('transfers:prepare', skill)

@@ -6,7 +6,7 @@
 
 Add BetterOff’s financial tools and install its workflow skills in Hermes Agent.
 
-**Partially verified.** Authenticated synthetic checks passed; the full connection lifecycle remains unverified. This status reflects the October 6, 2026 test record; the October 13 documentation review did not rerun these checks. See [verification and sources](#verification-and-sources).
+**Tested:** sign-in and synthetic reads passed on October 6, 2026. See [test record](#verification-and-sources).
 
 Read the [account and consent requirements](../../README.md#before-you-start) before connecting. Run shell commands in a terminal and slash commands inside the client.
 

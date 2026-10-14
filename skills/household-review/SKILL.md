@@ -1,6 +1,6 @@
 ---
 name: household-review
-description: Reads BetterOff household finances and prepares corrections for authenticated user review. Use for accounts, net worth, transactions, spending, cash flow, recurring payments, investments, DeFi, debts, financial findings, permitted financial activity, and transfer requests for approval in BetterOff.
+description: Reads BetterOff household finances and prepares corrections and transfer requests for authenticated user review in BetterOff. Use for accounts, net worth, transactions, spending, cash flow, recurring payments, investments, DeFi, debts, financial findings, and permitted financial activity.
 ---
 
 # BetterOff household review
@@ -36,12 +36,19 @@ A tool that the connection lacks permission for may be hidden, or it may return 
 | Prepare category correction | `betteroff_propose_category_change` |
 | Prepare recurring classification | `betteroff_propose_recurring_kind` |
 | Prepare stated debt terms | `betteroff_propose_debt_details` |
+| Send approved diagnostic feedback | `betteroff_submit_feedback` |
+
+<!-- transfers -->
+Transfer request tools need a separate transfer permission:
+
+| Task | Tool |
+| --- | --- |
 | Request a USDC transfer between the household's own wallets | `betteroff_request_transfer` |
 | Request a bank transfer between the user's own linked accounts | `betteroff_request_bank_transfer` |
 | Request a deposit into a supported vault | `betteroff_request_vault_deposit` |
 | Transfer request status | `betteroff_get_action_request` |
 | Cancel a transfer request before signing | `betteroff_cancel_action_request` |
-| Send approved diagnostic feedback | `betteroff_submit_feedback` |
+<!-- /transfers -->
 
 ## Interpret results
 
@@ -84,7 +91,11 @@ Category review offers two choices: selected payments only; or selected payments
 
 Approval checks the current household, role, originating grant, expiry, and source versions. A stale proposal must be prepared again. Approval retries reuse the saved result. Undo restores only records that have not changed since approval; later edits remain. Payments ingested after approval remain as recorded, while undo restores the rule for subsequent ingestion.
 
-The tools cannot approve or execute transfer requests, pay bills, or place trades. With the separate `transfers:prepare`, `transfers:bank`, or `transfers:vault` permission, request tools can prepare wallet transfers, bank transfers, or vault deposits respectively; give the returned review link and say it awaits approval in BetterOff and the required passkey confirmation or wallet signature. Describe supported financial facts and arithmetic without presenting individualized investment, tax, or legal advice.
+The tools cannot approve or execute transfer requests, pay bills, or place trades. Describe supported financial facts and arithmetic without presenting individualized investment, tax, or legal advice.
+
+<!-- transfers -->
+With the separate `transfers:prepare`, `transfers:bank`, or `transfers:vault` permission, request tools can prepare wallet transfers, bank transfers, or vault deposits respectively. Give the returned review link and say it awaits approval in BetterOff and the required passkey confirmation or wallet signature.
+<!-- /transfers -->
 
 ## Send feedback
 

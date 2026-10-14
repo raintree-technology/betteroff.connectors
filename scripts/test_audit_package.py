@@ -27,6 +27,13 @@ class PackageAuditTests(unittest.TestCase):
             self.assertEqual(result.returncode, 1)
             self.assertIn('endpoint_mismatch', result.stdout)
             guide.write_text(original_guide)
+            agent = target / 'plugins/betteroff/skills/debt-plan/agents/openai.yaml'
+            original_agent = agent.read_text()
+            agent.write_text(original_agent.replace('https://api.betteroff.finance/mcp', 'https://api.invalid.example/mcp'))
+            result = audit()
+            self.assertEqual(result.returncode, 1)
+            self.assertIn('endpoint_mismatch: plugins/betteroff/skills/debt-plan/agents/openai.yaml', result.stdout)
+            agent.write_text(original_agent)
             manifest = target / 'plugins/betteroff/plugin.json'
             original = manifest.read_text()
             data = json.loads(original)

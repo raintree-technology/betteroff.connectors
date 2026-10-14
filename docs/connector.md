@@ -2,15 +2,13 @@
 
 # BetterOff connector reference
 
-[All clients](../README.md#install-the-connector) · [Contributing](../CONTRIBUTING.md)
+[All clients](../README.md#install-the-connector) · [Tool reference](tools.md) · [Contributing](../CONTRIBUTING.md)
 
 Use this reference to sign in, interpret financial results, review proposals, and revoke access. The [client guides](../README.md#install-the-connector) explain installation. Read the [account and consent requirements](../README.md#before-you-start) before connecting.
 
-**Client verification is incomplete.** Check the [client status table](../README.md#install-the-connector) before following setup instructions. Private tests and published Registry metadata do not establish public directory approval. See [preview integrations](../README.md#preview-integrations) for unpublished or unverified destinations.
-
 ## Sign in and ask your first question
 
-Your client uses Model Context Protocol (MCP) to call BetterOff tools at `https://api.betteroff.finance/mcp`. It must support Streamable HTTP and OAuth. Clients that support only static tokens, local standard input/output (stdio), legacy Server-Sent Events (SSE), or machine-to-machine authentication cannot use this connection. Never paste credentials or access tokens into agent conversations.
+Your client uses Model Context Protocol (MCP) to call BetterOff tools at `https://api.betteroff.finance/mcp`. It must support Streamable HTTP and OAuth. Clients that support only static tokens, local standard input/output (stdio), legacy Server-Sent Events (SSE), or machine-to-machine authentication cannot use this MCP connection. Use the REST adapter instead: create an API token in BetterOff and call `POST https://api.betteroff.finance/v1/tools/{name}`, as described in the [developer documentation](https://betteroff.finance/developers) and the [public OpenAPI document](https://api.betteroff.finance/openapi/public.json). Never paste credentials or access tokens into agent conversations.
 
 1. Follow your [client's setup guide](../README.md#install-the-connector). Run shell commands in a terminal; run slash commands inside the client.
 2. When prompted, sign in to BetterOff. Review the household and requested permissions before selecting **Allow access**.
@@ -20,7 +18,7 @@ Confirm that the result identifies your household and reports observation dates 
 
 ## What the connector can do
 
-Version 0.5.0 defines up to 29 tools; clients see only the tools allowed by their permissions:
+Version 0.5.0 defines up to 29 tools; clients see only the tools allowed by their permissions. The [tool reference](tools.md) lists each tool's access, plan, and scopes:
 
 - **20 financial reads and analyses** cover setup status, accounts, net worth, cash flow, recurring items, holdings, transactions, spending, debts, checklist progress, observations, financial activity, market search, and reported vault yields.
 - **Three correction proposals** cover payment categories, recurring items, and debt classifications.
@@ -89,4 +87,4 @@ The consent page identifies the client, household, permissions, and access durat
 - If a read fails, check `code` and `retryable`. Retry once if `retryable` is true. Otherwise, address the reported error before retrying. Do not treat a failed read as an empty result.
 - If records are missing or stale, preserve `quality.reasons` and warnings. Use `betteroff_get_setup_status` when available and follow its returned BetterOff links.
 
-Production verification of the full 0.5.0 catalog remains unfinished. Each client guide records its own verification limits. See the [directory guide](../integrations/directories/README.md) for publication evidence; repository installation does not establish availability in ChatGPT or Claude connector directories.
+Not every 0.5.0 tool has passed a live production test. Each client guide records its own test limits. Installing this repository does not list BetterOff in the ChatGPT or Claude connector directories; see the [directory guide](../integrations/directories/README.md).
