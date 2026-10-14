@@ -11,7 +11,7 @@ Connector package 0.5.1 describes hosted server 0.5.0 at `https://api.betteroff.
 - **Write** tools save a pending correction or transfer request, cancel a pending request, or send feedback. None of them can approve, sign, or execute a change; you do that in BetterOff.
 - **Core** tools need a BetterOff Core plan. The other tools are free.
 
-The same catalog is available as [tools.json](../tools.json). With an API token, call any tool at `POST https://api.betteroff.finance/v1/tools/{name}`; see the [developer documentation](https://betteroff.finance/developers) and the [public OpenAPI document](https://api.betteroff.finance/openapi/public.json).
+The same catalog is available as [tools.json](../tools.json). With an API token, call any tool at `POST https://api.betteroff.finance/v1/tools/{name}`; see the [developer documentation](https://betteroff.finance/developers) and the [tool OpenAPI document](https://api.betteroff.finance/openapi/tools.json).
 
 | Tool | Access | Plan | Scopes | Description |
 | --- | --- | --- | --- | --- |

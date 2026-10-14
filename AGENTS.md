@@ -9,7 +9,7 @@ Connector package 0.5.1 describes hosted server 0.5.0. The Registry record versi
 - **MCP endpoint:** `https://api.betteroff.finance/mcp`, Streamable HTTP, stateless.
 - **Auth:** OAuth authorization code with PKCE S256. Discovery starts at the 401 challenge's `resource_metadata`, `https://api.betteroff.finance/.well-known/oauth-protected-resource/mcp`. The authorization server is `https://app.betteroff.finance/api/auth` and supports dynamic client registration and Client ID Metadata Documents. Send `resource=https://api.betteroff.finance/mcp`.
 - **Consent:** A household owner signs in and approves each scope. Access lasts up to 30 days. Request `offline_access` for refresh tokens.
-- **REST alternative:** With an API token (`bo_pat_…`) created in BetterOff, call `POST https://api.betteroff.finance/v1/tools/{name}` with a JSON body. See the [developer documentation](https://betteroff.finance/developers). [openapi/public.json](https://api.betteroff.finance/openapi/public.json) holds only the public API: every tool's input and output schema, scopes, and errors. The full `/openapi.json` also lists app-only routes that can change without notice.
+- **REST alternative:** With an API token (`bo_pat_…`) created in BetterOff, call `POST https://api.betteroff.finance/v1/tools/{name}` with a JSON body. See the [developer documentation](https://betteroff.finance/developers). [openapi/tools.json](https://api.betteroff.finance/openapi/tools.json) lists the 29 tool operations with input schemas, scopes, and MCP annotations. The compact document references [openapi/public.json](https://api.betteroff.finance/openapi/public.json) for response schemas. The full `/openapi.json` also lists app-only routes that can change without notice.
 
 ## Scopes
 
@@ -19,7 +19,7 @@ Write scopes: `corrections:prepare` (Core), `transfers:prepare`, `transfers:bank
 
 ## Tools
 
-[tools.json](tools.json) lists all 29 tools with title, scopes, read or write access, and plan. [docs/tools.md](docs/tools.md) is the same list for people. Local MCP transport checks confirm that every tool declares `title`, `readOnlyHint`, and `destructiveHint: false`. Production annotations still need an authenticated synthetic-grant or Claude portal check. No tool approves, signs, or executes a change; the user does that in BetterOff.
+[tools.json](tools.json) lists all 29 tools with title, scopes, read or write access, and plan. [docs/tools.md](docs/tools.md) is the same list for people. An authenticated synthetic-grant check on October 13, 2026 confirmed that all 29 production MCP tools declare `title`, `readOnlyHint`, and `destructiveHint: false`. The daily `python3 scripts/tools_catalog.py --live` check compares production OpenAPI `x-mcp-annotations.readOnlyHint` with each catalog entry's `readOnly` value. The daily OpenAPI check does not verify OAuth or client behavior. No tool approves, signs, or executes a change; the user does that in BetterOff.
 
 ## Load a skill for the task
 

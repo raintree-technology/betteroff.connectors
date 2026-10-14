@@ -35,7 +35,7 @@ Then ask: “Show my household overview and flag missing or out-of-date data.”
 
 **Other MCP clients.** Add `https://api.betteroff.finance/mcp` as a remote server with Streamable HTTP transport and OAuth sign-in.
 
-**No OAuth MCP client?** Create an API token in BetterOff and call the same tools over REST at `POST https://api.betteroff.finance/v1/tools/{name}`. See the [developer documentation](https://betteroff.finance/developers) and the [public OpenAPI document](https://api.betteroff.finance/openapi/public.json).
+**No OAuth MCP client?** Create an API token in BetterOff and call the same tools over REST at `POST https://api.betteroff.finance/v1/tools/{name}`. See the [developer documentation](https://betteroff.finance/developers) and the [tool OpenAPI document](https://api.betteroff.finance/openapi/tools.json).
 
 ## Install the connector
 

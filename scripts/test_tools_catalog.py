@@ -41,9 +41,35 @@ class ToolCatalogTests(unittest.TestCase):
                           '/v1/tools/old_alias': {'post': {'operationId': 'old_alias', 'deprecated': True}}}}
         (self.root / 'spec.json').write_text(json.dumps(spec))
         errors = '\n'.join(check_live(self.root, (self.root / 'spec.json').as_uri()))
+        self.assertIn(f"{tool['name']}: readOnly", errors)
         self.assertIn(f"{tool['name']}: scopes", errors)
         self.assertIn(f"{catalog['tools'][1]['name']}: missing from the API", errors)
         self.assertNotIn('old_alias', errors)
+
+    def test_live_annotations_and_catalog_url(self):
+        catalog = json.loads((self.root / 'tools.json').read_text())
+        spec = {'info': {'version': catalog['serverVersion']}, 'paths': {
+            f"/v1/tools/{tool['name']}": {'post': {
+                'operationId': tool['name'], 'summary': tool['title'],
+                'security': [{'agentOAuth': tool['scopes']}],
+                'x-mcp-annotations': {'readOnlyHint': tool['readOnly']},
+            }} for tool in catalog['tools']}}
+        target = self.root / 'spec.json'
+        catalog['openapi'] = target.as_uri()
+        (self.root / 'tools.json').write_text(json.dumps(catalog))
+        target.write_text(json.dumps(spec))
+        self.assertEqual(check_live(self.root), [])
+        for read_only in (True, False):
+            tool = next(t for t in catalog['tools'] if t['readOnly'] is read_only)
+            operation = spec['paths'][f"/v1/tools/{tool['name']}"]['post']
+            for annotation in ({'readOnlyHint': not read_only}, {}, {'readOnlyHint': int(read_only)}):
+                with self.subTest(read_only=read_only, annotation=annotation):
+                    operation['x-mcp-annotations'] = annotation
+                    target.write_text(json.dumps(spec))
+                    errors = check_live(self.root)
+                    self.assertEqual(len(errors), 1)
+                    self.assertIn(f"{tool['name']}: readOnly", errors[0])
+            operation['x-mcp-annotations'] = {'readOnlyHint': read_only}
 
     def test_live_version_tracks_server_independently_of_package(self):
         catalog = json.loads((self.root / 'tools.json').read_text())
