@@ -3,13 +3,15 @@
   "name": "finance.betteroff/mcp",
   "title": "BetterOff",
   "description": "Review household finances and prepare corrections and transfer requests for approval in BetterOff.",
-  "version": "0.5.0",
-  "websiteUrl": "https://betteroff.finance/agents",
+  "version": "0.5.1",
+  "websiteUrl": "https://betteroff.finance/agents?utm_source=mcp-registry&utm_medium=directory&utm_campaign=mcp-listing",
   "icons": [
     {
       "src": "https://api.betteroff.finance/.well-known/betteroff-icon.png",
       "mimeType": "image/png",
-      "sizes": ["512x512"]
+      "sizes": [
+        "512x512"
+      ]
     }
   ],
   "remotes": [
