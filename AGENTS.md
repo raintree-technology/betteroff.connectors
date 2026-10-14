@@ -2,6 +2,8 @@
 
 BetterOff is a household finance app. This repository distributes its MCP connector configuration and workflow skills. It contains no server code.
 
+Connector package 0.5.1 describes hosted server 0.5.0. The Registry record versions independently of the hosted server and connector package. `tools.json` records the package `version` and the expected `serverVersion`.
+
 ## Connect
 
 - **MCP endpoint:** `https://api.betteroff.finance/mcp`, Streamable HTTP, stateless.
@@ -17,7 +19,7 @@ Write scopes: `corrections:prepare` (Core), `transfers:prepare`, `transfers:bank
 
 ## Tools
 
-[tools.json](tools.json) lists all 29 tools with title, scopes, read or write access, and plan. [docs/tools.md](docs/tools.md) is the same list for people. Every tool declares `title`, `readOnlyHint`, and `destructiveHint: false`. No tool approves, signs, or executes a change; the user does that in BetterOff.
+[tools.json](tools.json) lists all 29 tools with title, scopes, read or write access, and plan. [docs/tools.md](docs/tools.md) is the same list for people. Local MCP transport checks confirm that every tool declares `title`, `readOnlyHint`, and `destructiveHint: false`. Production annotations still need an authenticated synthetic-grant or Claude portal check. No tool approves, signs, or executes a change; the user does that in BetterOff.
 
 ## Load a skill for the task
 

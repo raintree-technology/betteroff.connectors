@@ -1,7 +1,7 @@
 {
 	"$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
 	"name": "betteroff",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections, wallet and bank transfers, and vault deposits for approval.",
 	"author": {
 		"name": "FinSync LLC"
@@ -104,7 +104,7 @@
 				"countries": [
 					"US"
 				],
-				"release_notes": "Align with server 0.5.0: 20 financial reads and analyses, three correction proposals, five transfer request tools (including read-only status), and one feedback tool. Add market search, reported vault yields, bank-transfer requests, and vault-deposit requests. Requests require approval in BetterOff and the applicable signature or passkey confirmation."
+				"release_notes": "Release the quickstart, 29-tool catalog, agent guide, and structural checks. Clarify independent connector, hosted-server, and Registry versions. The hosted server remains 0.5.0."
 			}
 		}
 	}
