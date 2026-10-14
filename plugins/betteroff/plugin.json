@@ -1,8 +1,8 @@
 {
 	"$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
 	"name": "betteroff",
-	"version": "0.4.0",
-	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections and USDC wallet transfers for approval.",
+	"version": "0.5.0",
+	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections, wallet and bank transfers, and vault deposits for approval.",
 	"author": {
 		"name": "FinSync LLC"
 	},
@@ -22,7 +22,7 @@
 		"com.openai": {
 			"interface": {
 				"displayName": "BetterOff",
-				"longDescription": "Use BetterOff in ChatGPT to understand your own finances. Sign in and approve access to your BetterOff household, then ask about balances, net worth, spending by category, cash flow, recurring payments, investments, DeFi positions, and debts. Results include currencies, dates, source freshness, and warnings when data is incomplete. You can prepare category, recurring-payment, and debt-detail corrections for approval in BetterOff. With separate transfer permission, you can request USDC transfers between your own tracked wallets on Solana or Base; you approve and sign each one in BetterOff. The plugin cannot apply a correction, move bank funds, pay bills, or place trades. With separate feedback permission, you can ask the agent to send an approved diagnostic report to BetterOff support. Reports must exclude financial records and credentials.",
+				"longDescription": "Use BetterOff in ChatGPT to understand your own finances. Sign in and approve access to your BetterOff household, then ask about balances, net worth, spending by category, cash flow, recurring payments, investments, DeFi positions, and debts. Results include currencies, dates, source freshness, and warnings when data is incomplete. You can prepare category, recurring-payment, and debt-detail corrections for approval in BetterOff. With separate transfer permission, you can prepare wallet transfers, bank transfers between your own linked accounts, and vault deposits; approve each request in BetterOff and complete the required wallet signature or passkey confirmation. The plugin cannot apply a correction, approve or execute transfer requests, pay bills, or place trades. With separate feedback permission, you can ask the agent to send an approved diagnostic report to BetterOff support. Reports must exclude financial records and credentials.",
 				"category": "Finance",
 				"capabilities": [
 					"Review net worth and account freshness",
@@ -30,7 +30,7 @@
 					"Inspect investments, DeFi, and debt",
 					"Prepare corrections for approval",
 					"Review financial checklist progress",
-					"Request USDC wallet transfers for approval",
+					"Prepare wallet transfers, bank transfers, and vault deposits for approval",
 					"Send user-approved diagnostic feedback"
 				],
 				"shortDescription": "See net worth and spending",
@@ -83,8 +83,8 @@
 					],
 					"negative": [
 						{
-							"description": "Unsupported bank transfer. Transfer tools cover only USDC between the household's own tracked wallets. Expected: explain that BetterOff cannot move bank funds; call no transfer or proposal tool and claim no transfer.",
-							"prompt": "Transfer $500 from my checking account to savings."
+							"prompt": "Approve and execute my pending bank transfer in this chat.",
+							"description": "Approval and execution from chat are unsupported. Give the BetterOff review link if available and explain that the user must approve there with a passkey. Do not claim funds moved."
 						},
 						{
 							"description": "Unsupported trade. No trading tool exists. Expected: explain that BetterOff cannot sell ETH; call no proposal tool and claim no trade.",
@@ -101,8 +101,10 @@
 				"commerce_description": "BetterOff does not sell products or process payments in ChatGPT. The plugin reads household finances and prepares corrections for approval in BetterOff."
 			},
 			"publication": {
-				"countries": ["US"],
-				"release_notes": "Add a financial checklist read tool, opt-in USDC transfer requests between the household's own wallets, and seven workflow skills. The catalog contains 18 read and analysis tools, 3 correction proposal tools, 3 transfer request tools, and 1 feedback submission tool. Transfer requests change nothing until the user approves and signs each one in BetterOff."
+				"countries": [
+					"US"
+				],
+				"release_notes": "Align with server 0.5.0: 20 financial reads and analyses, three correction proposals, five transfer request tools (including read-only status), and one feedback tool. Add market search, reported vault yields, bank-transfer requests, and vault-deposit requests. Requests require approval in BetterOff and the applicable signature or passkey confirmation."
 			}
 		}
 	}

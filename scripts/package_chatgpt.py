@@ -7,7 +7,9 @@ from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOT = next(parent for parent in Path(__file__).resolve().parents if (parent / 'plugins/betteroff/plugin.json').exists())
 SOURCE = ROOT / 'plugins/betteroff'
-TRANSFER_TOOLS = ('betteroff_request_transfer', 'betteroff_get_action_request', 'betteroff_cancel_action_request')
+TRANSFER_TOOLS = ('betteroff_request_transfer', 'betteroff_request_bank_transfer',
+                  'betteroff_request_vault_deposit', 'betteroff_get_action_request',
+                  'betteroff_cancel_action_request')
 
 
 def build(output):
@@ -47,11 +49,12 @@ def build(output):
                 text = path.read_text()
                 text = re.sub(r"With the separate transfer permission,.*?BetterOff\. ", "", text)
                 if relative == Path('skills/household-review/SKILL.md'):
-                    text = re.sub(r'With the separate `transfers:prepare` permission,.*?wallet signature\. ', '', text)
+                    text = re.sub(r'With the separate `transfers:prepare`.*?wallet signature\. ', '', text)
                     text = '\n'.join(line for line in text.splitlines() if not any(tool in line for tool in TRANSFER_TOOLS)) + '\n'
                     text = text.replace(', and USDC transfer requests between the household\'s own wallets', '')
+                    text = text.replace(', and transfer requests for approval in BetterOff', '')
                     text += '\nThis ChatGPT plugin cannot request, approve, sign, or execute transfers.\n'
-                if 'request USDC transfers' in text or 'transfers:prepare' in text or any(tool in text for tool in TRANSFER_TOOLS):
+                if 'request USDC transfers' in text or 'transfers:' in text or any(tool in text for tool in TRANSFER_TOOLS):
                     raise ValueError(f'Transfer tool remains in {relative}')
                 archive.writestr(str(relative), text)
             else:

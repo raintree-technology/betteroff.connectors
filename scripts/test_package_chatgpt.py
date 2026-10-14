@@ -15,6 +15,10 @@ class ChatgptPackageTest(unittest.TestCase):
                 for entry in archive.namelist():
                     if entry.startswith('skills/'):
                         self.assertNotIn('request USDC transfers', archive.read(entry).decode())
+                        for name in TRANSFER_TOOLS:
+                            self.assertNotIn(name, archive.read(entry).decode())
+                        self.assertNotIn('transfers:bank', archive.read(entry).decode())
+                        self.assertNotIn('transfers:vault', archive.read(entry).decode())
                 manifest = json.loads(archive.read('plugin.json'))
                 listing = manifest['extensions']['com.openai']
                 self.assertEqual(len(listing['review']['test_cases']['positive']), 5)

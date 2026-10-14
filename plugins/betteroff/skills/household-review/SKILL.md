@@ -1,6 +1,6 @@
 ---
 name: household-review
-description: Reads BetterOff household finances and prepares corrections for authenticated user review. Use for accounts, net worth, transactions, spending, cash flow, recurring payments, investments, DeFi, debts, financial findings, permitted financial activity, and USDC transfer requests between the household's own wallets.
+description: Reads BetterOff household finances and prepares corrections for authenticated user review. Use for accounts, net worth, transactions, spending, cash flow, recurring payments, investments, DeFi, debts, financial findings, permitted financial activity, and transfer requests for approval in BetterOff.
 ---
 
 # BetterOff household review
@@ -25,6 +25,9 @@ A tool that the connection lacks permission for may be hidden, or it may return 
 | Observed recurring payments | `betteroff_list_recurring` |
 | Portfolio positions, allocation and concentration | `betteroff_get_portfolio` |
 | DeFi assets and liabilities | `betteroff_get_defi_positions` |
+| Search prediction markets | `betteroff_search_markets` |
+| Reported vault yields | `betteroff_get_vault_yields` |
+| Financial checklist progress | `betteroff_get_checklist` |
 | Debt balances and missing terms | `betteroff_list_debts` |
 | Arithmetic payoff scenario | `betteroff_simulate_debt_payoff` |
 | Permitted financial changes | `betteroff_search_activity` |
@@ -34,6 +37,8 @@ A tool that the connection lacks permission for may be hidden, or it may return 
 | Prepare recurring classification | `betteroff_propose_recurring_kind` |
 | Prepare stated debt terms | `betteroff_propose_debt_details` |
 | Request a USDC transfer between the household's own wallets | `betteroff_request_transfer` |
+| Request a bank transfer between the user's own linked accounts | `betteroff_request_bank_transfer` |
+| Request a deposit into a supported vault | `betteroff_request_vault_deposit` |
 | Transfer request status | `betteroff_get_action_request` |
 | Cancel a transfer request before signing | `betteroff_cancel_action_request` |
 | Send approved diagnostic feedback | `betteroff_submit_feedback` |
@@ -79,7 +84,7 @@ Category review offers two choices: selected payments only; or selected payments
 
 Approval checks the current household, role, originating grant, expiry, and source versions. A stale proposal must be prepared again. Approval retries reuse the saved result. Undo restores only records that have not changed since approval; later edits remain. Payments ingested after approval remain as recorded, while undo restores the rule for subsequent ingestion.
 
-The tools cannot move bank funds, pay bills, or place trades. With the separate `transfers:prepare` permission, `betteroff_request_transfer` can request a USDC transfer between two wallets the household tracks on Solana or Base; give the returned review link and say it awaits the user's approval and wallet signature. Describe supported financial facts and arithmetic without presenting individualized investment, tax, or legal advice.
+The tools cannot approve or execute transfer requests, pay bills, or place trades. With the separate `transfers:prepare`, `transfers:bank`, or `transfers:vault` permission, request tools can prepare wallet transfers, bank transfers, or vault deposits respectively; give the returned review link and say it awaits approval in BetterOff and the required passkey confirmation or wallet signature. Describe supported financial facts and arithmetic without presenting individualized investment, tax, or legal advice.
 
 ## Send feedback
 
