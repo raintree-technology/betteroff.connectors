@@ -95,7 +95,7 @@ Dependabot proposes GitHub Actions updates weekly and waits seven days after eac
 
 ## Releases
 
-Keep the version equal in `plugins/betteroff/plugin.json`, its Claude and Cursor manifests, `gemini-extension.json`, and `tools.json`; the package audit checks them. `integrations/directories/server.json` carries the Registry record's own version, which rises for each Registry republish, including metadata-only changes. After the release merges to `main`, tag it as `v<version>` and publish a GitHub release.
+Keep the version equal in `plugins/betteroff/plugin.json`, its Claude and Cursor manifests, `gemini-extension.json`, and `tools.json`; the package audit checks them. `tools.json` records the hosted API version separately as `serverVersion`; the live catalog check compares that field with OpenAPI. `integrations/directories/server.json` carries the Registry record's own version, which rises for each Registry republish, including metadata-only changes. After the release merges to `main`, tag it as `v<version>` and publish a GitHub release.
 
 ## ChatGPT submission package
 

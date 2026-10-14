@@ -33,7 +33,7 @@ def render(catalog):
 
 [All clients](../README.md#install-the-connector) · [Connector reference](connector.md)
 
-Version {catalog['version']} of `{catalog['server']}` defines {len(tools)} tools: {len(tools) - writes} read tools and {writes} write tools. A client sees only the tools its granted scopes allow.
+Connector package {catalog['version']} describes hosted server {catalog['serverVersion']} at `{catalog['server']}` and defines {len(tools)} tools: {len(tools) - writes} read tools and {writes} write tools. A client sees only the tools its granted scopes allow.
 
 - **Read** tools return data and change nothing.
 - **Write** tools save a pending correction or transfer request, cancel a pending request, or send feedback. None of them can approve, sign, or execute a change; you do that in BetterOff.
@@ -85,8 +85,8 @@ def check_live(root, url=None):
         if path.startswith('/v1/tools/') and not operation.get('deprecated'):
             live[operation['operationId']] = operation
     errors = []
-    if not spec['info']['version'].split('+')[0] == catalog['version']:
-        errors.append(f"version: API {spec['info']['version']} != tools.json {catalog['version']}")
+    if not spec['info']['version'].split('+')[0] == catalog['serverVersion']:
+        errors.append(f"version: API {spec['info']['version']} != tools.json serverVersion {catalog['serverVersion']}")
     expected = {t['name']: t for t in catalog['tools']}
     for name in sorted(set(live) ^ set(expected)):
         errors.append(f"{name}: {'missing from tools.json' if name in live else 'missing from the API'}")

@@ -1,6 +1,7 @@
 {
   "server": "https://api.betteroff.finance/mcp",
-  "version": "0.5.0",
+  "version": "0.5.1",
+  "serverVersion": "0.5.0",
   "openapi": "https://api.betteroff.finance/openapi/public.json",
   "tools": [
     {"name": "betteroff_get_overview", "title": "Get overview", "scopes": ["accounts:read", "networth:read"], "readOnly": true, "plan": "free", "summary": "Household valuation, data coverage, identity, and connection health."},

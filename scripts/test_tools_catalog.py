@@ -36,7 +36,7 @@ class ToolCatalogTests(unittest.TestCase):
         tool = catalog['tools'][0]
         operation = {'operationId': tool['name'], 'summary': tool['title'],
                      'security': [{'agentOAuth': ['accounts:read']}]}
-        spec = {'info': {'version': catalog['version'] + '+abc'},
+        spec = {'info': {'version': catalog['serverVersion'] + '+abc'},
                 'paths': {f"/v1/tools/{tool['name']}": {'post': operation},
                           '/v1/tools/old_alias': {'post': {'operationId': 'old_alias', 'deprecated': True}}}}
         (self.root / 'spec.json').write_text(json.dumps(spec))
@@ -44,6 +44,18 @@ class ToolCatalogTests(unittest.TestCase):
         self.assertIn(f"{tool['name']}: scopes", errors)
         self.assertIn(f"{catalog['tools'][1]['name']}: missing from the API", errors)
         self.assertNotIn('old_alias', errors)
+
+    def test_live_version_tracks_server_independently_of_package(self):
+        catalog = json.loads((self.root / 'tools.json').read_text())
+        catalog['version'] = '9.0.0'
+        (self.root / 'tools.json').write_text(json.dumps(catalog))
+        spec = {'info': {'version': catalog['serverVersion']}, 'paths': {}}
+        target = self.root / 'spec.json'
+        target.write_text(json.dumps(spec))
+        self.assertFalse(any(error.startswith('version:') for error in check_live(self.root, target.as_uri())))
+        spec['info']['version'] = '99.0.0'
+        target.write_text(json.dumps(spec))
+        self.assertTrue(any(error.startswith('version:') for error in check_live(self.root, target.as_uri())))
 
     def test_render_counts_tools(self):
         self.assertIn('29 tools: 21 read tools and 8 write tools', render(json.loads((ROOT / 'tools.json').read_text())))
