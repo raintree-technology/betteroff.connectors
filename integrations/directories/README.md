@@ -99,7 +99,7 @@ The draft Markdown was manually reviewed as plain text. A separate grammar check
 
 ## Shared listing copy
 
-Use these fields for directory submissions. The official Registry entry is published; Smithery, Glama, and PulseMCP remain unsubmitted in the recorded evidence. Resolve the [release holds](#release-holds) before submitting to Smithery or Glama.
+Use these fields for directory submissions. The official Registry and Smithery entries are published; Glama and PulseMCP remain unsubmitted in the recorded evidence. Resolve the [release holds](#release-holds) before submitting to Glama; Smithery retains the recorded refresh and vendor-ownership limits.
 
 ### Shared fields
 

@@ -45,11 +45,11 @@ Maintainers can find publication procedures and evidence in the [directory guide
 
 [<img src="assets/clients/zapier.ico" alt="" width="24" height="24" align="absmiddle"> Zapier private preview](integrations/zapier/README.md) — **Private; not yet approved for public listing.** The guide covers MCP and API-token setup, account-access requirements, and historical test evidence. Successful tests do not establish public approval.
 
-The following directory routes also remain unavailable or unverified in the recorded evidence. These statuses concern publication and destination-specific tests, not the shared server's availability.
+The following directory routes have publication, ownership, or verification limits in the recorded evidence. These statuses concern publication and destination-specific tests, not the shared server's availability.
 
 | Destination | Recorded status | Guide |
 | --- | --- | --- |
-| Smithery | **Private testing only; unpublished.** Limited synthetic reads passed; renewal and a successful valuation comparison remain unverified. | [Smithery status](integrations/directories/README.md#smithery) |
+| Smithery | **Published; vendor ownership unverified.** Five scoped synthetic reads and disconnect passed; renewal remains unverified. | [Smithery status](integrations/directories/README.md#smithery) |
 | Glama | **Unsubmitted; connection blocked.** OAuth callback handoff failed; no authenticated tool call completed. | [Glama status](integrations/directories/README.md#glama) |
 | PulseMCP | **Listing unverified.** Manual submissions were paused; Registry ingestion was not verified. | [PulseMCP status](integrations/directories/README.md#pulsemcp) |
 | ChatGPT directory | **Public approval and listing unverified in this repository.** Preparing a submission ZIP does not establish availability. | [ChatGPT package status](CONTRIBUTING.md#chatgpt-submission-package) |
