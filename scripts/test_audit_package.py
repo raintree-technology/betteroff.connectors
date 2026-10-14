@@ -12,13 +12,21 @@ class PackageAuditTests(unittest.TestCase):
     def test_inline_metadata_and_native_skill(self):
         with tempfile.TemporaryDirectory() as directory:
             target = pathlib.Path(directory)
-            for name in ('plugins', 'skills', '.agents', '.claude-plugin', '.cursor-plugin'):
+            for name in ('plugins', 'skills', 'docs', '.agents', '.claude-plugin', '.cursor-plugin'):
                 shutil.copytree(ROOT / name, target / name)
-            for name in ('README.md', 'COMPATIBILITY.md', 'gemini-extension.json'):
+            for name in ('README.md', 'gemini-extension.json'):
                 shutil.copyfile(ROOT / name, target / name)
             def audit():
                 return subprocess.run(['python3', str(ROOT / 'scripts/audit_package.py'), directory], capture_output=True, text=True)
             self.assertEqual(audit().returncode, 0)
+            guide = target / 'docs/clients/grok.md'
+            original_guide = guide.read_text()
+            guide.write_text(original_guide.replace('https://api.betteroff.finance/mcp',
+                                                   'https://api.invalid.example/mcp'))
+            result = audit()
+            self.assertEqual(result.returncode, 1)
+            self.assertIn('endpoint_mismatch', result.stdout)
+            guide.write_text(original_guide)
             manifest = target / 'plugins/betteroff/plugin.json'
             original = manifest.read_text()
             data = json.loads(original)
@@ -46,9 +54,9 @@ class PackageAuditTests(unittest.TestCase):
     def test_client_metadata_drift(self):
         with tempfile.TemporaryDirectory() as directory:
             target = pathlib.Path(directory)
-            for name in ('plugins', 'skills', '.agents', '.claude-plugin', '.cursor-plugin'):
+            for name in ('plugins', 'skills', 'docs', '.agents', '.claude-plugin', '.cursor-plugin'):
                 shutil.copytree(ROOT / name, target / name)
-            for name in ('README.md', 'COMPATIBILITY.md', 'gemini-extension.json'):
+            for name in ('README.md', 'gemini-extension.json'):
                 shutil.copyfile(ROOT / name, target / name)
             manifest = target / 'plugins/betteroff/.cursor-plugin/plugin.json'
             data = json.loads(manifest.read_text())

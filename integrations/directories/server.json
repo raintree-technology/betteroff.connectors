@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "finance.betteroff/mcp",
+  "title": "BetterOff",
+  "description": "Review household finances and prepare corrections and transfer requests for approval in BetterOff.",
+  "version": "0.5.0",
+  "websiteUrl": "https://betteroff.finance/agents",
+  "icons": [
+    {
+      "src": "https://api.betteroff.finance/.well-known/betteroff-icon.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.betteroff.finance/mcp"
+    }
+  ]
+}
