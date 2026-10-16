@@ -15,7 +15,7 @@ Use this guide to find the source for each kind of documentation and run reposit
 | Understand permissions, data, and approval boundaries | [Connector reference](docs/connector.md) |
 | Look up a tool's access, plan, and scopes | [tools.json](tools.json), rendered as the [tool reference](docs/tools.md) |
 | Connect an agent or work in this repository as an agent | [Agent guide](AGENTS.md) |
-| Change an agent workflow | `plugins/betteroff/skills/<name>/SKILL.md`; shared rules in `scripts/core_rules.md` |
+| Change an agent workflow | `betteroff.finance/plugins/betteroff/skills/<name>/SKILL.md`; see [Agent workflow sources](#agent-workflow-sources) |
 | Prepare directory submissions | [Directory guide](integrations/directories/README.md) |
 | Inspect dated directory evidence | [Directory evidence](integrations/directories/evidence-2026-10-13.md) |
 | Build and validate the Zapier integration | [Zapier private preview guide](integrations/zapier/README.md) and [evidence](integrations/zapier/evidence-2026-10-13.md) |
@@ -55,12 +55,15 @@ Date official-source reviews separately from BetterOff tests. A documentation re
 
 ## Agent workflow sources
 
-The plugin's `skills/` directory is the editing source. Root `skills/` mirrors it for Gemini CLI. Both distributions need complete, standalone workflows, including their core interpretation and approval rules.
+`betteroff.finance` owns the plugin manifests, skills, agent metadata, and ChatGPT package generator. This repository distributes them. Root `skills/` mirrors the plugin skills for Gemini CLI. Both distributions need complete, standalone workflows, including their interpretation and approval rules.
 
-1. Edit `plugins/betteroff/skills/<name>/SKILL.md` and its `agents/openai.yaml` when applicable.
-2. Run `python3 scripts/sync_skills.py`. It writes `scripts/core_rules.md` into every workflow's **Core rules** section, then updates the Gemini distribution. Root `skills/` and the **Core rules** sections are generated; do not edit them directly. `household-review` has its own fuller rules and no generated section.
-   Wrap transfer-only text in `<!-- transfers -->` and `<!-- /transfers -->` lines. The ChatGPT package removes those blocks.
-3. Run `python3 scripts/sync_skills.py --check` and the package audit below. CI checks every distributed file, including agent metadata. Unexpected files require manual review; the sync command never deletes them.
+Maintainers need sibling checkouts of `betteroff.finance` and `betteroff.connectors`. Contributors without finance access should describe the proposed plugin change in an issue so a maintainer can apply it at the source.
+
+1. Review both working trees. Reconcile connector-only plugin changes in finance before syncing so they are not overwritten.
+2. In finance, edit `plugins/betteroff/skills/<name>/SKILL.md` and its `agents/openai.yaml` when applicable. Edit manifests under `plugins/betteroff/` and the ChatGPT generator at `tools/connectors/package-chatgpt.py`. Wrap transfer-only text in `<!-- transfers -->` and `<!-- /transfers -->` lines; the ChatGPT package removes those blocks.
+3. From finance, run `bun tools/connectors/sync-public.ts ../betteroff.connectors`, then repeat with `--check`. This updates the distributed plugin, root Gemini metadata and skills, marketplace manifests, and `scripts/package_chatgpt.py`.
+4. When shared rules change, update them in each applicable finance skill and align this repository's `scripts/core_rules.md` with those rules. Run `python3 scripts/sync_skills.py --check` here to verify the mirror. Do not run its write mode with stale rules: it overwrites the distributed skills. `household-review` has its own fuller rules.
+5. Run the package audit below. CI checks every distributed file, including agent metadata. Review unexpected files manually; the finance sync command refuses to remove target-only plugin files.
 
 Keep both copies as regular files. Do not replace a workflow with a link to another skill: clients can install each workflow independently.
 
@@ -95,7 +98,7 @@ Dependabot proposes GitHub Actions updates weekly and waits seven days after eac
 
 ## Releases
 
-Keep the version equal in `plugins/betteroff/plugin.json`, its Claude and Cursor manifests, `gemini-extension.json`, and `tools.json`; the package audit checks them. `tools.json` records the hosted API version separately as `serverVersion`; the live catalog check compares that field with OpenAPI. `integrations/directories/server.json` carries the Registry record's own version, which rises for each Registry republish, including metadata-only changes. After the release merges to `main`, tag it as `v<version>` and publish a GitHub release.
+Update plugin versions in finance and sync them here before updating `tools.json`. Keep the version equal in `plugins/betteroff/plugin.json`, its Claude and Cursor manifests, `gemini-extension.json`, and `tools.json`; the package audit checks them. `tools.json` records the hosted API version separately as `serverVersion`; the live catalog check compares that field with OpenAPI. `integrations/directories/server.json` carries the Registry record's own version, which rises for each Registry republish, including metadata-only changes. After the release merges to `main`, tag it as `v<version>` and publish a GitHub release.
 
 ## ChatGPT submission package
 
