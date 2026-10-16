@@ -84,6 +84,7 @@ python3 scripts/test_audit_package.py && python3 scripts/audit_package.py
 python3 scripts/test_package_chatgpt.py
 python3 scripts/test_sync_skills.py && python3 scripts/sync_skills.py --check
 python3 scripts/test_tools_catalog.py && python3 scripts/tools_catalog.py --check
+python3 scripts/test_audit_server.py
 gitleaks git --redact --no-banner .
 claude plugin validate --strict . && claude plugin validate --strict plugins/betteroff
 scripts/audit_server.sh && python3 scripts/tools_catalog.py --live

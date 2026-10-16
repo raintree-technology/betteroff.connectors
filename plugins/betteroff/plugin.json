@@ -101,9 +101,7 @@
 				"commerce_description": "BetterOff does not sell products or process payments in ChatGPT. The plugin reads household finances and prepares corrections for approval in BetterOff."
 			},
 			"publication": {
-				"countries": [
-					"US"
-				],
+				"countries": ["US"],
 				"release_notes": "Release the quickstart, 29-tool catalog, agent guide, and structural checks. Clarify independent connector, hosted-server, and Registry versions. The hosted server remains 0.5.0."
 			}
 		}
