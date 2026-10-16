@@ -74,6 +74,7 @@ Read `code` and `retryable` before calling again. Never interpret a failed looku
 - For `RESULT_TOO_LARGE`, narrow the date range, account, filters, or page size. Follow returned cursors rather than asking for every row at once.
 - For `INSUFFICIENT_SCOPE`, tell the user to reconnect with the required permission.
 - For `INCOMPLETE_DATA`, name the missing inputs and follow the returned next step.
+- For `AGENT_SUBSCRIPTION_INACTIVE`, tell the user the feature needs BetterOff Core and give the returned `nextStep`. Do not retry or substitute other reads for the missing data.
 - Retry a retryable failure once. If it fails again, state the limitation and direct the user to BetterOff.
 - Do not repeat a terminal failure with unchanged arguments.
 
