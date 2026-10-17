@@ -70,14 +70,20 @@ fi
 
 # Unknown well-known paths must not return the app's HTML page
 for u in "$ORIGIN/.well-known/oauth-authorization-server" "$ORIGIN/.well-known/openid-configuration"; do
-  ct=$(curl -sL -o /dev/null -w '%{content_type}' "$u")
-  [[ $ct == text/html* ]] && fail "$u returns HTML" || ok "$u is not HTML"
+  if ct=$(curl -sL -o /dev/null -w '%{content_type}' "$u"); then
+    [[ $ct == text/html* ]] && fail "$u returns HTML" || ok "$u is not HTML"
+  else
+    fail "$u request failed"
+  fi
 done
 
 # Transport
 curl -sI "${MCP/https:/http:}" | head -1 | grep -qE ' 30[18]' && ok "HTTP redirects to HTTPS" || fail "HTTP not redirected"
 curl -sI "$MCP" | grep -iq '^strict-transport-security' && ok "HSTS" || fail "no HSTS"
-curl -si -X OPTIONS "$MCP" -H 'Origin: https://evil.example' -H 'Access-Control-Request-Method: POST' \
-  | grep -iqE '^access-control-allow-origin: (\*|https://evil)' && fail "CORS allows an arbitrary origin" || ok "CORS"
+if cors=$(curl -si -X OPTIONS "$MCP" -H 'Origin: https://evil.example' -H 'Access-Control-Request-Method: POST'); then
+  grep -iqE '^access-control-allow-origin: (\*|https://evil)' <<<"$cors" && fail "CORS allows an arbitrary origin" || ok "CORS"
+else
+  fail "CORS request failed"
+fi
 
 exit $F

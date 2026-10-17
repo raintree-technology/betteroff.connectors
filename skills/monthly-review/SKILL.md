@@ -35,7 +35,7 @@ Call `betteroff_get_setup_status` first. If a step is `action_needed`, name it a
 
 Then make these reads. They are independent, so make them together when the client allows:
 
-- `betteroff_get_cash_flow` for the review month. Use `priorPeriod` for the comparison.
+- `betteroff_get_cash_flow` for the review month. For complete months, make a second call with `startDate` and `endDate` covering the entire previous calendar month. Compare the top-level totals from the two responses. `priorPeriod` uses the same elapsed days and can omit the end of a longer previous month. For an incomplete current month, use `priorPeriod` only when its returned dates match the intended comparison dates.
 - `betteroff_analyze_spending` for the review month with `comparison` set to the prior month.
 - `betteroff_detect_spending_patterns` for the review month.
 - `betteroff_list_recurring`.

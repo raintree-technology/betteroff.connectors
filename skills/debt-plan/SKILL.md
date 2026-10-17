@@ -34,10 +34,10 @@ The user's explicit instructions take priority over this skill. When the `househ
 
 When the simulation refuses with `missingInputs`:
 
-1. Name each listed debt and the missing balance, APR, or minimum payment.
-2. Ask the user for the values. Do not estimate them.
-3. Call `betteroff_propose_debt_details` with the `debtId` from `betteroff_list_debts` and only the values the user supplied.
-4. Give the `reviewUrl`. The simulation keeps refusing until the user approves the terms in BetterOff. Offer to rerun it afterward.
+1. Name each listed debt and its missing inputs. For missing balances or currency conversions, direct the user to resolve the source data in BetterOff. Debt-detail proposals cannot supply balances or exchange rates.
+2. For missing APRs or minimum payments, ask the user for those terms. Do not estimate them.
+3. If the user supplies supported terms, call `betteroff_propose_debt_details` with the `debtId` from `betteroff_list_debts`. Set `interestRate` and `minimumPayment` to the supplied values or null to leave them unchanged, and set `nextPaymentDueDate` to null unless the user supplied it. Do not send a proposal when no supported term was supplied.
+4. Give each returned `reviewUrl`. Offer to rerun the simulation after approval and resolution of any remaining missing balances or conversions. Approval alone does not resolve those missing inputs.
 
 ## Report
 

@@ -47,6 +47,6 @@ Existing manual choices on other payments stay unchanged. Payee rules also match
 
 ## Prepare
 
-Call `betteroff_propose_category_change` once per confirmed group, with the transaction ids from the search and the target category. Report `selectedCount`, `matchingCount`, and `reviewUrl` for each proposal.
+Split each confirmed group into batches of at most 10 distinct transaction ids. Include every selected transaction exactly once. Call `betteroff_propose_category_change` once per batch with the target category. Report `selectedCount`, `matchingCount`, and `reviewUrl` for every proposal.
 
 End with the list of review links. Say that no categories change until the user approves each proposal in BetterOff, and that an expired or stale proposal must be prepared again.

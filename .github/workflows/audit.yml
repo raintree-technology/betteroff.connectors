@@ -35,6 +35,7 @@ jobs:
       - run: python3 scripts/tools_catalog.py --check
       - run: python3 scripts/test_audit_package.py
       - run: python3 scripts/audit_package.py
+      - run: python3 scripts/test_audit_server.py
       - name: Scan Git history for secrets
         env:
           GITLEAKS_VERSION: "8.30.0"

@@ -86,7 +86,7 @@ Use only values the user supplied. Proposal tools persist a review record but do
 - `betteroff_propose_recurring_kind` takes the `streamId` from `betteroff_list_recurring`.
 - `betteroff_propose_debt_details` takes the `debtId` from `betteroff_list_debts`. Use the debt's `displayName` only when no `debtId` is available. If more than one debt could match, ask the user which one.
 
-When `betteroff_simulate_debt_payoff` refuses with `missingInputs`, ask the user for the missing terms, then prepare `betteroff_propose_debt_details`. The simulation keeps refusing until the user approves those terms in BetterOff.
+When `betteroff_simulate_debt_payoff` refuses with `missingInputs`, ask the user for missing APRs or minimum payments, then prepare `betteroff_propose_debt_details` only for supported terms they supply. Send null for unchanged required fields. Missing balances or currency conversions require resolving the source data in BetterOff; debt-detail proposals cannot supply them. Rerun the simulation only after approval and resolution of all remaining missing inputs.
 
 Category review offers two choices: selected payments only; or selected payments, other matching payments, and future matching payments. Existing manual choices on other payments remain unchanged. Payee rules also restrict payment amount and currency. Do not describe a separate future-only choice.
 
