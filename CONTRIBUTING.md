@@ -61,7 +61,7 @@ Maintainers need sibling checkouts of `betteroff.finance` and `betteroff.connect
 
 1. Review both working trees. Reconcile connector-only plugin changes in finance before syncing so they are not overwritten.
 2. In finance, edit `plugins/betteroff/skills/<name>/SKILL.md` and its `agents/openai.yaml` when applicable. Edit manifests under `plugins/betteroff/` and the ChatGPT generator at `tools/connectors/package-chatgpt.py`. Wrap transfer-only text in `<!-- transfers -->` and `<!-- /transfers -->` lines; the ChatGPT package removes those blocks.
-3. From finance, run `bun tools/connectors/sync-public.ts ../betteroff.connectors`, then repeat with `--check`. This updates the distributed plugin, root Gemini metadata and skills, marketplace manifests, and `scripts/package_chatgpt.py`.
+3. From finance, run `bun tools/connectors/sync-public.ts ../connectors`, then repeat with `--check`. This updates the distributed plugin, root Gemini metadata and skills, marketplace manifests, and `scripts/package_chatgpt.py`.
 4. When shared rules change, update them in each applicable finance skill and align this repository's `scripts/core_rules.md` with those rules. Run `python3 scripts/sync_skills.py --check` here to verify the mirror. Do not run its write mode with stale rules: it overwrites the distributed skills. `household-review` has its own fuller rules.
 5. Run the package audit below. CI checks every distributed file, including agent metadata. Review unexpected files manually; the finance sync command refuses to remove target-only plugin files.
 
