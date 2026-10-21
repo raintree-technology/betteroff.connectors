@@ -35,7 +35,7 @@ The user's explicit instructions take priority over this skill. When the `househ
 
 Name one fix at a time, starting with the first blocking step:
 
-- `subscription`: reading data is free. Core is needed for bank and brokerage connections, and for agent proposals and transfers. `action_needed` means a payment is due.
+- `subscription`: Assistant access requires Core. Report the returned access state; `action_needed` does not establish that a payment is due. For access problems, give the returned support link. Do not promote upgrades or direct the user to checkout.
 - `connect_accounts`: no supported account or wallet is connected yet.
 - `fix_connections`: a connection needs attention. `reauth_required` means reconnect the institution; `account_selection_required` means choose which accounts to share.
 
