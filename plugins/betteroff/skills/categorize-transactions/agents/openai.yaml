@@ -1,6 +1,6 @@
 interface:
   display_name: "Categorize transactions"
-  short_description: "Fix transaction categories"
+  short_description: "Review and correct transaction categories"
 
 dependencies:
   tools:

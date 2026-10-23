@@ -1,6 +1,6 @@
 interface:
   display_name: "Portfolio check"
-  short_description: "Check allocation and concentration"
+  short_description: "See where your investments are concentrated"
 
 dependencies:
   tools:

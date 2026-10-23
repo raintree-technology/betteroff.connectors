@@ -1,6 +1,6 @@
 interface:
   display_name: "Setup and connections"
-  short_description: "Fix BetterOff setup"
+  short_description: "Find missing accounts and connection issues"
 
 dependencies:
   tools:
