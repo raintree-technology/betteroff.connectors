@@ -22,7 +22,7 @@
 		"com.openai": {
 			"interface": {
 				"displayName": "BetterOff",
-				"longDescription": "Ask about your money across the bank accounts, investments, and crypto wallets connected to BetterOff. Find a restaurant charge, review your net worth, or see your DeFi positions alongside your other accounts.\n\nReview recurring charges, investments, and debts using the accounts connected to BetterOff. Answers include dates and flag missing or incomplete information.\n\nConnect your BetterOff account and choose what the assistant can access. With correction access, prepare changes to transaction categories, recurring payments, and debt details for approval in BetterOff. With separate transfer permission, you can prepare wallet transfers, bank transfers between your own linked accounts, and vault deposits; approve each request in BetterOff and complete the required wallet signature or passkey confirmation. The plugin cannot apply a correction, approve or execute transfer requests, pay bills, or place trades. Diagnostic reports are sent to BetterOff support only with your permission and must exclude financial records and credentials.",
+				"longDescription": "Ask about your money across the bank accounts, investments, and crypto wallets connected to BetterOff. Find a restaurant charge, compare monthly spending, review subscriptions, or see your net worth and DeFi positions.\n\nChoose what the assistant can access. Answers include dates and flag incomplete data. Category, recurring-payment, and debt-detail corrections require approval in BetterOff. With separate transfer permission, you can prepare wallet transfers, bank transfers between your own linked accounts, and vault deposits; approve each request in BetterOff and complete the required wallet signature or passkey confirmation. The plugin cannot apply corrections, move money, pay bills, or place trades.",
 				"category": "Finance",
 				"capabilities": [
 					"Check net worth and balance dates",
@@ -42,9 +42,9 @@
 				"composerIcon": "./assets/icon.png",
 				"logo": "./assets/icon.png",
 				"defaultPrompt": [
-					"Show my net worth across my connected accounts and wallets.",
+					"Show my net worth across my accounts and wallets.",
 					"How much have I spent at restaurants in the past three months?",
-					"Show my DeFi assets and debts, with their latest dates."
+					"Show my DeFi assets and debts."
 				]
 			},
 			"review": {
