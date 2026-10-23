@@ -90,12 +90,17 @@ claude plugin validate --strict . && claude plugin validate --strict plugins/bet
 scripts/audit_server.sh && python3 scripts/tools_catalog.py --live
 ```
 
+Two more workflows run on pull requests. Each job has no token permissions beyond the ones it declares.
+
+- **CodeQL** (`.github/workflows/codeql.yml`) scans the Python scripts and the workflows with the `security-extended` queries. It also runs on pushes to `main` and weekly.
+- **Dependency review** (`.github/workflows/dependency-review.yml`) fails a pull request that adds a dependency, including a GitHub Action, with a known vulnerability of moderate severity or worse.
+
 `audit_server.sh` exits with status 2 and a single `SKIP` line when the runner cannot resolve the API host or its proxy (curl exit 5 or 6). That result is a network problem, not a server regression. A timeout, refused connection, or TLS failure exits with status 1 as a server failure.
 
 Dependabot proposes GitHub Actions updates weekly and waits seven days after each release. Update the other two pinned tools by hand in `audit.yml`:
 
 - **gitleaks:** change `GITLEAKS_VERSION` and `GITLEAKS_SHA256` together. Take the hash from the `linux_x64` line of the release's `checksums.txt`.
-- **Claude Code:** bump the pinned version deliberately and confirm that `--strict` validation still passes.
+- **Claude Code:** change `CLAUDE_CODE_VERSION` and `CLAUDE_CODE_SHA256` together, and confirm that `--strict` validation still passes. The job downloads the `@anthropic-ai/claude-code-linux-x64` tarball from the npm registry without running install scripts. Take the hash with `curl -fsSL <dist.tarball> | sha256sum`, and check that the tarball's SHA-512 matches `npm view @anthropic-ai/claude-code-linux-x64@<version> dist.integrity`. Pick a release at least three days old.
 
 ## Releases
 

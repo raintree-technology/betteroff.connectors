@@ -8,8 +8,8 @@ on:
     - cron: "17 13 * * *"
   workflow_dispatch:
 
-permissions:
-  contents: read
+# Nothing by default; each job asks for what it needs.
+permissions: {}
 
 # A separate group per event keeps a push to main from cancelling a pending scheduled audit.
 concurrency:
@@ -22,6 +22,8 @@ jobs:
     if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -47,8 +49,20 @@ jobs:
           echo "${GITLEAKS_SHA256}  /tmp/gitleaks.tar.gz" | sha256sum -c -
           tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
           /tmp/gitleaks git --redact --no-banner .
+      # Fetches the native binary directly, so no npm install script runs.
       # Bump deliberately and confirm that --strict validation still passes.
-      - run: npm install -g @anthropic-ai/claude-code@2.1.292
+      - name: Install Claude Code
+        env:
+          CLAUDE_CODE_VERSION: "2.1.292"
+          # Update with the version: sha256 of the linux-x64 tarball, which must match the registry's dist.integrity.
+          CLAUDE_CODE_SHA256: "a389726dfe70db0cadefd93ac9850c50783f554bb4e0edef9cc607048d57a503"
+        run: |
+          curl -fsSL "https://registry.npmjs.org/@anthropic-ai/claude-code-linux-x64/-/claude-code-linux-x64-${CLAUDE_CODE_VERSION}.tgz" -o /tmp/claude-code.tgz
+          echo "${CLAUDE_CODE_SHA256}  /tmp/claude-code.tgz" | sha256sum -c -
+          mkdir -p /tmp/claude-code
+          tar -xzf /tmp/claude-code.tgz -C /tmp/claude-code --strip-components=1 package/claude
+          echo /tmp/claude-code >> "$GITHUB_PATH"
+      - run: claude --version
       - run: claude plugin validate --strict .
       - run: claude plugin validate --strict plugins/betteroff
 
