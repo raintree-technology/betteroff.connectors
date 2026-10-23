@@ -74,7 +74,7 @@ Changes reach `main` only through pull requests. Branch protection applies to ad
 The **Audit** workflow in `.github/workflows/audit.yml` runs two jobs:
 
 - **`package`** runs on pull requests, pushes to `main`, and manual runs. It tests and runs the public-content, package, skill-sync, and tool-catalog audits, scans the full Git history with gitleaks, and validates the marketplace and the plugin with `claude plugin validate --strict`.
-- **`server`** runs daily and on manual runs. It checks the live MCP endpoint's OAuth discovery, token rejection, HTTPS redirect, HSTS, and CORS behavior, and compares `tools.json` with the tool operations in the public OpenAPI document. A scheduled failure opens or updates a **Scheduled server audit failed** issue. The job does not run on pull requests, so a server outage cannot block a merge.
+- **`server`** runs daily and on manual runs. It checks the live MCP endpoint's OAuth discovery, token rejection, HTTPS redirect, HSTS, and CORS behavior, and compares `tools.json` with the tool operations in the public OpenAPI document. A scheduled failure opens or updates a **Scheduled server audit failed** issue, and the next passing scheduled run closes it. The job does not run on pull requests, so a server outage cannot block a merge.
 
 To run the same checks before you open a pull request, run these commands from the repository root. The server check needs `curl` and `jq`.
 
@@ -90,7 +90,7 @@ claude plugin validate --strict . && claude plugin validate --strict plugins/bet
 scripts/audit_server.sh && python3 scripts/tools_catalog.py --live
 ```
 
-`audit_server.sh` exits with status 2 and a single `SKIP` line when the runner cannot reach the API, for example behind a proxy. That result is a network problem, not a server regression.
+`audit_server.sh` exits with status 2 and a single `SKIP` line when the runner cannot resolve the API host or its proxy (curl exit 5 or 6). That result is a network problem, not a server regression. A timeout, refused connection, or TLS failure exits with status 1 as a server failure.
 
 Dependabot proposes GitHub Actions updates weekly and waits seven days after each release. Update the other two pinned tools by hand in `audit.yml`:
 

@@ -6,7 +6,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CORE_RULES = re.compile(r'(^## Core rules\n\n).*?(?=^## )', re.M | re.S)
+# The section ends at the next heading or, when it is the last section, at the end of the file.
+CORE_RULES = re.compile(r'(^## Core rules\n\n).*?(?=^## |\Z)', re.M | re.S)
 
 
 def inventory(directory):
@@ -26,11 +27,12 @@ def apply_core_rules(root, check):
     rules = root / 'scripts/core_rules.md'
     if not rules.is_file():
         return []
-    block = rules.read_text() + '\n'
+    rules_text = rules.read_text()
     changed = []
     for skill in sorted((root / 'plugins/betteroff/skills').glob('*/SKILL.md')):
         text = skill.read_text()
-        updated = CORE_RULES.sub(lambda match: match.group(1) + block, text)
+        updated = CORE_RULES.sub(
+            lambda match: match.group(1) + rules_text + ('' if match.end() == len(text) else '\n'), text)
         if updated != text:
             changed.append(skill.relative_to(root))
             if not check:

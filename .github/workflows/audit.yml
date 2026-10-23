@@ -11,8 +11,9 @@ on:
 permissions:
   contents: read
 
+# A separate group per event keeps a push to main from cancelling a pending scheduled audit.
 concurrency:
-  group: audit-${{ github.ref }}
+  group: audit-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -79,4 +80,15 @@ jobs:
             gh issue comment "$number" --repo "$GITHUB_REPOSITORY" --body "Failed again: $RUN_URL"
           else
             gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body "The daily server audit failed: $RUN_URL"
+          fi
+      - name: Close the scheduled failure issue after a passing audit
+        if: success() && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          title="Scheduled server audit failed"
+          number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
+          if [[ -n $number ]]; then
+            gh issue close "$number" --repo "$GITHUB_REPOSITORY" --comment "Passed again: $RUN_URL"
           fi

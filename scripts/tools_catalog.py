@@ -70,7 +70,7 @@ def check(root):
         if path.is_file() and path.suffix in ('.md', '.json', '.yaml', '.cjs'):
             for name in sorted(set(TOOL.findall(path.read_text())) - set(names)):
                 errors.append(f'{path.relative_to(root)}: unknown tool {name}')
-    if f'{len(names)} tools' not in (root / 'README.md').read_text():
+    if not re.search(rf'(?<!\d){len(names)} tools\b', (root / 'README.md').read_text()):
         errors.append(f'README.md must state "{len(names)} tools"')
     return errors
 

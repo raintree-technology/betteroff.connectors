@@ -1,8 +1,10 @@
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
 from zipfile import ZipFile
+import package_chatgpt
 from package_chatgpt import build, SOURCE, TRANSFER_TOOLS
 
 class ChatgptPackageTest(unittest.TestCase):
@@ -36,6 +38,27 @@ class ChatgptPackageTest(unittest.TestCase):
                     self.assertNotIn(name, skill)
                 self.assertNotIn('transfers:prepare', skill)
         self.assertEqual(before, (SOURCE / 'plugin.json').read_bytes())
+
+    def build_with(self, directory, name, text):
+        copy = Path(directory) / 'betteroff'
+        shutil.copytree(SOURCE, copy)
+        target = copy / 'skills/monthly-review' / name
+        target.write_text((target.read_text() if target.exists() else '') + text)
+        self.addCleanup(setattr, package_chatgpt, 'SOURCE', SOURCE)
+        package_chatgpt.SOURCE = copy
+        return build(Path(directory) / 'chatgpt.zip')
+
+    def test_nested_transfer_block_fails(self):
+        nested = ('<!-- transfers -->\na\n<!-- transfers -->\nb\n<!-- /transfers -->\n'
+                  'Wallet transfer text\n<!-- /transfers -->\n')
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(ValueError, 'Transfer tool remains'):
+                self.build_with(directory, 'SKILL.md', nested)
+
+    def test_transfer_tool_in_unfiltered_file_fails(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(ValueError, 'unfiltered file'):
+                self.build_with(directory, 'reference.txt', 'Call betteroff_request_transfer.\n')
 
 if __name__ == '__main__':
     unittest.main()

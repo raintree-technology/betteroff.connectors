@@ -83,6 +83,12 @@ class ToolCatalogTests(unittest.TestCase):
         target.write_text(json.dumps(spec))
         self.assertTrue(any(error.startswith('version:') for error in check_live(self.root, target.as_uri())))
 
+    def test_readme_tool_count_must_match_exactly(self):
+        readme = self.root / 'README.md'
+        count = len(json.loads((self.root / 'tools.json').read_text())['tools'])
+        readme.write_text(readme.read_text().replace(f'{count} tools', f'1{count} tools'))
+        self.assertIn(f'README.md must state "{count} tools"', check(self.root))
+
     def test_render_counts_tools(self):
         self.assertIn('29 tools: 21 read tools and 8 write tools', render(json.loads((ROOT / 'tools.json').read_text())))
 
