@@ -69,7 +69,7 @@ Keep both copies as regular files. Do not replace a workflow with a link to anot
 
 ## Contribution checks
 
-Changes reach `main` only through pull requests. Branch protection applies to administrators, every commit must be signed, and the `package` check must pass before a pull request can merge.
+Changes reach `main` only through squash-merged pull requests. A repository ruleset with no bypass blocks force-pushes and deletion, requires signed commits, linear history, and resolved review threads, and requires the `package`, `analyze (python)`, `analyze (actions)`, and `review` checks to pass on an up-to-date branch.
 
 The **Audit** workflow in `.github/workflows/audit.yml` runs two jobs:
 
