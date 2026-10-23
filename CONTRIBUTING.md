@@ -17,7 +17,7 @@ Use this guide to find the source for each kind of documentation and run reposit
 | Connect an agent or work in this repository as an agent | [Agent guide](AGENTS.md) |
 | Change an agent workflow | `betteroff.finance/plugins/betteroff/skills/<name>/SKILL.md`; see [Agent workflow sources](#agent-workflow-sources) |
 | Prepare directory submissions | [Directory guide](integrations/directories/README.md) |
-| Inspect dated directory evidence | [Directory evidence](integrations/directories/evidence-2026-10-13.md) |
+| Inspect dated directory evidence | [Directory evidence](integrations/directories/evidence-2026-10-13.md) and [ChatGPT approval](integrations/directories/evidence-2026-10-22.md) |
 | Build and validate the Zapier integration | [Zapier private preview guide](integrations/zapier/README.md) and [evidence](integrations/zapier/evidence-2026-10-13.md) |
 | Investigate Glama's OAuth callback | [Reproduction and relay experiment](integrations/directories/evidence-2026-10-13.md#glama-oauth-callback-handoff-reproduction) |
 | Report a vulnerability | [Security policy](SECURITY.md) |
@@ -103,7 +103,7 @@ Update plugin versions in finance and sync them here before updating `tools.json
 
 ## ChatGPT submission package
 
-**Submission preparation only — public approval and listing unverified in this repository.** A generated ZIP is not an approved directory integration.
+**Approved October 22, 2026 as portal version 1.0.0; not published.** See the [approval record](integrations/directories/evidence-2026-10-22.md). A generated ZIP is not an approved directory integration.
 
 Generate the ChatGPT ZIP separately from the shared client plugin:
 

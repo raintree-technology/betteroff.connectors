@@ -2,20 +2,20 @@
 
 # BetterOff MCP directory guide
 
-[All clients](../../README.md#install-the-connector) · [Contributing](../../CONTRIBUTING.md) · [Dated evidence](evidence-2026-10-13.md) · [Zapier private preview](../zapier/README.md)
+[All clients](../../README.md#install-the-connector) · [Contributing](../../CONTRIBUTING.md) · [Dated evidence](evidence-2026-10-13.md) · [ChatGPT approval](evidence-2026-10-22.md) · [Zapier private preview](../zapier/README.md)
 
 This guide owns directory status, submission fields, and the acceptance procedure. Dated test logs, request IDs, and the Glama investigation are in the [October 13, 2026 evidence record](evidence-2026-10-13.md), beside the JSON results in this folder. A directory listing publishes metadata; it never grants access to a household.
 
 ## Status
 
-Recorded October 13, 2026. Do not change a status without dated evidence for that destination.
+Recorded October 13, 2026; the ChatGPT row was updated October 22, 2026. Do not change a status without dated evidence for that destination.
 
 | Destination | Status | Next step |
 | --- | --- | --- |
 | [Official MCP Registry](#official-mcp-registry) | Published as `finance.betteroff/mcp` | Publish [server.json](server.json) with a new version for each change |
 | [Smithery](#smithery) | Published; owned by a test-account namespace | Claim vendor ownership; test token renewal |
 | [Claude connector directory](#chatgpt-and-claude-connector-directories) | Not submitted | Submit through the developer portal |
-| [ChatGPT directory](#chatgpt-and-claude-connector-directories) | Not approved or listed | Test the restricted ChatGPT client, then submit the package |
+| [ChatGPT directory](#chatgpt-and-claude-connector-directories) | Approved October 22, 2026 as portal version 1.0.0; not published | Publish from the OpenAI plugins page, then test the transfer restriction in ChatGPT |
 | [Glama](#glama) | Not submitted; OAuth callback fails in Glama's inspector | Glama fixes its popup handoff |
 | [PulseMCP](#pulsemcp) | Not listed; manual submissions paused | Check for Registry ingestion when PulseMCP resumes |
 
@@ -32,7 +32,7 @@ The independent production lifecycle test passed: scoped sign-in, discovery, rea
 
 Claude Code plugin tests do not verify this destination. Source: [Submit a connector to the directory](https://claude.com/docs/connectors/building/submission), reviewed October 13, 2026.
 
-**ChatGPT.** Build the restricted package with the [ChatGPT submission procedure](../../CONTRIBUTING.md#chatgpt-submission-package). A generated ZIP is not an approved listing.
+**ChatGPT.** Build the restricted package with the [ChatGPT submission procedure](../../CONTRIBUTING.md#chatgpt-submission-package). A generated ZIP is not an approved listing. OpenAI approved BetterOff for the ChatGPT directory on October 22, 2026; it is not published yet, and no authenticated ChatGPT test is recorded. See the [approval record](evidence-2026-10-22.md).
 
 The same `readOnlyHint` annotations drive Hermes Agent's approval prompt for `trust: untrusted` servers and Zapier's **Read-Only** label.
 
