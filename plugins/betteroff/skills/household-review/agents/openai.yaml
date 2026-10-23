@@ -1,6 +1,6 @@
 interface:
-  display_name: "Household review"
-  short_description: "Review household finances"
+  display_name: "Financial overview"
+  short_description: "Review your accounts and finances"
 
 dependencies:
   tools:

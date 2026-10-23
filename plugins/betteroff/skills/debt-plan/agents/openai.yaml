@@ -1,6 +1,6 @@
 interface:
-  display_name: "Debt plan"
-  short_description: "Compare debt payoff plans"
+  display_name: "Debt payoff plan"
+  short_description: "Compare payoff dates and interest costs"
 
 dependencies:
   tools:

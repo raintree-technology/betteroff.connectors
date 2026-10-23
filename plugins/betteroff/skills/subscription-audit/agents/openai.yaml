@@ -1,6 +1,6 @@
 interface:
-  display_name: "Subscription audit"
-  short_description: "Review recurring charges"
+  display_name: "Recurring charges"
+  short_description: "Review subscriptions and recurring bills"
 
 dependencies:
   tools:
