@@ -1,4 +1,29 @@
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/betteroff-mark-white.svg"><img src="assets/betteroff-mark-graphite.svg" alt="" width="40" height="40"></picture>
+<div align="center"><pre>
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⢿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⣿⡟⠁⠈⢻⣿⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⣿⣿⠏⠀⠀⠀⠀⠹⣿⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⡿⠁⠀⠀⠀⠀⠀⠀⠈⢿⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣾⣿⣿⠟⠀⠀⢀⣤⣾⣷⣤⡀⠀⠀⠻⣿⣿⣷⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⣿⣿⣿⣿⠋⠀⣠⣴⣿⣿⠟⠻⣿⣿⣦⣄⠀⠙⣿⣿⣿⣿⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣾⣿⣿⣿⣿⡿⢁⣴⣾⣿⡿⠋⠀⢀⡀⠀⠙⢿⣿⣷⣦⡈⢿⣿⣿⣿⣿⣷⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣀⣴⣿⡿⠋⣵⣿⣿⣿⣶⣿⣿⠟⠁⠀⢀⣴⣿⣿⣦⡀⠀⠈⠻⣿⣿⣶⣿⣿⣿⣮⠙⢿⣿⣦⣀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢀⣠⣾⣿⠟⠉⢀⣾⣿⣿⣿⣿⠿⠋⠀⠀⢀⣴⣿⡿⠟⠻⢿⣿⣦⡀⠀⠀⠙⠿⣿⣿⣿⣿⣷⡀⠉⠻⣿⣷⣄⡀⠀⠀⠀⠀
+⠀⠀⣀⣴⣿⡿⠋⠁⠀⣰⣿⣿⣿⡿⠛⠁⠀⠀⣠⣴⣿⡿⠋⠀⠀⠀⠀⠙⢿⣿⣦⣄⠀⠀⠈⠛⢿⣿⣿⣿⣆⠀⠈⠙⢿⣿⣦⣀⠀⠀
+⣤⣾⣿⠟⠉⠀⠀⢀⣼⣿⣿⠟⠋⠀⠀⠀⣠⣾⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣿⣷⣄⠀⠀⠀⠙⠻⣿⣿⣧⡀⠀⠀⠉⠻⣿⣷⣤
+⠛⢿⣿⣦⣀⠀⠀⠈⢻⣿⣿⣦⣄⠀⠀⠀⠙⢿⣿⣷⣄⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⡿⠋⠀⠀⠀⣠⣴⣿⣿⡟⠁⠀⠀⣀⣴⣿⡿⠛
+⠀⠀⠉⠻⣿⣷⣄⡀⠀⠹⣿⣿⣿⣷⣤⡀⠀⠀⠙⠻⣿⣷⣄⠀⠀⠀⠀⣠⣾⣿⠟⠋⠀⠀⢀⣤⣾⣿⣿⣿⠏⠀⢀⣠⣾⣿⠟⠉⠀⠀
+⠀⠀⠀⠀⠈⠙⢿⣿⣦⣀⠈⢿⣿⣿⣿⣿⣶⣄⠀⠀⠈⠻⣿⣷⣦⣴⣾⣿⠟⠁⠀⠀⣠⣶⣿⣿⣿⣿⡿⠁⣀⣴⣿⡿⠋⠁⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠉⠻⣿⣷⣄⡻⣿⣿⣿⠿⣿⣿⣦⡀⠀⠈⠻⣿⣿⠟⠁⠀⢀⣴⣿⣿⠿⣿⣿⣿⢟⣠⣾⣿⠟⠉⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣷⡈⠻⢿⣿⣷⣄⠀⠈⠁⠀⣠⣾⣿⡿⠟⢁⣾⣿⣿⣿⣿⡿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⣿⣿⣿⣿⣄⠀⠙⠻⣿⣿⣦⣴⣿⣿⠟⠋⠀⣠⣿⣿⣿⣿⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣿⣿⣦⠀⠀⠈⠛⢿⡿⠛⠁⠀⠀⣴⣿⣿⡿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣷⡀⠀⠀⠀⠀⠀⠀⢀⣾⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⣿⣆⠀⠀⠀⠀⣰⣿⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣿⣧⡀⢀⣼⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣷⣾⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+</pre></div>
 
 # BetterOff connectors
 
@@ -61,7 +86,7 @@ Use the [workflow picker](docs/connector.md#choose-a-workflow) for household rev
 
 ## Directory listings
 
-BetterOff is published in the [official MCP Registry](integrations/directories/README.md#official-mcp-registry) as `finance.betteroff/mcp` and on [Smithery](integrations/directories/README.md#smithery). It is not yet listed in the ChatGPT or Claude connector directories, Glama, or PulseMCP. A [Zapier integration](integrations/zapier/README.md) is in private preview. The [directory guide](integrations/directories/README.md) tracks each submission.
+BetterOff is published in the [official MCP Registry](integrations/directories/README.md#official-mcp-registry) as `finance.betteroff/mcp` and on [Smithery](integrations/directories/README.md#smithery). OpenAI approved BetterOff for the ChatGPT directory on October 22, 2026; it is not published there yet. It is not listed in the Claude connector directory, Glama, or PulseMCP. A [Zapier integration](integrations/zapier/README.md) is in private preview. The [directory guide](integrations/directories/README.md) tracks each submission.
 
 ## Security and support
 
