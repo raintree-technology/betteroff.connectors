@@ -47,6 +47,9 @@ Existing manual choices on other payments stay unchanged. Payee rules also match
 
 ## Prepare
 
-Split each confirmed group into batches of at most 10 distinct transaction ids. Include every selected transaction exactly once. Call `betteroff_propose_category_change` once per batch with the target category. Report `selectedCount`, `matchingCount`, and `reviewUrl` for every proposal.
+Each proposal takes at most 10 distinct transaction ids. Call `betteroff_propose_category_change` with the target category and report `selectedCount`, `matchingCount`, and `reviewUrl` for every proposal.
+
+- Selected payments only: split each confirmed group into batches of at most 10 ids and include every selected transaction exactly once. Tell the user to choose selected payments only when approving each batch; choosing matching payments on one batch makes the other batches for that merchant stale.
+- Matching and future payments: prepare one proposal per merchant with up to 10 of the selected ids. Approving it changes every matching payment from that merchant, so any other pending proposal for that merchant would go stale. After the user approves, search again and prepare proposals only for selected payments that still have the old category.
 
 End with the list of review links. Say that no categories change until the user approves each proposal in BetterOff, and that an expired or stale proposal must be prepared again.

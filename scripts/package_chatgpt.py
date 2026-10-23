@@ -54,10 +54,14 @@ def build(output):
                 if relative == Path('skills/household-review/SKILL.md'):
                     text = replace_once(text, 'prepares corrections and transfer requests for', 'prepares corrections for')
                     text += '\nThis ChatGPT plugin cannot request, approve, sign, or execute transfers.\n'
-                if '<!-- transfers' in text or 'transfers:' in text or any(tool in text for tool in TRANSFER_TOOLS):
+                if 'transfers -->' in text or 'transfers:' in text or any(tool in text for tool in TRANSFER_TOOLS):
                     raise ValueError(f'Transfer tool remains in {relative}')
                 archive.writestr(str(relative), text)
             else:
+                # Only .md and .yaml files are filtered, so reject transfer text in any other file.
+                data = path.read_bytes()
+                if b'transfers' in data or any(tool.encode() in data for tool in TRANSFER_TOOLS):
+                    raise ValueError(f'Transfer text in unfiltered file {relative}')
                 archive.write(path, relative)
     return output
 

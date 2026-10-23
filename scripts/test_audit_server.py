@@ -16,6 +16,8 @@ mcp = 'https://api.betteroff.finance/mcp'
 issuer = 'https://app.betteroff.finance/api/auth'
 metadata = 'https://api.betteroff.finance/.well-known/oauth-protected-resource/mcp'
 url = next(arg for arg in args if arg.startswith(('https://', 'http://')))
+if case == 'dns_failure': sys.exit(6)
+if case == 'server_timeout': sys.exit(28)
 if 'OPTIONS' in args:
     if case == 'cors_timeout': sys.exit(28)
     print('HTTP/2 204')
@@ -74,6 +76,17 @@ class ServerAuditTests(unittest.TestCase):
         result = self.run_audit('metadata_timeout')
         self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
         self.assertNotIn('is not HTML', result.stdout)
+
+    def test_runner_dns_failure_skips(self):
+        result = self.run_audit('dns_failure')
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn('SKIP', result.stdout)
+
+    def test_unreachable_server_fails(self):
+        result = self.run_audit('server_timeout')
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertIn('FAIL cannot reach', result.stdout)
+        self.assertNotIn('SKIP', result.stdout)
 
     def test_permissive_cors_fails(self):
         result = self.run_audit('cors_open')
