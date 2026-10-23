@@ -1,6 +1,6 @@
 ---
 name: household-review
-description: Reads BetterOff household finances and prepares corrections and transfer requests for authenticated user review in BetterOff. Use for accounts, net worth, transactions, spending, cash flow, recurring payments, investments, DeFi, debts, financial findings, and permitted financial activity.
+description: Answers direct questions about BetterOff accounts, balances, net worth, transactions, cash flow, and DeFi, and prepares corrections and transfer requests for review in BetterOff. Use for general financial questions; use the specialist skills for monthly reviews, subscription audits, portfolio checks, debt payoff comparisons, category cleanup, financial checkups, or connection problems.
 ---
 
 # BetterOff household review
