@@ -13,7 +13,7 @@ Use this guide to find the source for each kind of documentation and run reposit
 | Install a client and choose a workflow | [Installation guide](README.md) |
 | Check client verification and its limits | [Client guides](README.md#install-the-connector) and [status vocabulary](#client-status-vocabulary) |
 | Understand permissions, data, and approval boundaries | [Connector reference](docs/connector.md) |
-| Look up a tool's access, plan, and scopes | [tools.json](tools.json), rendered as the [tool reference](docs/tools.md) |
+| Look up a tool's access and scopes | [tools.json](tools.json), rendered as the [tool reference](docs/tools.md) |
 | Connect an agent or work in this repository as an agent | [Agent guide](AGENTS.md) |
 | Change an agent workflow | `betteroff.finance/plugins/betteroff/skills/<name>/SKILL.md`; see [Agent workflow sources](#agent-workflow-sources) |
 | Prepare directory submissions | [Directory guide](integrations/directories/README.md) |

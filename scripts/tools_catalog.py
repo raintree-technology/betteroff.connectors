@@ -23,7 +23,7 @@ def render(catalog):
     tools = catalog['tools']
     writes = sum(not t['readOnly'] for t in tools)
     rows = '\n'.join(
-        f"| `{t['name']}` | {'Read' if t['readOnly'] else 'Write'} | {'Core' if t['plan'] == 'core' else 'Free'} "
+        f"| `{t['name']}` | {'Read' if t['readOnly'] else 'Write'} "
         f"| {', '.join(f'`{s}`' for s in t['scopes'])} | {t['summary']} |"
         for t in tools)
     return f"""<!-- Generated from tools.json by scripts/tools_catalog.py. Edit tools.json, then run the script. -->
@@ -37,12 +37,12 @@ Connector package {catalog['version']} describes hosted server {catalog['serverV
 
 - **Read** tools return data and change nothing.
 - **Write** tools save a pending correction or transfer request, cancel a pending request, or send feedback. None can apply a correction, approve a transfer, or sign a transaction. You do those in BetterOff. Cancellation and feedback take effect when called.
-- **Core** is required for every MCP and tools API call, including reads and feedback. Free accounts and trials cannot use these tools.
+- Every tool requires BetterOff Core, over MCP or REST. The Free plan and trials do not include tool access.
 
 The same catalog is available as [tools.json](../tools.json). With an API token, call any tool at `POST https://api.betteroff.finance/v1/tools/{{name}}`; see the [developer documentation](https://betteroff.finance/developers) and the [tool OpenAPI document]({catalog['openapi']}).
 
-| Tool | Access | Plan | Scopes | Description |
-| --- | --- | --- | --- | --- |
+| Tool | Access | Scopes | Description |
+| --- | --- | --- | --- |
 {rows}
 """
 
