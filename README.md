@@ -96,7 +96,7 @@ Each guide starts with what has been tested for that client. Codex, Claude Code,
 
 ## Workflows and tools
 
-Use the [workflow picker](docs/connector.md#choose-a-workflow) for household reviews, subscriptions, categories, debt, investments, setup, and financial checkups. The [tool reference](docs/tools.md) lists every tool with its access, plan, and scopes; [tools.json](tools.json) is the machine-readable copy. Read the [connector reference](docs/connector.md) for approval boundaries, troubleshooting, and disconnection.
+Use the [workflow picker](docs/connector.md#choose-a-workflow) for household reviews, subscriptions, categories, debt, investments, setup, and financial checkups. The [tool reference](docs/tools.md) lists every tool with its access and scopes; [tools.json](tools.json) is the machine-readable copy. Read the [connector reference](docs/connector.md) for approval boundaries, troubleshooting, and disconnection.
 
 ## Directory listings
 

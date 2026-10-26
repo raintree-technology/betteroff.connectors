@@ -27,7 +27,7 @@ The user's explicit instructions take priority over this skill. When the `househ
 
 ## Read
 
-1. Call `betteroff_get_setup_status`. Report each step whose `status` is `action_needed`, in the returned order, with its `url`. A step with `status: optional` is not a blocker; mention it only if the user asks about Core.
+1. Call `betteroff_get_setup_status`. Report each step whose `status` is `action_needed`, in the returned order, with its `url`.
 2. Call `betteroff_list_accounts`. Flag accounts with no balance or with an old `balanceAsOf`, and state the `balanceAsOfSource`.
 3. Call `betteroff_get_overview` for `coverage` counts and the ledger review count.
 

@@ -21,7 +21,7 @@ Write scopes: `corrections:prepare`, `transfers:prepare`, `transfers:bank`, `tra
 
 ## Tools
 
-[tools.json](tools.json) lists all 29 tools with title, scopes, read or write access, and plan. [docs/tools.md](docs/tools.md) is the same list for people. An authenticated synthetic-grant check on October 13, 2026 confirmed that all 29 production MCP tools declare `title`, `readOnlyHint`, and `destructiveHint: false`. The daily `python3 scripts/tools_catalog.py --live` check compares production OpenAPI `x-mcp-annotations.readOnlyHint` with each catalog entry's `readOnly` value. The daily OpenAPI check does not verify OAuth or client behavior. No tool applies a correction, approves a transfer, or signs a transaction; the user does that in BetterOff. Cancellation and feedback tools perform their stated writes.
+[tools.json](tools.json) lists all 29 tools with title, scopes, and read or write access. [docs/tools.md](docs/tools.md) is the same list for people. An authenticated synthetic-grant check on October 13, 2026 confirmed that all 29 production MCP tools declare `title`, `readOnlyHint`, and `destructiveHint: false`. The daily `python3 scripts/tools_catalog.py --live` check compares production OpenAPI `x-mcp-annotations.readOnlyHint` with each catalog entry's `readOnly` value. The daily OpenAPI check does not verify OAuth or client behavior. No tool applies a correction, approves a transfer, or signs a transaction; the user does that in BetterOff. Cancellation and feedback tools perform their stated writes.
 
 ## Load a skill for the task
 
