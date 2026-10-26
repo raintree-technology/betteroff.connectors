@@ -35,36 +35,50 @@ Connect your AI client to BetterOff to review household finances, find recurring
 
 ## Before you start
 
-- **Account:** You need a BetterOff household owner account and a client listed below. Connect a supported account or wallet in BetterOff to ask questions about your finances.
-- **Consent:** All household members must consent to AI processing, and you must accept the applicable BetterOff Terms. Data returned by a tool is shared with your connected client.
-- **Plan:** Most reads are free. Recurring items, checklist progress, observations, correction proposals, and transfer requests require BetterOff Core. The [tool reference](docs/tools.md) marks each tool.
-- **Approval:** The connector prepares corrections for your review. With separate permissions, it can request wallet transfers, bank transfers between your own linked accounts, and vault deposits. You review each request in BetterOff. Wallet transfers and deposits require your signature; bank transfers require passkey confirmation. The connector cannot approve or execute these requests or apply a correction.
+- **Account:** You need a BetterOff household owner account and a client listed below. To ask about your finances, first connect a supported financial account or wallet in BetterOff.
+- **Plan:** You need BetterOff Core to call any tool, read or write, over MCP or REST. The Free plan and trials do not include tool access.
+- **Consent:** Every household member must turn on **Chat data access** in BetterOff settings, and you must accept the applicable BetterOff Terms. Your connected client receives the data that each tool returns.
+- **Approval:** The connector prepares corrections for your review. If you grant the transfer scopes, it can also request wallet transfers, bank transfers between your own linked accounts, and vault deposits. You review each request in BetterOff. Wallet transfers and vault deposits require your wallet signature; bank transfers require passkey confirmation. The connector cannot apply a correction or approve or execute a request.
+
+The [tool reference](docs/tools.md) lists each tool and the scopes it requires.
 
 ## Quickstart
 
-**Claude Code.** Run in a terminal, then start a new session, run `/mcp`, select BetterOff, and sign in:
+### Claude Code
 
-```sh
-claude plugin marketplace add raintree-technology/betteroff.connectors
-claude plugin install betteroff@betteroff
-```
+1. Run these commands in a terminal:
 
-**Codex.** Run in a terminal, then start a new session and complete the BetterOff sign-in prompt:
+   ```sh
+   claude plugin marketplace add raintree-technology/betteroff.connectors
+   claude plugin install betteroff@betteroff
+   ```
 
-```sh
-codex plugin marketplace add raintree-technology/betteroff.connectors
-codex plugin add betteroff@betteroff
-```
+2. Start a new Claude Code session and run `/mcp`.
+3. Select `betteroff` and sign in to BetterOff.
 
-Then ask: “Show my household overview and flag missing or out-of-date data.” The result should name your household and include dates or missing-data warnings.
+### Codex
 
-**Other MCP clients.** Add `https://api.betteroff.finance/mcp` as a remote server with Streamable HTTP transport and OAuth sign-in.
+1. Run these commands in a terminal:
 
-**No OAuth MCP client?** Create an API token in BetterOff and call the same tools over REST at `POST https://api.betteroff.finance/v1/tools/{name}`. See the [developer documentation](https://betteroff.finance/developers) and the [tool OpenAPI document](https://api.betteroff.finance/openapi/tools.json).
+   ```sh
+   codex plugin marketplace add raintree-technology/betteroff.connectors
+   codex plugin add betteroff@betteroff
+   ```
+
+2. Start a new Codex session and complete the BetterOff sign-in prompt.
+
+### Other clients
+
+- **MCP clients with OAuth:** Add `https://api.betteroff.finance/mcp` as a remote server with Streamable HTTP transport and OAuth sign-in.
+- **Clients without OAuth:** In BetterOff, open **Settings** > **API tokens** and create a token. Then call the same tools over REST at `POST https://api.betteroff.finance/v1/tools/{name}`. See the [developer documentation](https://betteroff.finance/developers) and the [tool OpenAPI document](https://api.betteroff.finance/openapi/tools.json).
+
+### Check the connection
+
+After you sign in, ask: “Show my household overview and flag missing or out-of-date data.” The answer should name your household and include dates or missing-data warnings.
 
 ## Install the connector
 
-Each guide starts with what has been tested for that client. Codex, Claude Code, and Hermes Agent have passed sign-in and read tests with synthetic data. The other routes follow each vendor's documentation and have not yet completed a BetterOff sign-in test.
+Each guide starts with what has been tested for that client. Codex, Claude Code, and Hermes Agent passed sign-in and read tests with synthetic data on October 6, 2026. The other guides follow each vendor's documentation and have not completed a BetterOff sign-in test.
 
 | Client | Install | Guide |
 | --- | --- | --- |
@@ -82,7 +96,7 @@ Each guide starts with what has been tested for that client. Codex, Claude Code,
 
 ## Workflows and tools
 
-Use the [workflow picker](docs/connector.md#choose-a-workflow) for household reviews, subscriptions, categories, debt, investments, setup, and financial checkups. The [tool reference](docs/tools.md) lists every tool with its access, plan, and permissions; [tools.json](tools.json) is the machine-readable copy. Read the [connector reference](docs/connector.md) for approval boundaries, troubleshooting, and disconnection.
+Use the [workflow picker](docs/connector.md#choose-a-workflow) for household reviews, subscriptions, categories, debt, investments, setup, and financial checkups. The [tool reference](docs/tools.md) lists every tool with its access, plan, and scopes; [tools.json](tools.json) is the machine-readable copy. Read the [connector reference](docs/connector.md) for approval boundaries, troubleshooting, and disconnection.
 
 ## Directory listings
 

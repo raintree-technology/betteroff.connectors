@@ -12,3 +12,4 @@ __pycache__/
 *.pem
 *.key
 .DS_Store
+.claude/scheduled_tasks.lock

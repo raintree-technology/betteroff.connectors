@@ -79,7 +79,7 @@ Use these fields for directory submissions. The official Registry and Smithery e
 
 BetterOff connects an AI assistant to your household finances. Review accounts, net worth, spending, cash flow, recurring charges, investments, and debt. Ask for a household overview, review a month of spending, or identify recurring subscriptions. Results include dates, source status, and incomplete-data warnings.
 
-An eligible BetterOff household owner signs in and chooses permissions. All household members must consent to AI processing, and the owner must accept the applicable Terms. Financial information returned by tools is shared with the connected client. Most reads are free. Recurring items, checklist progress, observations, correction proposals, and transfer requests require BetterOff Core.
+An eligible BetterOff household owner signs in and chooses permissions. All household members must consent to AI processing, and the owner must accept the applicable Terms. Financial information returned by tools is shared with the connected client. Every tool, including read tools, requires BetterOff Core. Free accounts and trials cannot use the connector.
 
 Correction tools prepare changes for approval in BetterOff. Separate transfer permissions can expose tools that prepare wallet transfers, bank transfers, or vault deposits; the user must approve each request in BetterOff and complete the required wallet signature or passkey confirmation. MCP tools cannot approve or execute those requests themselves. A separate, opt-in feedback tool sends user-approved diagnostic reports.
 

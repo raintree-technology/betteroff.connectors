@@ -21,6 +21,14 @@ class ToolCatalogTests(unittest.TestCase):
     def test_repository_passes(self):
         self.assertEqual(check(self.root), [])
 
+    def test_all_agent_tools_require_core(self):
+        catalog = json.loads((ROOT / 'tools.json').read_text())
+        self.assertTrue(catalog['tools'])
+        for tool in catalog['tools']:
+            with self.subTest(tool=tool['name']):
+                self.assertEqual(tool['plan'], 'core')
+        self.assertNotIn('other tools are free', render(catalog))
+
     def test_unknown_tool_and_stale_reference_fail(self):
         guide = self.root / 'docs/connector.md'
         guide.write_text(guide.read_text() + '\nCall `betteroff_move_money`.\n')
