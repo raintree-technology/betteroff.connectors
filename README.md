@@ -106,8 +106,12 @@ BetterOff is published in the [official MCP Registry](integrations/directories/R
 
 Report vulnerabilities as described in [SECURITY.md](SECURITY.md). For product help, [contact BetterOff](https://betteroff.finance/contact). Maintainers can find repository checks in [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Legal notice
+
+BetterOff is a financial tracking tool. It is not a bank, broker, or financial advisor, and it does not provide investment, tax, legal, or financial advice. AI agents can return inaccurate results and can be influenced by text they read, including merchant names and other third-party data. Review each request before you approve it in BetterOff. Your use of BetterOff is governed by the [BetterOff Terms of Service](https://betteroff.finance/legal/terms).
+
 ## License and brand assets
 
-This is a public connector distribution, not an open-source license grant. See [LICENSE](LICENSE); the manifests declare `UNLICENSED`. See [Terms of Service, Section 10: Intellectual Property](https://betteroff.finance/legal/terms#intellectual-property) for the terms covering BetterOff names and artwork.
+This repository is available under the [MIT License](LICENSE). The license does not cover the BetterOff name, logo, or artwork, which are trademarks of FinSync LLC, or the hosted BetterOff service. See [Terms of Service, Section 10: Intellectual Property](https://betteroff.finance/legal/terms#intellectual-property).
 
 Client logos identify the documented integrations and remain the property of their respective owners. Their inclusion does not imply endorsement. See [logo sources](assets/clients/README.md) for attribution.

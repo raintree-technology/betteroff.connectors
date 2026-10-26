@@ -73,7 +73,7 @@ Use these fields for directory submissions. The official Registry and Smithery e
 | Authentication | OAuth with authorization code and PKCE S256; per-user household consent |
 | API key or fixed header | None for this OAuth connection |
 | Server version | 0.5.0 in the recorded production initialization; verify again for a new release |
-| License | Proprietary. The connector repository is public but does not grant an open-source license. |
+| License | MIT for the connector repository. The hosted server is proprietary and governed by the BetterOff Terms. |
 
 ### Full description
 
