@@ -13,6 +13,6 @@
 	"documentationUrl": "https://github.com/raintree-technology/betteroff.connectors",
 	"repository": "https://github.com/raintree-technology/betteroff.connectors",
 	"icon": "./assets/icon.png",
-	"license": "UNLICENSED",
+	"license": "MIT",
 	"mcpServers": "./.mcp.json"
 }

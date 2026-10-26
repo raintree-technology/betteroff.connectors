@@ -141,3 +141,7 @@ Before documenting an installation route:
 4. Verify token renewal and denied access after disconnecting in BetterOff.
 
 Do not claim Instinct support until those checks pass. Do not paste BetterOff credentials or access tokens into an Instinct conversation.
+
+## License
+
+By contributing, you agree that your contribution is licensed under the [MIT License](LICENSE).
