@@ -75,7 +75,10 @@ Read `code` and `retryable` before calling again. Never interpret a failed looku
 - For `INSUFFICIENT_SCOPE`, tell the user to reconnect with the required permission.
 - For `INCOMPLETE_DATA`, name the missing inputs and follow the returned next step.
 - For `AGENT_SUBSCRIPTION_INACTIVE`, tell the user that agent access needs BetterOff Core and give the returned `nextStep`. Do not retry or substitute other reads for the missing data.
-- Retry a retryable failure once. If it fails again, state the limitation and direct the user to BetterOff.
+- `AGENT_AI_CONSENT_REQUIRED`: explain that every household member must enable Chat data access in BetterOff settings. Stop reading until the user confirms the change.
+- `AGENT_GRANT_REVOKED`: the connection expired or was disconnected. Ask the user to reconnect BetterOff; do not switch credentials or channels to bypass it.
+- After the user fixes a blocker, retry the blocked step and resume the original task. Confirm success from a usable result, not from sign-in alone.
+- Retry a retryable failure once, respecting any returned retry delay. If it fails again, state the limitation and direct the user to BetterOff.
 - Do not repeat a terminal failure with unchanged arguments.
 
 ## Prepare corrections
