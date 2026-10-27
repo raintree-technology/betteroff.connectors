@@ -98,6 +98,10 @@ Each guide starts with what has been tested for that client. Codex, Claude Code,
 
 Use the [workflow picker](docs/connector.md#choose-a-workflow) for household reviews, subscriptions, categories, debt, investments, setup, and financial checkups. The [tool reference](docs/tools.md) lists every tool with its access and scopes; [tools.json](tools.json) is the machine-readable copy. Read the [connector reference](docs/connector.md) for approval boundaries, troubleshooting, and disconnection.
 
+## What BetterOff records
+
+This repository contains no telemetry code. The connector sends nothing from your computer except your requests to BetterOff. When your client calls a tool, BetterOff's servers log the tool name, whether it succeeded, the error code if it failed, how long it took, how many records it returned, the client's name and version, and hashed household and connection identifiers. The logs do not contain your prompts, the tool arguments or results, or your financial data. Selected logs are archived for 30 days. The [BetterOff Privacy Policy](https://betteroff.finance/legal/privacy) has the full list and retention periods. You can disconnect at any time in BetterOff under Settings > Agent connections.
+
 ## Directory listings
 
 BetterOff is published in the [official MCP Registry](integrations/directories/README.md#official-mcp-registry) as `finance.betteroff/mcp` and on [Smithery](integrations/directories/README.md#smithery). OpenAI approved BetterOff for the ChatGPT directory on October 22, 2026; it is not published there yet. It is not listed in the Claude connector directory, Glama, or PulseMCP. A [Zapier integration](integrations/zapier/README.md) is in private preview. The [directory guide](integrations/directories/README.md) tracks each submission.
