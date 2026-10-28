@@ -1,0 +1,11 @@
+interface:
+  display_name: "Spending changes"
+  short_description: "See which categories and charges changed"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "betteroff"
+      description: "BetterOff MCP server"
+      transport: "streamable_http"
+      url: "https://api.betteroff.finance/mcp"

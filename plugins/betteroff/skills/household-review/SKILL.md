@@ -1,6 +1,6 @@
 ---
 name: household-review
-description: Answers direct questions about BetterOff accounts, balances, net worth, transactions, cash flow, and DeFi, and prepares corrections and transfer requests for review in BetterOff. Use for general financial questions; use the specialist skills for monthly reviews, subscription audits, portfolio checks, debt payoff comparisons, category cleanup, financial checkups, or connection problems.
+description: Answers direct questions about BetterOff accounts, balances, net worth, transactions, cash flow, and DeFi, and prepares corrections and transfer requests for review in BetterOff. Use for general financial questions; use the specialist skills for monthly reviews, spending changes, upcoming bills, net worth changes, subscription audits, portfolio checks, debt payoff comparisons, category cleanup, financial checkups, or connection problems.
 ---
 
 # BetterOff household review

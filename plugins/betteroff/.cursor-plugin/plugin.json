@@ -1,7 +1,7 @@
 {
 	"name": "betteroff",
 	"displayName": "BetterOff",
-	"version": "0.5.2",
+	"version": "0.6.0",
 	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections, wallet and bank transfers, and vault deposits for approval.",
 	"author": {
 		"name": "FinSync LLC"
@@ -11,5 +11,6 @@
 	"license": "MIT",
 	"keywords": ["finance", "household", "net-worth", "budgeting", "mcp"],
 	"logo": "assets/icon.png",
+	"skills": "./skills/",
 	"mcpServers": "./.mcp.json"
 }
