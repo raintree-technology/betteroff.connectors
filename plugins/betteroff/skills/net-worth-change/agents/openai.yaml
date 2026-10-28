@@ -1,0 +1,11 @@
+interface:
+  display_name: "Net worth change"
+  short_description: "See what moved your net worth"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "betteroff"
+      description: "BetterOff MCP server"
+      transport: "streamable_http"
+      url: "https://api.betteroff.finance/mcp"

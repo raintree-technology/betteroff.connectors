@@ -18,7 +18,7 @@ Confirm that the result identifies your household and reports observation dates 
 
 ## What the connector can do
 
-Connector package 0.5.2 describes hosted server 0.5.0 and defines up to 29 tools; clients see only the tools allowed by their permissions. The [tool reference](tools.md) lists each tool's access and scopes:
+Connector package 0.6.0 describes hosted server 0.5.0 and defines up to 29 tools; clients see only the tools allowed by their permissions. The [tool reference](tools.md) lists each tool's access and scopes:
 
 - **20 financial reads and analyses** cover setup status, accounts, net worth, cash flow, recurring items, holdings, transactions, spending, debts, checklist progress, observations, financial activity, market search, and reported vault yields.
 - **Three correction proposals** cover payment categories, recurring items, and debt classifications.
@@ -69,6 +69,9 @@ Skills give your AI client instructions for specific tasks. Each skill works on 
 | [`portfolio-check`](../plugins/betteroff/skills/portfolio-check/SKILL.md) | “Summarize my investment allocation and concentration.” |
 | [`connect-and-setup`](../plugins/betteroff/skills/connect-and-setup/SKILL.md) | “Check my connections and show the remaining setup steps.” |
 | [`financial-checkup`](../plugins/betteroff/skills/financial-checkup/SKILL.md) | “Review my financial checklist and suggest the next items to complete.” |
+| [`spending-changes`](../plugins/betteroff/skills/spending-changes/SKILL.md) | “What changed in my spending last month?” |
+| [`upcoming-bills`](../plugins/betteroff/skills/upcoming-bills/SKILL.md) | “What bills are due in the next two weeks, and do my balances cover them?” |
+| [`net-worth-change`](../plugins/betteroff/skills/net-worth-change/SKILL.md) | “Why did my net worth change this month?” |
 
 ## Approval and disconnection
 

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
 	"name": "betteroff",
-	"version": "0.5.2",
+	"version": "0.6.0",
 	"description": "See net worth, spending, cash flow, investments, and debt from your BetterOff accounts; prepare corrections, wallet and bank transfers, and vault deposits for approval.",
 	"author": {
 		"name": "FinSync LLC"
@@ -102,7 +102,7 @@
 			},
 			"publication": {
 				"countries": ["US"],
-				"release_notes": "Clarify account and crypto coverage, add everyday starter prompts, and improve skill labels. Preserve approval requirements and ChatGPT transfer restrictions."
+				"release_notes": "Add skills for spending changes, upcoming bills, and net worth changes. Preserve approval requirements and ChatGPT transfer restrictions."
 			}
 		}
 	}

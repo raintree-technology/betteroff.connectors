@@ -1,0 +1,11 @@
+interface:
+  display_name: "Upcoming bills"
+  short_description: "See what is due and what covers it"
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "betteroff"
+      description: "BetterOff MCP server"
+      transport: "streamable_http"
+      url: "https://api.betteroff.finance/mcp"

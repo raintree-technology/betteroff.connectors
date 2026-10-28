@@ -32,10 +32,10 @@ Read the [account and consent requirements](../../README.md#before-you-start) be
    hermes mcp login betteroff
    ```
 
-3. Install the eight skills:
+3. Install the 11 skills:
 
    ```sh
-   for skill in household-review monthly-review subscription-audit categorize-transactions debt-plan portfolio-check connect-and-setup financial-checkup; do
+   for skill in household-review monthly-review subscription-audit categorize-transactions debt-plan portfolio-check connect-and-setup financial-checkup spending-changes upcoming-bills net-worth-change; do
      hermes skills install "raintree-technology/betteroff.connectors/plugins/betteroff/skills/$skill"
    done
    ```
