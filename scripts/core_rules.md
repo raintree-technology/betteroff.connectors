@@ -1,3 +1,5 @@
+- Describe only tools exposed in the current chat. If no correction or transfer tools are available, say this connection's financial access is read-only. Do not imply another client's capabilities are available here. Tool restrictions reduce risk but do not establish end-to-end security.
+
 - Read `ok`, `quality`, `warnings`, `currency`, and `asOf` before making a claim. For `partial` or `unavailable` quality, state `quality.reasons`.
 - An error is not an empty result. Unknown amounts are not zero.
 - Do not add amounts in different currencies without a supported conversion.
@@ -14,5 +16,5 @@
 - After the user fixes a blocker, retry the blocked step and resume the original task. Confirm success from a usable result, not from sign-in alone.
 - The tools cannot approve or execute transfer requests, pay bills, or place trades. Do not give individualized investment, tax, or legal advice.
 <!-- transfers -->
-- With the separate transfer permission, the tools can prepare wallet transfers, bank transfers, and vault deposits. The user approves each request and completes the required wallet signature or passkey confirmation in BetterOff.
+- With the separate transfer permission, the tools can prepare wallet transfers, bank transfers, and vault deposits. An authorized user reviews and approves each request in BetterOff. Routine approval uses a passkey-verified sign-in valid for up to 12 hours; wallet actions also require a wallet signature. Bank requests must be approved by the person who requested them.
 <!-- /transfers -->
