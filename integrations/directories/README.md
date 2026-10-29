@@ -13,7 +13,7 @@ Recorded October 13, 2026; the ChatGPT row was updated October 22, 2026. Do not 
 | Destination | Status | Next step |
 | --- | --- | --- |
 | [Official MCP Registry](#official-mcp-registry) | Published as `finance.betteroff/mcp` | Publish [server.json](server.json) with a new version for each change |
-| Official MCP Registry, `finance.betteroff/public` | Still active at 1.0.0, but its remote `https://betteroff.finance/mcp` has redirected to `/agents` since at least October 29, 2026, so connections fail. Glama copied this entry | Mark the entry deprecated in the Registry |
+| Official MCP Registry, `finance.betteroff/public` | Deprecated October 29, 2026 at 08:13:51 UTC. Its remote `https://betteroff.finance/mcp` redirects to `/agents`, so connections failed. Glama copied this entry | Ask Glama to drop its copy |
 | [Smithery](#smithery) | Published; owned by a test-account namespace | Claim vendor ownership; test token renewal |
 | [Claude connector directory](#chatgpt-and-claude-connector-directories) | Not submitted | Submit through the developer portal |
 | [ChatGPT directory](#chatgpt-and-claude-connector-directories) | Approved October 22, 2026 as portal version 1.0.0; not published | Publish from the OpenAI plugins page, then test the transfer restriction in ChatGPT |
@@ -104,9 +104,9 @@ Keep reviewer credentials outside this public repository. The recorded Glama tes
 
 ## Official MCP Registry
 
-**Published** as `finance.betteroff/mcp` on October 13, 2026. The latest Registry record should match [server.json](server.json); the Registry needs a new version for every change, including metadata-only updates. DNS ownership of `betteroff.finance` is verified; the signing key stays in ignored local storage. See [publication evidence](registry-publication-2026-10-13.json) and the [publication record](evidence-2026-10-13.md#official-mcp-registry-publication).
+**Published** as `finance.betteroff/mcp` on October 13, 2026. Version 0.5.2, which changes only the description, was published October 29, 2026 at 08:14:01 UTC through the Registry API with DNS login, and a public GET confirmed it as latest. The latest Registry record should match [server.json](server.json); the Registry needs a new version for every change, including metadata-only updates. DNS ownership of `betteroff.finance` is verified; the signing key stays in ignored local storage. See [publication evidence](registry-publication-2026-10-13.json) and the [publication record](evidence-2026-10-13.md#official-mcp-registry-publication).
 
-The older `finance.betteroff/public` 1.0.0 record points to a retired anonymous endpoint. Do not use it for setup.
+The older `finance.betteroff/public` 1.0.0 record points to a retired anonymous endpoint. It was marked deprecated on October 29, 2026. Do not use it for setup.
 
 The repository field is omitted because this repository distributes client configuration, not the hosted server. Sources: [remote-server format](https://modelcontextprotocol.io/registry/remote-servers) and [authentication](https://modelcontextprotocol.io/registry/authentication).
 
