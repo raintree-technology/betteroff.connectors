@@ -13,6 +13,7 @@ Recorded October 13, 2026; the ChatGPT row was updated October 22, 2026. Do not 
 | Destination | Status | Next step |
 | --- | --- | --- |
 | [Official MCP Registry](#official-mcp-registry) | Published as `finance.betteroff/mcp` | Publish [server.json](server.json) with a new version for each change |
+| Official MCP Registry, `finance.betteroff/public` | Still active at 1.0.0, but its remote `https://betteroff.finance/mcp` has redirected to `/agents` since at least October 29, 2026, so connections fail. Glama copied this entry | Mark the entry deprecated in the Registry |
 | [Smithery](#smithery) | Published; owned by a test-account namespace | Claim vendor ownership; test token renewal |
 | [Claude connector directory](#chatgpt-and-claude-connector-directories) | Not submitted | Submit through the developer portal |
 | [ChatGPT directory](#chatgpt-and-claude-connector-directories) | Approved October 22, 2026 as portal version 1.0.0; not published | Publish from the OpenAI plugins page, then test the transfer restriction in ChatGPT |
@@ -58,7 +59,7 @@ Use these fields for directory submissions. The official Registry and Smithery e
 | --- | --- |
 | Display name | BetterOff |
 | Publisher | FinSync LLC |
-| Short description | Review household finances and prepare corrections and transfer requests for approval in BetterOff. |
+| Short description | Read bank, brokerage, exchange, and wallet accounts; prepare changes and transfers for approval. |
 | Suggested categories | Finance; Personal finance; Productivity. Select only categories the destination actually offers. |
 | Homepage | https://betteroff.finance |
 | User documentation | https://betteroff.finance/agents |
@@ -77,7 +78,7 @@ Use these fields for directory submissions. The official Registry and Smithery e
 
 ### Full description
 
-BetterOff connects an AI assistant to your household finances. Review accounts, net worth, spending, cash flow, recurring charges, investments, and debt. Ask for a household overview, review a month of spending, or identify recurring subscriptions. Results include dates, source status, and incomplete-data warnings.
+BetterOff connects an AI assistant to your household's bank, brokerage, exchange, and wallet accounts. Review balances, net worth, spending, cash flow, recurring charges, investments, and debt. Ask for a household overview, review a month of spending, or identify recurring subscriptions. Results include dates, source status, and incomplete-data warnings.
 
 An eligible BetterOff household owner signs in and chooses permissions. All household members must consent to AI processing, and the owner must accept the applicable Terms. Financial information returned by tools is shared with the connected client. Every tool, including read tools, requires BetterOff Core. Free accounts and trials cannot use the connector.
 
