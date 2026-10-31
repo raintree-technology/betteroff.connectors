@@ -90,7 +90,7 @@ class ToolCatalogTests(unittest.TestCase):
         self.assertIn(f'README.md must state "{count} tools"', check(self.root))
 
     def test_render_counts_tools(self):
-        self.assertIn('29 tools: 21 read tools and 8 write tools', render(json.loads((ROOT / 'tools.json').read_text())))
+        self.assertIn('31 tools: 23 read tools and 8 write tools', render(json.loads((ROOT / 'tools.json').read_text())))
 
 
 if __name__ == '__main__':

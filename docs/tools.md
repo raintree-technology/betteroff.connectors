@@ -5,7 +5,7 @@
 
 [All clients](../README.md#install-the-connector) · [Connector reference](connector.md)
 
-Connector package 0.6.0 describes hosted server 0.5.0 at `https://api.betteroff.finance/mcp` and defines 29 tools: 21 read tools and 8 write tools. A client sees only the tools its granted scopes allow.
+Connector package 0.6.0 describes hosted server 0.5.0 at `https://api.betteroff.finance/mcp` and defines 31 tools: 23 read tools and 8 write tools. A client sees only the tools its granted scopes allow.
 
 - **Read** tools return data and change nothing.
 - **Write** tools save a pending correction or transfer request, cancel a pending request, or send feedback. None can apply a correction, approve a transfer, or sign a transaction. You do those in BetterOff. Cancellation and feedback take effect when called.
@@ -25,6 +25,7 @@ The same catalog is available as [tools.json](../tools.json). With an API token,
 | `betteroff_detect_spending_patterns` | Read | `transactions:read` | Spending habits, trends, and unusual transactions. |
 | `betteroff_get_account_flows` | Read | `accounts:read`, `transactions:read` | Gross deposits and withdrawals for specific accounts. |
 | `betteroff_get_cash_flow` | Read | `cashflow:read` | Household income, expenses, and savings rate. |
+| `betteroff_preview_cash_plan` | Read | `cashflow:read` | Read-only cash-plan scenario from amounts the user confirmed. Moves no money. |
 | `betteroff_list_recurring` | Read | `cashflow:read` | Observed recurring bills, subscriptions, and income. |
 | `betteroff_get_portfolio` | Read | `investments:read` | Investment positions, allocation, and concentration. |
 | `betteroff_get_defi_positions` | Read | `investments:read` | DeFi lending, staking, and liquidity positions with assets and liabilities. |
@@ -42,5 +43,6 @@ The same catalog is available as [tools.json](../tools.json). With an API token,
 | `betteroff_request_bank_transfer` | Write | `accounts:read`, `transfers:bank` | Requests a transfer between the user's own linked accounts; the user confirms with a passkey. |
 | `betteroff_request_vault_deposit` | Write | `investments:read`, `transfers:vault` | Requests a USDC or USDT vault deposit; the user signs in BetterOff. |
 | `betteroff_get_action_request` | Read | `transfers:read` | Status of a transfer or deposit request. |
+| `betteroff_get_money_activity` | Read | `accounts:read`, `transactions:read` | Natural wallet balances and the status of payments, requests, and transfers. |
 | `betteroff_cancel_action_request` | Write | `transfers:prepare` | Cancels a pending request before it is signed. |
 | `betteroff_submit_feedback` | Write | `feedback:submit` | Sends a user-approved diagnostic report to BetterOff support. |

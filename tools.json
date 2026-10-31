@@ -14,6 +14,7 @@
     {"name": "betteroff_detect_spending_patterns", "title": "Detect spending patterns", "scopes": ["transactions:read"], "readOnly": true, "summary": "Spending habits, trends, and unusual transactions."},
     {"name": "betteroff_get_account_flows", "title": "Get account flows", "scopes": ["accounts:read", "transactions:read"], "readOnly": true, "summary": "Gross deposits and withdrawals for specific accounts."},
     {"name": "betteroff_get_cash_flow", "title": "Get cash flow", "scopes": ["cashflow:read"], "readOnly": true, "summary": "Household income, expenses, and savings rate."},
+    {"name": "betteroff_preview_cash_plan", "title": "Preview cash plan", "scopes": ["cashflow:read"], "readOnly": true, "summary": "Read-only cash-plan scenario from amounts the user confirmed. Moves no money."},
     {"name": "betteroff_list_recurring", "title": "List recurring", "scopes": ["cashflow:read"], "readOnly": true, "summary": "Observed recurring bills, subscriptions, and income."},
     {"name": "betteroff_get_portfolio", "title": "Get portfolio", "scopes": ["investments:read"], "readOnly": true, "summary": "Investment positions, allocation, and concentration."},
     {"name": "betteroff_get_defi_positions", "title": "Get defi positions", "scopes": ["investments:read"], "readOnly": true, "summary": "DeFi lending, staking, and liquidity positions with assets and liabilities."},
@@ -31,6 +32,7 @@
     {"name": "betteroff_request_bank_transfer", "title": "Request bank transfer", "scopes": ["accounts:read", "transfers:bank"], "readOnly": false, "summary": "Requests a transfer between the user's own linked accounts; the user confirms with a passkey."},
     {"name": "betteroff_request_vault_deposit", "title": "Request vault deposit", "scopes": ["investments:read", "transfers:vault"], "readOnly": false, "summary": "Requests a USDC or USDT vault deposit; the user signs in BetterOff."},
     {"name": "betteroff_get_action_request", "title": "Get action request", "scopes": ["transfers:read"], "readOnly": true, "summary": "Status of a transfer or deposit request."},
+    {"name": "betteroff_get_money_activity", "title": "Get money activity", "scopes": ["accounts:read", "transactions:read"], "readOnly": true, "summary": "Natural wallet balances and the status of payments, requests, and transfers."},
     {"name": "betteroff_cancel_action_request", "title": "Cancel action request", "scopes": ["transfers:prepare"], "readOnly": false, "summary": "Cancels a pending request before it is signed."},
     {"name": "betteroff_submit_feedback", "title": "Submit feedback", "scopes": ["feedback:submit"], "readOnly": false, "summary": "Sends a user-approved diagnostic report to BetterOff support."}
   ]
