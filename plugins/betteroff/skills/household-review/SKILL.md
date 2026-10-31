@@ -24,6 +24,8 @@ Describe only tools exposed in the current chat. If no correction or transfer to
 | Habits and unusual spending | `betteroff_detect_spending_patterns` |
 | Gross account deposits and withdrawals | `betteroff_get_account_flows` |
 | Household income and expenses | `betteroff_get_cash_flow` |
+| Cash-plan scenario from confirmed amounts | `betteroff_preview_cash_plan` |
+| Natural wallet balances and payment status | `betteroff_get_money_activity` |
 | Observed recurring payments | `betteroff_list_recurring` |
 | Portfolio positions, allocation and concentration | `betteroff_get_portfolio` |
 | DeFi assets and liabilities | `betteroff_get_defi_positions` |
